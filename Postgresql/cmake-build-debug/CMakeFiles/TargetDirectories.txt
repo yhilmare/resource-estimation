@@ -1,0 +1,3 @@
+/home/ilmare/workspace/c/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/ilmare/workspace/c/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ilmare/workspace/c/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir
