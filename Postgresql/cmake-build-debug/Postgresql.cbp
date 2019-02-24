@@ -86,6 +86,24 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.h">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h">
+			<Option target="Postgresql"/>
+		</Unit>
 		<Unit filename="/home/ilmare/workspace/c/Resource_estimation/Postgresql/main.cpp">
 			<Option target="Postgresql"/>
 		</Unit>

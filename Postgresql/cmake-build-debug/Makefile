@@ -123,6 +123,87 @@ Postgresql/fast:
 	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/build
 .PHONY : Postgresql/fast
 
+lib/pg_lib/exception/conn_fail_exception.o: lib/pg_lib/exception/conn_fail_exception.cpp.o
+
+.PHONY : lib/pg_lib/exception/conn_fail_exception.o
+
+# target to build an object file
+lib/pg_lib/exception/conn_fail_exception.cpp.o:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.o
+.PHONY : lib/pg_lib/exception/conn_fail_exception.cpp.o
+
+lib/pg_lib/exception/conn_fail_exception.i: lib/pg_lib/exception/conn_fail_exception.cpp.i
+
+.PHONY : lib/pg_lib/exception/conn_fail_exception.i
+
+# target to preprocess a source file
+lib/pg_lib/exception/conn_fail_exception.cpp.i:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.i
+.PHONY : lib/pg_lib/exception/conn_fail_exception.cpp.i
+
+lib/pg_lib/exception/conn_fail_exception.s: lib/pg_lib/exception/conn_fail_exception.cpp.s
+
+.PHONY : lib/pg_lib/exception/conn_fail_exception.s
+
+# target to generate assembly for a file
+lib/pg_lib/exception/conn_fail_exception.cpp.s:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.s
+.PHONY : lib/pg_lib/exception/conn_fail_exception.cpp.s
+
+lib/pg_lib/exception/conn_info_nullpointer_exception.o: lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.o
+
+.PHONY : lib/pg_lib/exception/conn_info_nullpointer_exception.o
+
+# target to build an object file
+lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.o:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.o
+.PHONY : lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.o
+
+lib/pg_lib/exception/conn_info_nullpointer_exception.i: lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.i
+
+.PHONY : lib/pg_lib/exception/conn_info_nullpointer_exception.i
+
+# target to preprocess a source file
+lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.i:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.i
+.PHONY : lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.i
+
+lib/pg_lib/exception/conn_info_nullpointer_exception.s: lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.s
+
+.PHONY : lib/pg_lib/exception/conn_info_nullpointer_exception.s
+
+# target to generate assembly for a file
+lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.s:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.s
+.PHONY : lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.s
+
+lib/pg_lib/pg_connection.o: lib/pg_lib/pg_connection.cpp.o
+
+.PHONY : lib/pg_lib/pg_connection.o
+
+# target to build an object file
+lib/pg_lib/pg_connection.cpp.o:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.o
+.PHONY : lib/pg_lib/pg_connection.cpp.o
+
+lib/pg_lib/pg_connection.i: lib/pg_lib/pg_connection.cpp.i
+
+.PHONY : lib/pg_lib/pg_connection.i
+
+# target to preprocess a source file
+lib/pg_lib/pg_connection.cpp.i:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.i
+.PHONY : lib/pg_lib/pg_connection.cpp.i
+
+lib/pg_lib/pg_connection.s: lib/pg_lib/pg_connection.cpp.s
+
+.PHONY : lib/pg_lib/pg_connection.s
+
+# target to generate assembly for a file
+lib/pg_lib/pg_connection.cpp.s:
+	$(MAKE) -f CMakeFiles/Postgresql.dir/build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.s
+.PHONY : lib/pg_lib/pg_connection.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +240,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Postgresql"
+	@echo "... lib/pg_lib/exception/conn_fail_exception.o"
+	@echo "... lib/pg_lib/exception/conn_fail_exception.i"
+	@echo "... lib/pg_lib/exception/conn_fail_exception.s"
+	@echo "... lib/pg_lib/exception/conn_info_nullpointer_exception.o"
+	@echo "... lib/pg_lib/exception/conn_info_nullpointer_exception.i"
+	@echo "... lib/pg_lib/exception/conn_info_nullpointer_exception.s"
+	@echo "... lib/pg_lib/pg_connection.o"
+	@echo "... lib/pg_lib/pg_connection.i"
+	@echo "... lib/pg_lib/pg_connection.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -18,19 +18,27 @@ postgres_ext.h
 pg_config_ext.h
 /home/ilmare/Downloads/pgsql/include/pg_config_ext.h
 
+/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
+exception
+-
+
+/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+libpq-fe.h
+-
+
 /home/ilmare/workspace/c/Resource_estimation/Postgresql/main.cpp
 iostream
 -
-fstream
--
 libpq-fe.h
 -
-string
--
-iterator
+regex
 -
 vector
 -
-unistd.h
+iterator
 -
+lib/pg_lib/pg_connection.h
+/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+lib/pg_lib/exception/conn_info_nullpointer_exception.h
+/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
 
