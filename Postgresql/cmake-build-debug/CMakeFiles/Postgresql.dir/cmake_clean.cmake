@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj"
   "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.obj"
   "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.obj"
+  "CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj"
   "Postgresql.pdb"
   "Postgresql.exe"
   "Postgresql.exe.manifest"

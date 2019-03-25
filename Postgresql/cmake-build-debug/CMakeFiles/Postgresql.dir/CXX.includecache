@@ -18,18 +18,6 @@ C:/pgsql/include/postgres_ext.h
 pg_config_ext.h
 C:/pgsql/include/pg_config_ext.h
 
-F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.cpp
-conn_fail_exception.h
-F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.h
-iostream
--
-
-F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.h
-exception
--
-libpq-fe.h
--
-
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
 exception
 -

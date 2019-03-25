@@ -203,6 +203,33 @@ lib/pg_lib/pg_connection.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.s
 .PHONY : lib/pg_lib/pg_connection.cpp.s
 
+lib/pg_lib/pg_statement.obj: lib/pg_lib/pg_statement.cpp.obj
+
+.PHONY : lib/pg_lib/pg_statement.obj
+
+# target to build an object file
+lib/pg_lib/pg_statement.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj
+.PHONY : lib/pg_lib/pg_statement.cpp.obj
+
+lib/pg_lib/pg_statement.i: lib/pg_lib/pg_statement.cpp.i
+
+.PHONY : lib/pg_lib/pg_statement.i
+
+# target to preprocess a source file
+lib/pg_lib/pg_statement.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.i
+.PHONY : lib/pg_lib/pg_statement.cpp.i
+
+lib/pg_lib/pg_statement.s: lib/pg_lib/pg_statement.cpp.s
+
+.PHONY : lib/pg_lib/pg_statement.s
+
+# target to generate assembly for a file
+lib/pg_lib/pg_statement.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.s
+.PHONY : lib/pg_lib/pg_statement.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -248,6 +275,9 @@ help:
 	@echo ... lib/pg_lib/pg_connection.obj
 	@echo ... lib/pg_lib/pg_connection.i
 	@echo ... lib/pg_lib/pg_connection.s
+	@echo ... lib/pg_lib/pg_statement.obj
+	@echo ... lib/pg_lib/pg_statement.i
+	@echo ... lib/pg_lib/pg_statement.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

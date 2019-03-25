@@ -18,6 +18,9 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.cpp
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.cpp
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/main.cpp.obj
  C:/pgsql/include/libpq-fe.h
  C:/pgsql/include/pg_config_ext.h

@@ -9,7 +9,7 @@
 
 class pg_connection {
 private:
-    PGconn *pg_conn;
+    PGconn *pg_conn = NULL;
     ConnStatusType connection_status;
     char *conn_info;
 public:
@@ -21,6 +21,7 @@ public:
             const char *port,
             int connection_timeout);
     ~pg_connection();
+    void close();
 };
 
 #endif //POSTGRESQL_PG_CONNECTION_H

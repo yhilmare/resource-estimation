@@ -51,10 +51,22 @@ pg_connection::pg_connection(const char *user_name, const char *password,
     this->conn_info = new char[tmp.length() + 1];
     strcpy(this->conn_info, tmp.c_str());
     this->conn_info[tmp.length()] = 0;
-    std::cout << this->conn_info << std::endl;
     delete []timeout;
+    this->pg_conn = PQconnectdb(this->conn_info);
+    this->connection_status = PQstatus(this->pg_conn);
+    if (this->connection_status != CONNECTION_OK){
+        PQfinish(this->pg_conn);
+        throw conn_fail_exception(this->connection_status);
+    }
 }
 
 pg_connection::~pg_connection() {
     delete [] this->conn_info;
+    this->close();
+}
+
+void pg_connection::close() {
+    if (this->pg_conn){
+        PQfinish(this->pg_conn);
+    }
 }
