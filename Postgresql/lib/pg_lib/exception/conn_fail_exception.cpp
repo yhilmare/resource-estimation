@@ -10,9 +10,9 @@ conn_fail_exception::conn_fail_exception() {
 }
 
 conn_fail_exception::conn_fail_exception(ConnStatusType statusType) {
-    std::cerr << "connectioj failed, status is " << statusType << std::endl;
+    std::cerr << "connection failed, status is " << statusType << std::endl;
 }
 
-const char* conn_fail_exception::what() {
-    return "connectioj failed";
+const char* conn_fail_exception::what() const noexcept{
+    return "connection failed";
 }

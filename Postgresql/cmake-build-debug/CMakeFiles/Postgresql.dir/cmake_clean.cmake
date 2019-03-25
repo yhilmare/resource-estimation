@@ -1,10 +1,12 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Postgresql.dir/main.cpp.o"
-  "CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.o"
-  "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.o"
-  "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.o"
+  "CMakeFiles/Postgresql.dir/main.cpp.obj"
+  "CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj"
+  "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.obj"
+  "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.obj"
   "Postgresql.pdb"
-  "Postgresql"
+  "Postgresql.exe"
+  "Postgresql.exe.manifest"
+  "libPostgresql.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

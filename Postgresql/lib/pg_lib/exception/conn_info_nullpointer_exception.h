@@ -11,7 +11,7 @@ class conn_info_nullpointer_exception: public std::exception{
 public:
     conn_info_nullpointer_exception(const char *connection_info);
     conn_info_nullpointer_exception();
-    virtual const char *what();
+    virtual const char *what() const noexcept override;
 };
 
 #endif //POSTGRESQL_CONN_INFO_NULLPOINTER_EXCEPTION_H

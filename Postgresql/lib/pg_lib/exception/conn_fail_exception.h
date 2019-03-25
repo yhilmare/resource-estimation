@@ -13,7 +13,7 @@ public:
     conn_fail_exception(ConnStatusType statusType);
     conn_fail_exception();
 
-    virtual const char *what();
+    virtual const char *what() const noexcept override;
 };
 
 

@@ -6,27 +6,39 @@
 
 #IncludeRegexTransform: 
 
-/home/ilmare/Downloads/pgsql/include/libpq-fe.h
+C:/pgsql/include/libpq-fe.h
 stdio.h
 -
 postgres_ext.h
-/home/ilmare/Downloads/pgsql/include/postgres_ext.h
+C:/pgsql/include/postgres_ext.h
 
-/home/ilmare/Downloads/pgsql/include/pg_config_ext.h
+C:/pgsql/include/pg_config_ext.h
 
-/home/ilmare/Downloads/pgsql/include/postgres_ext.h
+C:/pgsql/include/postgres_ext.h
 pg_config_ext.h
-/home/ilmare/Downloads/pgsql/include/pg_config_ext.h
+C:/pgsql/include/pg_config_ext.h
 
-/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
-exception
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.cpp
+conn_fail_exception.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.h
+iostream
 -
 
-/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.h
+exception
+-
 libpq-fe.h
 -
 
-/home/ilmare/workspace/c/Resource_estimation/Postgresql/main.cpp
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
+exception
+-
+
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+libpq-fe.h
+-
+
+F:/repos/Resource_estimation/Postgresql/main.cpp
 iostream
 -
 libpq-fe.h
@@ -38,7 +50,7 @@ vector
 iterator
 -
 lib/pg_lib/pg_connection.h
-/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
 lib/pg_lib/exception/conn_info_nullpointer_exception.h
-/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
 

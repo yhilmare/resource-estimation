@@ -4,16 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.cpp" "/home/ilmare/workspace/c/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.o"
-  "/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp" "/home/ilmare/workspace/c/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.o"
-  "/home/ilmare/workspace/c/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.cpp" "/home/ilmare/workspace/c/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.o"
-  "/home/ilmare/workspace/c/Resource_estimation/Postgresql/main.cpp" "/home/ilmare/workspace/c/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.o"
+  "F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.obj"
+  "F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.obj"
+  "F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj"
+  "F:/repos/Resource_estimation/Postgresql/main.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/ilmare/Downloads/pgsql/include"
+  "C:/pgsql/include"
   )
 
 # Targets to which this target links.

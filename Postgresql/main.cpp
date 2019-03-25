@@ -41,7 +41,6 @@ void regex_test(){
     string msg = "yh_swjtu@163.com是我一个人1193830957@qq.com";
     smatch match;
     cout << regex_match(msg, match, pattern) << endl;
-    cout << match.str() << endl;
     smatch search;
     cout << regex_search(msg, search, pattern) << endl;
     cout << search.str() << endl;
