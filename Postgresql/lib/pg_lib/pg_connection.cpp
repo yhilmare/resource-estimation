@@ -65,6 +65,11 @@ pg_connection::~pg_connection() {
     this->close();
 }
 
+pg_statement pg_connection::create_statement() {
+    pg_statement statement = pg_statement();
+    return statement;
+}
+
 void pg_connection::close() {
     if (this->pg_conn){
         PQfinish(this->pg_conn);

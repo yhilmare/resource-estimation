@@ -6,6 +6,7 @@
 #define POSTGRESQL_PG_CONNECTION_H
 
 #include <libpq-fe.h>
+#include "pg_statement.h"
 
 class pg_connection {
 private:
@@ -21,6 +22,8 @@ public:
             const char *port,
             int connection_timeout);
     ~pg_connection();
+
+    pg_statement create_statement();
     void close();
 };
 

@@ -126,13 +126,43 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.s"
 	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\repos\Resource_estimation\Postgresql\lib\pg_lib\pg_statement.cpp -o CMakeFiles\Postgresql.dir\lib\pg_lib\pg_statement.cpp.s
 
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: CMakeFiles/Postgresql.dir/flags.make
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: CMakeFiles/Postgresql.dir/includes_CXX.rsp
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/pg_lib/pg_resultset.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Postgresql.dir\lib\pg_lib\pg_resultset.cpp.obj -c F:\repos\Resource_estimation\Postgresql\lib\pg_lib\pg_resultset.cpp
+
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\repos\Resource_estimation\Postgresql\lib\pg_lib\pg_resultset.cpp > CMakeFiles\Postgresql.dir\lib\pg_lib\pg_resultset.cpp.i
+
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\repos\Resource_estimation\Postgresql\lib\pg_lib\pg_resultset.cpp -o CMakeFiles\Postgresql.dir\lib\pg_lib\pg_resultset.cpp.s
+
+CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj: CMakeFiles/Postgresql.dir/flags.make
+CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj: CMakeFiles/Postgresql.dir/includes_CXX.rsp
+CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj: ../lib/pg_lib/exception/resultset_nullpointer_exception.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Postgresql.dir\lib\pg_lib\exception\resultset_nullpointer_exception.cpp.obj -c F:\repos\Resource_estimation\Postgresql\lib\pg_lib\exception\resultset_nullpointer_exception.cpp
+
+CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\repos\Resource_estimation\Postgresql\lib\pg_lib\exception\resultset_nullpointer_exception.cpp > CMakeFiles\Postgresql.dir\lib\pg_lib\exception\resultset_nullpointer_exception.cpp.i
+
+CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\repos\Resource_estimation\Postgresql\lib\pg_lib\exception\resultset_nullpointer_exception.cpp -o CMakeFiles\Postgresql.dir\lib\pg_lib\exception\resultset_nullpointer_exception.cpp.s
+
 # Object files for target Postgresql
 Postgresql_OBJECTS = \
 "CMakeFiles/Postgresql.dir/main.cpp.obj" \
 "CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj" \
 "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.obj" \
 "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.obj" \
-"CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj"
+"CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj" \
+"CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj" \
+"CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj"
 
 # External object files for target Postgresql
 Postgresql_EXTERNAL_OBJECTS =
@@ -142,11 +172,13 @@ Postgresql.exe: CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj
+Postgresql.exe: CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj
+Postgresql.exe: CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/build.make
 Postgresql.exe: CMakeFiles/Postgresql.dir/linklibs.rsp
 Postgresql.exe: CMakeFiles/Postgresql.dir/objects1.rsp
 Postgresql.exe: CMakeFiles/Postgresql.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable Postgresql.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Postgresql.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Postgresql.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

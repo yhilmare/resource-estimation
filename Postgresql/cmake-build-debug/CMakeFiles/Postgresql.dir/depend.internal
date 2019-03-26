@@ -10,6 +10,9 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_fail_exception.cpp.obj
 CMakeFiles/Postgresql.dir/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.cpp
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/resultset_nullpointer_exception.cpp
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/resultset_nullpointer_exception.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj
  C:/pgsql/include/libpq-fe.h
  C:/pgsql/include/pg_config_ext.h
@@ -18,6 +21,13 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.cpp
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj
+ C:/pgsql/include/libpq-fe.h
+ C:/pgsql/include/pg_config_ext.h
+ C:/pgsql/include/postgres_ext.h
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.cpp
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.cpp
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
@@ -27,4 +37,5 @@ CMakeFiles/Postgresql.dir/main.cpp.obj
  C:/pgsql/include/postgres_ext.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
  F:/repos/Resource_estimation/Postgresql/main.cpp

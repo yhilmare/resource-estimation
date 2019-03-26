@@ -5,10 +5,15 @@
 #ifndef POSTGRESQL_PG_STATEMENT_H
 #define POSTGRESQL_PG_STATEMENT_H
 
+#include <string>
 
 class pg_statement {
 private:
-    const char *sql;
+    std::string sql;
+public:
+    pg_statement(){};
+
+    void execute_update();
 
 };
 
