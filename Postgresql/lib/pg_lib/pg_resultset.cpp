@@ -24,11 +24,18 @@ pg_resultset::~pg_resultset() {
     this->close();
 }
 
+std::string pg_resultset::get_field(int idx) {
+    if (idx >= get_column_count()){
+        throw resultset_nullpointer_exception(std::string("idx is bigger than the biggest column count"));
+    }
+    return PQfname(this->result_set, idx);
+}
+
 char* pg_resultset::get_value(int idx) {
     if (idx >= this->column_count){
-        throw resultset_nullpointer_exception(std::string("idx is bigger than column count"));
+        throw resultset_nullpointer_exception(std::string("idx is bigger than the biggest column count"));
     }
-    if (this->cursor < this->row_count){
+    if (this->cursor < this->get_tuples_count()){
         return PQgetvalue(this->result_set, this->cursor, idx);
     }else{
         throw resultset_nullpointer_exception(std::string("cursor is bigger than row count"));

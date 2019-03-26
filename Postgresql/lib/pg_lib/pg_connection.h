@@ -7,12 +7,13 @@
 
 #include <libpq-fe.h>
 #include "pg_statement.h"
+#include "pg_prepared_statement.h"
 
 class pg_connection {
 private:
     PGconn *pg_conn = NULL;
     ConnStatusType connection_status;
-    char *conn_info;
+    char *conn_info = NULL;
 public:
     pg_connection(char *connection_info);
     pg_connection(const char *user_name,
@@ -21,9 +22,13 @@ public:
             const char *database,
             const char *port,
             int connection_timeout);
+    pg_connection(const pg_connection &);
     ~pg_connection();
 
+    pg_connection &operator=(const pg_connection &);
+
     pg_statement create_statement();
+    pg_prepared_statement prepared_statement(std::string &);
     void close();
 };
 

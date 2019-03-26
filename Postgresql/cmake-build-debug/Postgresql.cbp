@@ -100,6 +100,12 @@
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/resultset_nullpointer_exception.h">
 			<Option target="Postgresql"/>
 		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/sqlexecute_exception.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/sqlexecute_exception.h">
+			<Option target="Postgresql"/>
+		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/statement_exception.cpp">
 			<Option target="Postgresql"/>
 		</Unit>

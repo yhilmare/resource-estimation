@@ -13,6 +13,7 @@ class pg_statement {
 protected:
     std::string sql;
     PGconn *conn;
+    void verify_sql_executeresult(ExecStatusType type);
 public:
     pg_statement(PGconn *conn);
 

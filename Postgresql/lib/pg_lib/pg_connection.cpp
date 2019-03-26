@@ -10,11 +10,26 @@
 #include <vector>
 #include <iostream>
 
+pg_connection::pg_connection(const pg_connection &obj) {
+    if (obj.conn_info == NULL || !strlen(obj.conn_info)){
+        throw conn_info_nullpointer_exception();
+    }
+    this->conn_info = new char[strlen(obj.conn_info) + 1];
+    strcpy(this->conn_info, obj.conn_info);
+    this->pg_conn = PQconnectdb(this->conn_info);
+    this->connection_status = PQstatus(this->pg_conn);
+    if (this->connection_status != CONNECTION_OK){
+        PQfinish(this->pg_conn);
+        throw conn_fail_exception(this->connection_status);
+    }
+}
+
 pg_connection::pg_connection(char *connection_info) {
-    if (this->conn_info == NULL || !strlen(connection_info)){
+    if (connection_info == NULL || !strlen(connection_info)){
         throw conn_info_nullpointer_exception();
     }
     this->conn_info = new char[strlen(connection_info) + 1];
+    strcpy(this->conn_info, connection_info);
     this->pg_conn = PQconnectdb(this->conn_info);
     this->connection_status = PQstatus(this->pg_conn);
     if (this->connection_status != CONNECTION_OK){
@@ -58,6 +73,26 @@ pg_connection::pg_connection(const char *user_name, const char *password,
         PQfinish(this->pg_conn);
         throw conn_fail_exception(this->connection_status);
     }
+    std::cout << this->conn_info << std::endl;
+}
+
+pg_connection& pg_connection::operator=(const pg_connection &obj) {
+    if (this == &obj){
+        return *this;
+    }
+    if (obj.conn_info == NULL || !strlen(obj.conn_info)){
+        throw conn_info_nullpointer_exception();
+    }
+    delete []this->conn_info;
+    this->conn_info = new char[strlen(obj.conn_info) + 1];
+    strcpy(this->conn_info, obj.conn_info);
+    this->pg_conn = PQconnectdb(this->conn_info);
+    this->connection_status = PQstatus(this->pg_conn);
+    if (this->connection_status != CONNECTION_OK){
+        PQfinish(this->pg_conn);
+        throw conn_fail_exception(this->connection_status);
+    }
+    return *this;
 }
 
 pg_connection::~pg_connection() {
@@ -74,4 +109,9 @@ void pg_connection::close() {
     if (this->pg_conn){
         PQfinish(this->pg_conn);
     }
+}
+
+pg_prepared_statement pg_connection::prepared_statement(std::string &sql) {
+    pg_prepared_statement st = pg_prepared_statement(this->pg_conn, sql);
+    return st;
 }

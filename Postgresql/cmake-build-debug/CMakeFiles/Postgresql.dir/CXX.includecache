@@ -27,9 +27,23 @@ libpq-fe.h
 -
 pg_statement.h
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
+pg_prepared_statement.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.h
+
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.h
+pg_statement.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
+libpq-fe.h
+-
+vector
+-
+pg_resultset.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
 
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
 libpq-fe.h
+-
+string
 -
 
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
@@ -59,4 +73,8 @@ lib/pg_lib/pg_statement.h
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
 lib/pg_lib/pg_resultset.h
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
+time.h
+-
+lib/pg_lib/pg_prepared_statement.h
+F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.h
 

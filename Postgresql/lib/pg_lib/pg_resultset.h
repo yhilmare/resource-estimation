@@ -6,6 +6,7 @@
 #define POSTGRESQL_PG_RESULTSET_H
 
 #include <libpq-fe.h>
+#include <string>
 
 class pg_resultset {
 private:
@@ -20,6 +21,8 @@ public:
     bool has_next();
     int get_column_count();
     int get_tuples_count();
+
+    std::string get_field(int idx);
 
     char *get_value(int idx);
     void close();

@@ -7,6 +7,8 @@
 #include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
 #include "lib/pg_lib/pg_statement.h"
 #include "lib/pg_lib/pg_resultset.h"
+#include <time.h>
+#include "lib/pg_lib/pg_prepared_statement.h"
 
 void postgresql_test(){
     using namespace std;
@@ -77,48 +79,30 @@ void regex_test(){
 
 int main(int arg_n, char *arg_v[]) {
     using namespace std;
-
-    regex re(R"pattern(\$[0-9]*)pattern");
-    std::string sql = "select l_orderkey,l_partkey,l_shipdate,l_comment from lineitem where l_shipdate = $1 $2 $56";
-    sregex_iterator iter(sql.begin(), sql.end(), re);
-    sregex_iterator end;
-    for(;iter != end; iter ++){
-        cout << iter->str() << endl;
-    }
 //    postgresql_test();
-//    try{
-//        pg_connection con("ilmare", "123456", "10.69.35.174", "TPCD", "5432", 10);
-//        pg_statement st = con.create_statement();
-//        pg_resultset result = st.execute_query(
-//                "select l_orderkey,l_partkey,l_shipdate,l_comment from lineitem where l_shipdate = date '1994-10-24' limit 5 offset 100");
-//        int column_count = result.get_column_count();
+    try{
+        pg_connection con1("postgresql://ilmare@10.69.35.174/TPCD?connect_timeout=10&password=123456");
+        pg_connection con = con1;
+        std::string sql = "delete from nation where n_nationkey=$1";
+        pg_prepared_statement st = con.prepared_statement(sql);
+        st.set_value("25", 0, int_type);
+//        st.set_value("'CANADA'", 1, text_type);
+//        st.set_value("1", 2, int_type);
+//        st.set_value("'eas hang ironic, silent packages. slyly regular packages are furiously over the tithes. fluffily bold'", 3, text_type);
+        st.execute_update();
+//        pg_resultset result = st.execute_query();
+//        for (int i = 0; i < result.get_column_count(); i ++){
+//            printf("%-15s", result.get_field(i).c_str());
+//        }
+//        cout << endl;
 //        while(result.has_next()){
-//            for (int i = 0; i < column_count; i ++){
+//            for (int i = 0; i < result.get_column_count(); i ++){
 //                printf("%-15s", result.get_value(i));
 //            }
 //            cout << endl;
 //        }
-//    }catch(const exception &e){
-//        cout << e.what() << endl;
-//    }
-
-//    const char *Url = "postgresql://ilmare@10.69.35.174/TPCD?connect_timeout=10&password=123456";
-//    PGconn *connection = PQconnectdb(Url);
-//    if (PQstatus(connection) != CONNECTION_OK){
-//        cerr << "connection failure" << endl;
-//        PQfinish(connection);
-//        exit(-1);
-//    }
-//    const char *sql = "explain analyse select * from lineitem where L_SHIPDATE = date '1996-11-24'";
-//    PGresult *result = PQexec(connection, sql);
-//    int column_count = PQnfields(result);
-//    int tuple_count = PQntuples(result);
-//    for (int i = 0; i < tuple_count; i ++){
-//        for (int j = 0; j < column_count; j ++){
-//            char *field_name = PQfname(result, j);
-//            cout << field_name << ": " << PQgetvalue(result, i, j) << endl;
-//        }
-//    }
-//    PQfinish(connection);
+    }catch(const exception &e){
+        cout << e.what() << endl;
+    }
     return 0;
 }

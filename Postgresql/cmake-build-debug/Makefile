@@ -203,6 +203,33 @@ lib/pg_lib/exception/resultset_nullpointer_exception.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.s
 .PHONY : lib/pg_lib/exception/resultset_nullpointer_exception.cpp.s
 
+lib/pg_lib/exception/sqlexecute_exception.obj: lib/pg_lib/exception/sqlexecute_exception.cpp.obj
+
+.PHONY : lib/pg_lib/exception/sqlexecute_exception.obj
+
+# target to build an object file
+lib/pg_lib/exception/sqlexecute_exception.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/sqlexecute_exception.cpp.obj
+.PHONY : lib/pg_lib/exception/sqlexecute_exception.cpp.obj
+
+lib/pg_lib/exception/sqlexecute_exception.i: lib/pg_lib/exception/sqlexecute_exception.cpp.i
+
+.PHONY : lib/pg_lib/exception/sqlexecute_exception.i
+
+# target to preprocess a source file
+lib/pg_lib/exception/sqlexecute_exception.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/sqlexecute_exception.cpp.i
+.PHONY : lib/pg_lib/exception/sqlexecute_exception.cpp.i
+
+lib/pg_lib/exception/sqlexecute_exception.s: lib/pg_lib/exception/sqlexecute_exception.cpp.s
+
+.PHONY : lib/pg_lib/exception/sqlexecute_exception.s
+
+# target to generate assembly for a file
+lib/pg_lib/exception/sqlexecute_exception.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/exception/sqlexecute_exception.cpp.s
+.PHONY : lib/pg_lib/exception/sqlexecute_exception.cpp.s
+
 lib/pg_lib/exception/statement_exception.obj: lib/pg_lib/exception/statement_exception.cpp.obj
 
 .PHONY : lib/pg_lib/exception/statement_exception.obj
@@ -383,6 +410,9 @@ help:
 	@echo ... lib/pg_lib/exception/resultset_nullpointer_exception.obj
 	@echo ... lib/pg_lib/exception/resultset_nullpointer_exception.i
 	@echo ... lib/pg_lib/exception/resultset_nullpointer_exception.s
+	@echo ... lib/pg_lib/exception/sqlexecute_exception.obj
+	@echo ... lib/pg_lib/exception/sqlexecute_exception.i
+	@echo ... lib/pg_lib/exception/sqlexecute_exception.s
 	@echo ... lib/pg_lib/exception/statement_exception.obj
 	@echo ... lib/pg_lib/exception/statement_exception.i
 	@echo ... lib/pg_lib/exception/statement_exception.s

@@ -8,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/resultset_nullpointer_exception.cpp.obj"
   "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/statement_exception.cpp.obj"
   "CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj"
+  "CMakeFiles/Postgresql.dir/lib/pg_lib/exception/sqlexecute_exception.cpp.obj"
   "Postgresql.pdb"
   "Postgresql.exe"
   "Postgresql.exe.manifest"
