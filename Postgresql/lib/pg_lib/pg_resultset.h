@@ -9,13 +9,20 @@
 
 class pg_resultset {
 private:
-    const PGresult *result_set;
+    PGresult *result_set;
     int row_count;
     int column_count;
+    int cursor;
 public:
     pg_resultset(PGresult *res);
+    ~pg_resultset();
 
+    bool has_next();
+    int get_column_count();
+    int get_tuples_count();
+
+    char *get_value(int idx);
+    void close();
 };
-
 
 #endif //POSTGRESQL_PG_RESULTSET_H

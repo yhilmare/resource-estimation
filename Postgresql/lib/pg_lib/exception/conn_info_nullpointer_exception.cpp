@@ -8,6 +8,7 @@
 conn_info_nullpointer_exception::conn_info_nullpointer_exception(const char *connection_info) {
     std::cerr << "There is no connection information" << std::endl;
 }
+
 conn_info_nullpointer_exception::conn_info_nullpointer_exception() {
     std::cerr << "There is no connection information" << std::endl;
 }

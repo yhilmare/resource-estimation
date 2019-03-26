@@ -5,6 +5,8 @@
 #include <iterator>
 #include "lib/pg_lib/pg_connection.h"
 #include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
+#include "lib/pg_lib/pg_statement.h"
+#include "lib/pg_lib/pg_resultset.h"
 
 void postgresql_test(){
     using namespace std;
@@ -72,11 +74,30 @@ void regex_test(){
         cout << token_iter->str() << " - " << *token_iter << endl;
     }
 }
+
 int main(int arg_n, char *arg_v[]) {
     using namespace std;
-    postgresql_test();
+
+    regex re(R"pattern(\$[0-9]*)pattern");
+    std::string sql = "select l_orderkey,l_partkey,l_shipdate,l_comment from lineitem where l_shipdate = $1 $2 $56";
+    sregex_iterator iter(sql.begin(), sql.end(), re);
+    sregex_iterator end;
+    for(;iter != end; iter ++){
+        cout << iter->str() << endl;
+    }
+//    postgresql_test();
 //    try{
 //        pg_connection con("ilmare", "123456", "10.69.35.174", "TPCD", "5432", 10);
+//        pg_statement st = con.create_statement();
+//        pg_resultset result = st.execute_query(
+//                "select l_orderkey,l_partkey,l_shipdate,l_comment from lineitem where l_shipdate = date '1994-10-24' limit 5 offset 100");
+//        int column_count = result.get_column_count();
+//        while(result.has_next()){
+//            for (int i = 0; i < column_count; i ++){
+//                printf("%-15s", result.get_value(i));
+//            }
+//            cout << endl;
+//        }
 //    }catch(const exception &e){
 //        cout << e.what() << endl;
 //    }

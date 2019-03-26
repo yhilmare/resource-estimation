@@ -100,10 +100,22 @@
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/resultset_nullpointer_exception.h">
 			<Option target="Postgresql"/>
 		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/statement_exception.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/statement_exception.h">
+			<Option target="Postgresql"/>
+		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.cpp">
 			<Option target="Postgresql"/>
 		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.h">
 			<Option target="Postgresql"/>
 		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.cpp">

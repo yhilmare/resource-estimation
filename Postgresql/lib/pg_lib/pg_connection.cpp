@@ -66,7 +66,7 @@ pg_connection::~pg_connection() {
 }
 
 pg_statement pg_connection::create_statement() {
-    pg_statement statement = pg_statement();
+    pg_statement statement = pg_statement(this->pg_conn);
     return statement;
 }
 

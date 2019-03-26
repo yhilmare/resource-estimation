@@ -3,8 +3,10 @@
 //
 
 #include "resultset_nullpointer_exception.h"
+#include <iostream>
 
 resultset_nullpointer_exception::resultset_nullpointer_exception(const std::string &msg) {
+    std::cerr << msg << std::endl;
     this->err_msg = msg;
 }
 
