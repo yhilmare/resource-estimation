@@ -7,11 +7,14 @@
 
 #include <string>
 #include "date.h"
+#include <unordered_map>
 
 const std::string parseInt(int);
 
-const std::string get_pg_date_string(const PG_DATE::Date &);
+const std::string get_pg_date_string(const PG::Date &);
 
 const std::string get_pg_string(const char *);
+
+const std::unordered_map<std::string, std::string> &parse_properties_file(const std::string &);
 
 #endif //POSTGRESQL_GLOBAL_TOOLS_H

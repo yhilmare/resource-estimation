@@ -64,13 +64,18 @@ CMakeFiles/Postgresql.dir/lib/tools/date.cpp.obj: ../lib/tools/date.cpp
 CMakeFiles/Postgresql.dir/lib/tools/date.cpp.obj: ../lib/tools/date.h
 CMakeFiles/Postgresql.dir/lib/tools/date.cpp.obj: ../lib/tools/global_tools.h
 
+CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj: ../lib/tools/exceptions/file_exception.cpp
+CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj: ../lib/tools/exceptions/file_exception.h
+
 CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj: ../lib/tools/exceptions/file_exception.h
 CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj: ../lib/tools/global_tools.cpp
 CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj: ../lib/tools/global_tools.h
 
 CMakeFiles/Postgresql.dir/main.cpp.obj: C:/pgsql/include/libpq-fe.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: C:/pgsql/include/pg_config_ext.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: C:/pgsql/include/postgres_ext.h
+CMakeFiles/Postgresql.dir/main.cpp.obj: ../global_define.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../lib/pg_lib/exception/conn_info_nullpointer_exception.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../lib/pg_lib/pg_connection.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h

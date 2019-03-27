@@ -5,7 +5,7 @@
 #include "statement_exception.h"
 #include <iostream>
 
-statement_exception::statement_exception(const char *msg) {
+statement_exception::statement_exception(const char *msg): std::exception() {
     std::cerr << msg << std::endl;
     this->err_msg = msg;
 }

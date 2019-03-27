@@ -8,7 +8,7 @@
 #include <iostream>
 #include <iomanip>
 
-namespace PG_DATE{
+namespace PG{
     enum date_format{
         format_24_hours,
         format_12_hours

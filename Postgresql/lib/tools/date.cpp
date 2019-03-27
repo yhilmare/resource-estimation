@@ -8,7 +8,7 @@
 #include <iomanip>
 #include "global_tools.h"
 
-namespace PG_DATE {
+namespace PG {
     void Date::reset_time() {
         time_t time_stamp = time(NULL);
         this->million_seconds = time_stamp;

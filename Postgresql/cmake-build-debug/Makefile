@@ -392,6 +392,33 @@ lib/tools/date.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/date.cpp.s
 .PHONY : lib/tools/date.cpp.s
 
+lib/tools/exceptions/file_exception.obj: lib/tools/exceptions/file_exception.cpp.obj
+
+.PHONY : lib/tools/exceptions/file_exception.obj
+
+# target to build an object file
+lib/tools/exceptions/file_exception.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj
+.PHONY : lib/tools/exceptions/file_exception.cpp.obj
+
+lib/tools/exceptions/file_exception.i: lib/tools/exceptions/file_exception.cpp.i
+
+.PHONY : lib/tools/exceptions/file_exception.i
+
+# target to preprocess a source file
+lib/tools/exceptions/file_exception.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.i
+.PHONY : lib/tools/exceptions/file_exception.cpp.i
+
+lib/tools/exceptions/file_exception.s: lib/tools/exceptions/file_exception.cpp.s
+
+.PHONY : lib/tools/exceptions/file_exception.s
+
+# target to generate assembly for a file
+lib/tools/exceptions/file_exception.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.s
+.PHONY : lib/tools/exceptions/file_exception.cpp.s
+
 lib/tools/global_tools.obj: lib/tools/global_tools.cpp.obj
 
 .PHONY : lib/tools/global_tools.obj
@@ -485,6 +512,9 @@ help:
 	@echo ... lib/tools/date.obj
 	@echo ... lib/tools/date.i
 	@echo ... lib/tools/date.s
+	@echo ... lib/tools/exceptions/file_exception.obj
+	@echo ... lib/tools/exceptions/file_exception.i
+	@echo ... lib/tools/exceptions/file_exception.s
 	@echo ... lib/tools/global_tools.obj
 	@echo ... lib/tools/global_tools.i
 	@echo ... lib/tools/global_tools.s

@@ -5,7 +5,7 @@
 #include "sqlexecute_exception.h"
 #include <iostream>
 
-sqlexecute_exception::sqlexecute_exception(ExecStatusType type) {
+sqlexecute_exception::sqlexecute_exception(ExecStatusType type): std::exception() {
     this->type = type;
     using namespace std;
     switch (type){

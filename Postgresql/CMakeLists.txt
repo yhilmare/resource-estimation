@@ -15,6 +15,6 @@ link_directories(${PGSQL_LIB})
 add_executable(Postgresql main.cpp
         lib/pg_lib/pg_connection.cpp
         lib/pg_lib/exception/conn_info_nullpointer_exception.cpp
-        lib/pg_lib/exception/conn_fail_exception.cpp lib/pg_lib/pg_statement.cpp lib/pg_lib/pg_statement.h lib/pg_lib/pg_resultset.cpp lib/pg_lib/pg_resultset.h lib/pg_lib/exception/resultset_nullpointer_exception.cpp lib/pg_lib/exception/resultset_nullpointer_exception.h lib/pg_lib/exception/statement_exception.cpp lib/pg_lib/exception/statement_exception.h lib/pg_lib/pg_prepared_statement.cpp lib/pg_lib/pg_prepared_statement.h lib/pg_lib/exception/sqlexecute_exception.cpp lib/pg_lib/exception/sqlexecute_exception.h lib/tools/date.cpp lib/tools/date.h lib/tools/global_tools.cpp lib/tools/global_tools.h)
+        lib/pg_lib/exception/conn_fail_exception.cpp lib/pg_lib/pg_statement.cpp lib/pg_lib/pg_statement.h lib/pg_lib/pg_resultset.cpp lib/pg_lib/pg_resultset.h lib/pg_lib/exception/resultset_nullpointer_exception.cpp lib/pg_lib/exception/resultset_nullpointer_exception.h lib/pg_lib/exception/statement_exception.cpp lib/pg_lib/exception/statement_exception.h lib/pg_lib/pg_prepared_statement.cpp lib/pg_lib/pg_prepared_statement.h lib/pg_lib/exception/sqlexecute_exception.cpp lib/pg_lib/exception/sqlexecute_exception.h lib/tools/date.cpp lib/tools/date.h lib/tools/global_tools.cpp lib/tools/global_tools.h global_define.h lib/tools/exceptions/file_exception.cpp lib/tools/exceptions/file_exception.h)
 
 target_link_libraries(Postgresql libpq.dll)

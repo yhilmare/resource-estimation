@@ -18,6 +18,8 @@ C:/pgsql/include/postgres_ext.h
 pg_config_ext.h
 C:/pgsql/include/pg_config_ext.h
 
+F:/repos/Resource_estimation/Postgresql/global_define.h
+
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_info_nullpointer_exception.h
 exception
 -
@@ -67,6 +69,8 @@ string
 -
 date.h
 F:/repos/Resource_estimation/Postgresql/lib/tools/date.h
+unordered_map
+-
 
 F:/repos/Resource_estimation/Postgresql/main.cpp
 iostream
@@ -95,4 +99,10 @@ lib/tools/global_tools.h
 F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
 cstring
 -
+fstream
+-
+direct.h
+-
+global_define.h
+F:/repos/Resource_estimation/Postgresql/global_define.h
 

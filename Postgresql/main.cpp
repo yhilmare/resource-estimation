@@ -12,6 +12,10 @@
 #include "lib/tools/global_tools.h"
 #include <cstring>
 
+#include <fstream>
+#include <direct.h>
+#include "global_define.h"
+
 
 void regex_test(){
     using namespace std;
@@ -44,7 +48,7 @@ void query_test(){
         string sql = "select l_orderkey,l_partkey,l_shipdate,l_commitdate,l_receiptdate,l_comment from lineitem where l_shipdate=$1 limit $2 offset $3";
         parameter_type types[] = {date_type, int_type, int_type};
         pg_prepared_statement st = con.prepared_statement(sql, types);
-        PG_DATE::Date d(1994, 10, 24);
+        PG::Date d(1994, 10, 24);
         std::string tmp = get_pg_date_string(d);
         st.set_value(0, tmp.c_str());
         st.set_value(1, "10");
@@ -85,8 +89,17 @@ void update_test(){
     }
 }
 
+
+
 int main(int arg_n, char *arg_v[]) {
     using namespace std;
-    update_test();
+    try{
+        char buffer[1000];
+        getcwd(buffer, 1000);
+        std::string filepath = std::string(buffer) + R"(/config/)" + "pg_config.propertis";
+        parse_properties_file(filepath);
+    }catch(exception &e){
+        e.what();
+    }
     return 0;
 }

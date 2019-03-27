@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/global_define.h">
+			<Option target="Postgresql"/>
+		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/conn_fail_exception.cpp">
 			<Option target="Postgresql"/>
 		</Unit>
@@ -140,6 +143,12 @@
 			<Option target="Postgresql"/>
 		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/tools/date.h">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/tools/exceptions/file_exception.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/tools/exceptions/file_exception.h">
 			<Option target="Postgresql"/>
 		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.cpp">

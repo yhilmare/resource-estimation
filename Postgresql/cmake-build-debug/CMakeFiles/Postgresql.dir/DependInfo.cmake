@@ -14,6 +14,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/lib/tools/date.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/tools/date.cpp.obj"
+  "F:/repos/Resource_estimation/Postgresql/lib/tools/exceptions/file_exception.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/main.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj"
   )
