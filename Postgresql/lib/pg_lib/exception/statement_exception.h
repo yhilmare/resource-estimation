@@ -11,7 +11,7 @@ class statement_exception: public std::exception {
 private:
     const char *err_msg;
 public:
-    statement_exception(char *);
+    statement_exception(const char *);
 
     virtual const char *what() const noexcept override;
 

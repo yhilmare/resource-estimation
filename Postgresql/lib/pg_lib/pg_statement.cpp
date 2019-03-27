@@ -18,6 +18,7 @@ void pg_statement::execute_update(const std::string &sql) {
     this->sql = sql;
     PGresult *result_set = PQexec(this->conn, this->sql.c_str());
     this->verify_sql_executeresult(PQresultStatus(result_set));
+    PQclear(result_set);
 }
 
 pg_resultset pg_statement::execute_query(const std::string &sql) {

@@ -56,3 +56,16 @@ bool pg_resultset::has_next() {
     return false;
 }
 
+void pg_resultset::show_with_elegant_format() {
+    for (int i = 0; i < this->get_column_count(); i ++){
+        printf("%-15s", this->get_field(i).c_str());
+    }
+    std::cout << std::endl;
+    while(this->has_next()){
+        for (int i = 0; i < this->get_column_count(); i ++){
+            printf("%-15s", this->get_value(i));
+        }
+        std::cout << std::endl;
+    }
+}
+

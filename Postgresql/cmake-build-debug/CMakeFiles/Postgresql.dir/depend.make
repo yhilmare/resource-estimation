@@ -27,6 +27,7 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: C:/pgsql/include/pg_
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: C:/pgsql/include/postgres_ext.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/exception/conn_fail_exception.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/exception/conn_info_nullpointer_exception.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/exception/sqlexecute_exception.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/pg_connection.cpp
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/pg_connection.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h

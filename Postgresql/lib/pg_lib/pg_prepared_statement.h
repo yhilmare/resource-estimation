@@ -21,14 +21,15 @@ enum parameter_type{
 class pg_prepared_statement: public pg_statement {
 private:
     int parameters_count;
-    std::vector<char *> parameters;
+    std::vector<const char *> parameters;
     std::vector<std::string> param_type;
     std::string prepare_prefix;
     std::string prepared_name;
 public:
-    pg_prepared_statement(PGconn *conn, std::string &sql);
+    pg_prepared_statement(PGconn *conn, std::string &sql, parameter_type types[]);
+    ~pg_prepared_statement();
 
-    void set_value(char *parameter, int idx, parameter_type type);
+    void set_value(int idx, const char *parameter);
     void execute_update();
     pg_resultset execute_query();
 };

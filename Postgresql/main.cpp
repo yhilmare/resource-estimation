@@ -1,5 +1,4 @@
 #include <iostream>
-#include <libpq-fe.h>
 #include <regex>
 #include <vector>
 #include <iterator>
@@ -7,53 +6,10 @@
 #include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
 #include "lib/pg_lib/pg_statement.h"
 #include "lib/pg_lib/pg_resultset.h"
-#include <time.h>
 #include "lib/pg_lib/pg_prepared_statement.h"
+#include <exception>
 
-void postgresql_test(){
-    using namespace std;
-    const char *conn_info = "postgresql://ilmare@10.69.35.174:5432/tpcD?connect_timeout=10&password=123456";
-    const char *conInfo = "host=10.69.35.174 port=5432 dbname=TPCD connect_timeout=10 password=123456 user=ilmare";
-    PGconn *conn = PQconnectdb(conInfo);
-    try{
-        cout << PQparameterStatus(conn, "integer_datetimes") << endl;
-    }catch(const exception &e){
-        cout << e.what() << endl;
-    }
-    if (PQstatus(conn) != CONNECTION_OK){
-        cout << "Connection failed!" << endl;
-        PQfinish(conn);
-        exit(-1);
-    }
-    const char * pre = "prepare test(date) as select l_orderkey,l_partkey,l_shipdate,l_comment from lineitem where l_shipdate = $1 limit 5 offset 100;";
-    const char *sql = "execute test(date '1994-10-24');";
-    const char *sql1 = "deallocate prepare all;";
-//    const char *sql = "select l_orderkey,l_partkey,l_shipdate,l_comment from lineitem where l_shipdate = date '1994-10-23' limit 50 offset 100";
-    PQexec(conn, pre);
-    try{
-        PGresult *result_set = PQexec(conn, sql);
-        int column_count = PQnfields(result_set);
-        int row_count = PQntuples(result_set);
-        for (unsigned i = 0; i < column_count; i ++){
-            printf("%-15s", PQfname(result_set, i));
-        }
-        cout << endl;
-        for (unsigned i = 0; i < row_count; i ++){
-            for (unsigned j = 0; j < column_count; j ++){
-                printf("%-15s", PQgetvalue(result_set, i, j));
-            }
-            cout << endl;
-        }
-        PQexec(conn, sql1);
-        PQclear(result_set);
-        PQfinish(conn);
-    }catch (const exception &s){
-        std::cout << "err" << std::endl;
 
-        std::cout << s.what() << std::endl;
-    }
-
-}
 void regex_test(){
     using namespace std;
     regex pattern = regex(R"pattern(\w+(@)\w+\.com)pattern");
@@ -77,32 +33,76 @@ void regex_test(){
     }
 }
 
-int main(int arg_n, char *arg_v[]) {
+const char *parse(int num){
     using namespace std;
-//    postgresql_test();
+    vector<int> val;
+    while(true){
+        val.push_back(num % 10);
+        num /= 10;
+        if (!num){
+            break;
+        }
+    }
+    char *res = new char[val.size() + 1];
+    for (int i = 0; i < val.size(); i ++){
+        res[i] = val[val.size() - i - 1] + 48;
+    }
+    res[val.size()] = 0;
+    return res;
+}
+
+void query_test(){
+    using namespace std;
+    pg_connection con("postgresql://ilmare@10.69.35.174/TPCD?connect_timeout=10&password=123456");
+    cout << con << endl;
     try{
-        pg_connection con1("postgresql://ilmare@10.69.35.174/TPCD?connect_timeout=10&password=123456");
-        pg_connection con = con1;
-        std::string sql = "delete from nation where n_nationkey=$1";
-        pg_prepared_statement st = con.prepared_statement(sql);
-        st.set_value("25", 0, int_type);
-//        st.set_value("'CANADA'", 1, text_type);
-//        st.set_value("1", 2, int_type);
-//        st.set_value("'eas hang ironic, silent packages. slyly regular packages are furiously over the tithes. fluffily bold'", 3, text_type);
-        st.execute_update();
-//        pg_resultset result = st.execute_query();
-//        for (int i = 0; i < result.get_column_count(); i ++){
-//            printf("%-15s", result.get_field(i).c_str());
-//        }
-//        cout << endl;
-//        while(result.has_next()){
-//            for (int i = 0; i < result.get_column_count(); i ++){
-//                printf("%-15s", result.get_value(i));
-//            }
-//            cout << endl;
-//        }
+        con.set_auto_commit(false);
+        string sql = "select l_orderkey,l_partkey,l_shipdate,l_commitdate,l_receiptdate,l_comment from lineitem where l_shipdate=$1 limit $2 offset $3";
+        parameter_type types[] = {date_type, int_type, int_type};
+        pg_prepared_statement st = con.prepared_statement(sql, types);
+        st.set_value(0, "date '1994-10-24'");
+        st.set_value(1, "10");
+        st.set_value(2, "100");
+        pg_resultset result = st.execute_query();
+        con.commit();
+        result.show_with_elegant_format();
     }catch(const exception &e){
+        con.roll_back();
         cout << e.what() << endl;
     }
+}
+
+void update_test(){
+    using namespace std;
+    pg_connection con("postgresql://ilmare@10.69.35.174/TPCD?connect_timeout=10&password=123456");
+    try{
+        con.set_auto_commit(false);
+//        std::string sql = "delete from nation where n_nationkey=$1";
+//        parameter_type types[] = {int_type};
+        std::string sql = "insert into nation(n_nationkey,n_name,n_regionkey,n_comment) values($1,$2,$3,$4)";
+        parameter_type types[] = {int_type, text_type, int_type, text_type};
+        pg_prepared_statement st = con.prepared_statement(sql, types);
+        for(int i = 0; i < 10; i ++){
+            const char *s = parse(25 + i);
+            st.set_value(0, s);
+            st.set_value(1, "'CANADA'");
+            st.set_value(2, "0");
+            st.set_value(3, "'eas hang ironic, silent packages. slyly regular packages are furiously over the tithes. fluffily bold'");
+            st.execute_update();
+            delete []s;
+            if (i == 5){
+                throw exception();
+            }
+        }
+        con.commit();
+    }catch(const exception &e){
+        con.roll_back();
+        cout << e.what() << endl;
+    }
+}
+
+int main(int arg_n, char *arg_v[]) {
+    using namespace std;
+    query_test();
     return 0;
 }

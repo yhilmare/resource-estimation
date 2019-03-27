@@ -21,6 +21,7 @@ public:
     bool has_next();
     int get_column_count();
     int get_tuples_count();
+    void show_with_elegant_format();
 
     std::string get_field(int idx);
 

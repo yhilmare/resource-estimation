@@ -5,6 +5,7 @@
 #include "pg_connection.h"
 #include "exception/conn_info_nullpointer_exception.h"
 #include "exception/conn_fail_exception.h"
+#include "exception/sqlexecute_exception.h"
 #include <cstring>
 #include <string>
 #include <vector>
@@ -24,7 +25,7 @@ pg_connection::pg_connection(const pg_connection &obj) {
     }
 }
 
-pg_connection::pg_connection(char *connection_info) {
+pg_connection::pg_connection(const char *connection_info) {
     if (connection_info == NULL || !strlen(connection_info)){
         throw conn_info_nullpointer_exception();
     }
@@ -36,6 +37,13 @@ pg_connection::pg_connection(char *connection_info) {
         PQfinish(this->pg_conn);
         throw conn_fail_exception(this->connection_status);
     }
+}
+
+pg_connection::~pg_connection() {
+    PGresult *result = PQexec(this->pg_conn, "deallocate prepare all;");
+    PQclear(result);
+    delete [] this->conn_info;
+    this->close();
 }
 
 pg_connection::pg_connection(const char *user_name, const char *password,
@@ -76,6 +84,84 @@ pg_connection::pg_connection(const char *user_name, const char *password,
     std::cout << this->conn_info << std::endl;
 }
 
+pg_statement pg_connection::create_statement() {
+    pg_statement statement = pg_statement(this->pg_conn);
+    return statement;
+}
+
+void pg_connection::close() {
+    if (this->pg_conn){
+        PQfinish(this->pg_conn);
+    }
+}
+
+void pg_connection::set_auto_commit(bool flag) {
+    this->auto_commit = flag;
+    if (this->auto_commit){
+        return;
+    }
+    PGresult *result = PQexec(this->pg_conn, "BEGIN;");
+    ExecStatusType type = PQresultStatus(result);
+    switch (type){
+        case PGRES_EMPTY_QUERY:
+            throw sqlexecute_exception(type);
+        case PGRES_BAD_RESPONSE:
+            throw sqlexecute_exception(type);
+        case PGRES_NONFATAL_ERROR:
+            throw sqlexecute_exception(type);
+        case PGRES_FATAL_ERROR:
+            throw sqlexecute_exception(type);
+        default:
+            std::clog << "TRANSACTION BEGIN" << std::endl;
+            break;
+    }
+}
+
+void pg_connection::roll_back() {
+    if (!this->auto_commit){
+        PGresult *result = PQexec(this->pg_conn, "ROLLBACK;");
+        ExecStatusType type = PQresultStatus(result);
+        switch (type){
+            case PGRES_EMPTY_QUERY:
+                throw sqlexecute_exception(type);
+            case PGRES_BAD_RESPONSE:
+                throw sqlexecute_exception(type);
+            case PGRES_NONFATAL_ERROR:
+                throw sqlexecute_exception(type);
+            case PGRES_FATAL_ERROR:
+                throw sqlexecute_exception(type);
+            default:
+                std::clog << "TRANSACTION ROLLBACK" << std::endl;
+                break;
+        }
+    }
+}
+
+void pg_connection::commit() {
+    if (!this->auto_commit){
+        PGresult *result = PQexec(this->pg_conn, "COMMIT;");
+        ExecStatusType type = PQresultStatus(result);
+        switch (type){
+            case PGRES_EMPTY_QUERY:
+                throw sqlexecute_exception(type);
+            case PGRES_BAD_RESPONSE:
+                throw sqlexecute_exception(type);
+            case PGRES_NONFATAL_ERROR:
+                throw sqlexecute_exception(type);
+            case PGRES_FATAL_ERROR:
+                throw sqlexecute_exception(type);
+            default:
+                std::clog << "TRANSACTION COMMIT" << std::endl;
+                break;
+        }
+    }
+}
+
+pg_prepared_statement pg_connection::prepared_statement(std::string &sql, parameter_type types[]) {
+    pg_prepared_statement st = pg_prepared_statement(this->pg_conn, sql, types);
+    return st;
+}
+
 pg_connection& pg_connection::operator=(const pg_connection &obj) {
     if (this == &obj){
         return *this;
@@ -95,23 +181,7 @@ pg_connection& pg_connection::operator=(const pg_connection &obj) {
     return *this;
 }
 
-pg_connection::~pg_connection() {
-    delete [] this->conn_info;
-    this->close();
-}
-
-pg_statement pg_connection::create_statement() {
-    pg_statement statement = pg_statement(this->pg_conn);
-    return statement;
-}
-
-void pg_connection::close() {
-    if (this->pg_conn){
-        PQfinish(this->pg_conn);
-    }
-}
-
-pg_prepared_statement pg_connection::prepared_statement(std::string &sql) {
-    pg_prepared_statement st = pg_prepared_statement(this->pg_conn, sql);
-    return st;
+std::ostream &operator<<(std::ostream &os, const pg_connection &connection){
+    os << "pg_connection@" << (void *)&connection << ":" << connection.conn_info;
+    return os;
 }
