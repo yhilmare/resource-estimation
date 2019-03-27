@@ -365,6 +365,60 @@ lib/pg_lib/pg_statement.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.s
 .PHONY : lib/pg_lib/pg_statement.cpp.s
 
+lib/tools/date.obj: lib/tools/date.cpp.obj
+
+.PHONY : lib/tools/date.obj
+
+# target to build an object file
+lib/tools/date.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/date.cpp.obj
+.PHONY : lib/tools/date.cpp.obj
+
+lib/tools/date.i: lib/tools/date.cpp.i
+
+.PHONY : lib/tools/date.i
+
+# target to preprocess a source file
+lib/tools/date.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/date.cpp.i
+.PHONY : lib/tools/date.cpp.i
+
+lib/tools/date.s: lib/tools/date.cpp.s
+
+.PHONY : lib/tools/date.s
+
+# target to generate assembly for a file
+lib/tools/date.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/date.cpp.s
+.PHONY : lib/tools/date.cpp.s
+
+lib/tools/global_tools.obj: lib/tools/global_tools.cpp.obj
+
+.PHONY : lib/tools/global_tools.obj
+
+# target to build an object file
+lib/tools/global_tools.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj
+.PHONY : lib/tools/global_tools.cpp.obj
+
+lib/tools/global_tools.i: lib/tools/global_tools.cpp.i
+
+.PHONY : lib/tools/global_tools.i
+
+# target to preprocess a source file
+lib/tools/global_tools.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.i
+.PHONY : lib/tools/global_tools.cpp.i
+
+lib/tools/global_tools.s: lib/tools/global_tools.cpp.s
+
+.PHONY : lib/tools/global_tools.s
+
+# target to generate assembly for a file
+lib/tools/global_tools.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.s
+.PHONY : lib/tools/global_tools.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -428,6 +482,12 @@ help:
 	@echo ... lib/pg_lib/pg_statement.obj
 	@echo ... lib/pg_lib/pg_statement.i
 	@echo ... lib/pg_lib/pg_statement.s
+	@echo ... lib/tools/date.obj
+	@echo ... lib/tools/date.i
+	@echo ... lib/tools/date.s
+	@echo ... lib/tools/global_tools.obj
+	@echo ... lib/tools/global_tools.i
+	@echo ... lib/tools/global_tools.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
