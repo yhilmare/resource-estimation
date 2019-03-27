@@ -7,6 +7,7 @@
 #include <cstring>
 #include <fstream>
 #include "exceptions/file_exception.h"
+#include <iterator>
 
 const std::string parseInt(int num){
     using namespace std;
@@ -55,7 +56,8 @@ int first_index_of(char *str, char s){
     return -1;
 }
 
-const std::unordered_map<std::string, std::string> &parse_properties_file(const std::string &file_path){
+const std::unordered_map<std::string, std::string>
+        parse_properties_file(const std::string &file_path){
     using namespace std;
     ifstream input;
     input.open(file_path.c_str());
@@ -63,9 +65,30 @@ const std::unordered_map<std::string, std::string> &parse_properties_file(const 
         throw file_exception("file not found");
     }
     char buffer[1000];
+    unordered_map<string, string> map;
     while(input){
         input.getline(buffer, 1000);
-        cout << buffer << endl;
+        if (!strlen(buffer)){
+            continue;
+        }
+        int index = first_index_of(buffer, '=');
+        if (index == -1){
+            throw file_exception("file content error");
+        }
+        int tmp_length = strlen(buffer);
+        char key[index + 1];
+        char value[tmp_length - index];
+        for (int i = 0; i < tmp_length; i ++){
+            if(i < index){
+                key[i] = buffer[i];
+            }else if (i > index){
+                value[i - index - 1] = buffer[i];
+            }
+        }
+        key[index] = 0;
+        value[tmp_length - index - 1] = 0;
+        map.insert(pair<string, string>(string(key), string(value)));
     }
     input.close();
+    return map;
 }

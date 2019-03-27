@@ -11,14 +11,4 @@
 #define PG_TIMEOUT 10
 #define PG_USER ilmare
 
-namespace PG{
-    enum PROPERTY_ENUM{
-        HOST_NAME,
-        PASSWORD,
-        DATABASE,
-        TIMEOUT,
-        USERNAME
-    };
-}
-
 #endif //POSTGRESQL_GLOBAL_DEFINE_H

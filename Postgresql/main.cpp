@@ -89,17 +89,19 @@ void update_test(){
     }
 }
 
-
-
 int main(int arg_n, char *arg_v[]) {
     using namespace std;
     try{
         char buffer[1000];
         getcwd(buffer, 1000);
-        std::string filepath = std::string(buffer) + R"(/config/)" + "pg_config.propertis";
-        parse_properties_file(filepath);
+        std::string filepath = std::string(buffer) + R"(/config/)" + "pg_config.properties";
+        unordered_map<string, string> map = parse_properties_file(filepath);
+        for(unordered_map<string, string>::iterator iter = map.begin(); iter != map.end(); iter ++){
+            cout << (*iter).first << " " << (*iter).second << endl;
+        }
     }catch(exception &e){
         e.what();
     }
+    query_test();
     return 0;
 }
