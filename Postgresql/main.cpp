@@ -106,15 +106,16 @@ void *start_thread1(void *message){
 
 int main(int argn, char *argv[]) {
     using namespace std;
-
+    void **ptr;
     pthread_t t2;
     pthread_t t1;
     const char *msg1 = "Thing1";
     const char *msg2 = "Thing2";
     pthread_create(&t1, NULL, start_thread, (void *)msg1);
     pthread_create(&t2, NULL, start_thread1, (void *)msg2);
-    pthread_join(t1, NULL);
-    pthread_join(t2, NULL);
+    pthread_join(t1, ptr);
+    pthread_join(t2, ptr);
     query_test();
+    cout << *((char **)ptr) << endl;
     return 0;
 }
