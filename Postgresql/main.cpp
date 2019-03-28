@@ -1,7 +1,6 @@
 #include <iostream>
 #include <regex>
 #include <vector>
-#include <iterator>
 #include "lib/pg_lib/pg_connection.h"
 #include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
 #include "lib/pg_lib/pg_statement.h"
@@ -15,6 +14,7 @@
 #include <fstream>
 #include <direct.h>
 #include "global_define.h"
+#include <pthread.h>
 
 
 void regex_test(){
@@ -89,19 +89,32 @@ void update_test(){
     }
 }
 
-int main(int arg_n, char *arg_v[]) {
+void *start_thread(void *message){
     using namespace std;
-    try{
-        char buffer[1000];
-        getcwd(buffer, 1000);
-        std::string filepath = std::string(buffer) + R"(/config/)" + "pg_config.properties";
-        unordered_map<string, string> map = parse_properties_file(filepath);
-        for(unordered_map<string, string>::iterator iter = map.begin(); iter != map.end(); iter ++){
-            cout << (*iter).first << " " << (*iter).second << endl;
+    cout << (const char *)message << endl;
+    return message;
+}
+
+void *start_thread1(void *message){
+    for(int i = 0; i < 10000; i ++){
+        if (!(i % 1000)){
+            std::cout << (const char *)message << std::endl;
         }
-    }catch(exception &e){
-        e.what();
     }
+    return message;
+}
+
+int main(int argn, char *argv[]) {
+    using namespace std;
+
+    pthread_t t2;
+    pthread_t t1;
+    const char *msg1 = "Thing1";
+    const char *msg2 = "Thing2";
+    pthread_create(&t1, NULL, start_thread, (void *)msg1);
+    pthread_create(&t2, NULL, start_thread1, (void *)msg2);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
     query_test();
     return 0;
 }

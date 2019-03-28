@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-C:/pgsql/include/libpq-fe.h
+C:/pgsql/simple_include/libpq-fe.h
 stdio.h
 -
 postgres_ext.h
-C:/pgsql/include/postgres_ext.h
+C:/pgsql/simple_include/postgres_ext.h
 
-C:/pgsql/include/pg_config_ext.h
+C:/pgsql/simple_include/pg_config_ext.h
 
-C:/pgsql/include/postgres_ext.h
+C:/pgsql/simple_include/postgres_ext.h
 pg_config_ext.h
-C:/pgsql/include/pg_config_ext.h
+C:/pgsql/simple_include/pg_config_ext.h
 
 F:/repos/Resource_estimation/Postgresql/global_define.h
 
@@ -79,8 +79,6 @@ regex
 -
 vector
 -
-iterator
--
 lib/pg_lib/pg_connection.h
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
 lib/pg_lib/exception/conn_info_nullpointer_exception.h
@@ -105,4 +103,6 @@ direct.h
 -
 global_define.h
 F:/repos/Resource_estimation/Postgresql/global_define.h
+pthread.h
+-
 
