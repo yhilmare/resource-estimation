@@ -96,11 +96,9 @@ void *start_thread(void *message){
 }
 
 void *start_thread1(void *message){
-    for(int i = 0; i < 10000; i ++){
-        if (!(i % 1000)){
-            std::cout << (const char *)message << std::endl;
-        }
-    }
+    using namespace std;
+    for(int i = 0; i < 10000; i ++);
+    cout << (const char *)message << endl;
     return message;
 }
 
