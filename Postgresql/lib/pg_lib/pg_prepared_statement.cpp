@@ -10,6 +10,8 @@
 #include <iostream>
 #include "exception/sqlexecute_exception.h"
 
+std::default_random_engine e;
+
 pg_prepared_statement::pg_prepared_statement(PGconn *conn,
         std::string &sql, parameter_type types[]): pg_statement(conn) {
     int count = 0;
@@ -24,8 +26,7 @@ pg_prepared_statement::pg_prepared_statement(PGconn *conn,
     this->parameters_count = count;
     this->parameters = std::vector<const char *>(count);
     this->param_type = std::vector<std::string>(count);
-    srand((unsigned) time(NULL));
-    long current_time = time(NULL) + rand();
+    long current_time = e();
     std::vector<int> tmp;
     while(true){
         int tmp_idx = current_time % 10;

@@ -35,9 +35,9 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj
- C:/pgsql/include/libpq-fe.h
- C:/pgsql/include/pg_config_ext.h
- C:/pgsql/include/postgres_ext.h
+ C:/pgsql/simple_include/libpq-fe.h
+ C:/pgsql/simple_include/pg_config_ext.h
+ C:/pgsql/simple_include/postgres_ext.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/sqlexecute_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/statement_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.cpp
@@ -72,6 +72,9 @@ CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/tools/exceptions/file_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.cpp
  F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
+CMakeFiles/Postgresql.dir/load/data_load.cpp.obj
+ F:/repos/Resource_estimation/Postgresql/load/data_load.cpp
+ F:/repos/Resource_estimation/Postgresql/load/data_load.h
 CMakeFiles/Postgresql.dir/main.cpp.obj
  C:/pgsql/simple_include/libpq-fe.h
  C:/pgsql/simple_include/pg_config_ext.h
@@ -84,4 +87,5 @@ CMakeFiles/Postgresql.dir/main.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
  F:/repos/Resource_estimation/Postgresql/lib/tools/date.h
  F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
+ F:/repos/Resource_estimation/Postgresql/load/data_load.h
  F:/repos/Resource_estimation/Postgresql/main.cpp

@@ -1,20 +1,21 @@
 #include <iostream>
 #include <regex>
 #include <vector>
+#include <exception>
+#include <cstring>
+#include <fstream>
+#include <direct.h>
+#include <pthread.h>
+#include <random>
+#include "global_define.h"
 #include "lib/pg_lib/pg_connection.h"
 #include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
 #include "lib/pg_lib/pg_statement.h"
 #include "lib/pg_lib/pg_resultset.h"
 #include "lib/pg_lib/pg_prepared_statement.h"
-#include <exception>
 #include "lib/tools/date.h"
 #include "lib/tools/global_tools.h"
-#include <cstring>
-
-#include <fstream>
-#include <direct.h>
-#include "global_define.h"
-#include <pthread.h>
+#include "load/data_load.h"
 
 
 void regex_test(){
@@ -89,31 +90,8 @@ void update_test(){
     }
 }
 
-void *start_thread(void *message){
-    using namespace std;
-    cout << (const char *)message << endl;
-    return message;
-}
-
-void *start_thread1(void *message){
-    using namespace std;
-    for(int i = 0; i < 10000; i ++);
-    cout << (const char *)message << endl;
-    return message;
-}
-
 int main(int argn, char *argv[]) {
     using namespace std;
-    void **ptr;
-    pthread_t t2;
-    pthread_t t1;
-    const char *msg1 = "Thing1";
-    const char *msg2 = "Thing2";
-    pthread_create(&t1, NULL, start_thread, (void *)msg1);
-    pthread_create(&t2, NULL, start_thread1, (void *)msg2);
-    pthread_join(t1, ptr);
-    pthread_join(t2, ptr);
-    query_test();
-    cout << *((char **)ptr) << endl;
+
     return 0;
 }

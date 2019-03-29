@@ -446,6 +446,33 @@ lib/tools/global_tools.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.s
 .PHONY : lib/tools/global_tools.cpp.s
 
+load/data_load.obj: load/data_load.cpp.obj
+
+.PHONY : load/data_load.obj
+
+# target to build an object file
+load/data_load.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/load/data_load.cpp.obj
+.PHONY : load/data_load.cpp.obj
+
+load/data_load.i: load/data_load.cpp.i
+
+.PHONY : load/data_load.i
+
+# target to preprocess a source file
+load/data_load.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/load/data_load.cpp.i
+.PHONY : load/data_load.cpp.i
+
+load/data_load.s: load/data_load.cpp.s
+
+.PHONY : load/data_load.s
+
+# target to generate assembly for a file
+load/data_load.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/load/data_load.cpp.s
+.PHONY : load/data_load.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -518,6 +545,9 @@ help:
 	@echo ... lib/tools/global_tools.obj
 	@echo ... lib/tools/global_tools.i
 	@echo ... lib/tools/global_tools.s
+	@echo ... load/data_load.obj
+	@echo ... load/data_load.i
+	@echo ... load/data_load.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
