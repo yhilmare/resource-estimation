@@ -23,7 +23,7 @@ public:
             const char *host_name,
             const char *database,
             const char *port,
-            int connection_timeout);
+            int connection_timeout=10);
     pg_connection(const pg_connection &);
     ~pg_connection();
 

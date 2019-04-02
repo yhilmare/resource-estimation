@@ -81,7 +81,6 @@ pg_connection::pg_connection(const char *user_name, const char *password,
         PQfinish(this->pg_conn);
         throw conn_fail_exception(this->connection_status);
     }
-    std::cout << this->conn_info << std::endl;
 }
 
 pg_statement pg_connection::create_statement() {

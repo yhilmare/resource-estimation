@@ -5,6 +5,17 @@
 #ifndef POSTGRESQL_DATA_LOAD_H
 #define POSTGRESQL_DATA_LOAD_H
 
+#include <unordered_map>
 
+namespace RANDOM_GEN {
+    void make_address(char *w_street_1, char *w_street_2,
+                      char *w_city, char *w_state, char *w_zip);
+
+    int make_number_string(int x, int y, char str[]);
+
+    int make_alpha_string (int x, int y, char str[]);
+}
+
+void load_warehouse(std::unordered_map<std::string, std::string> &config, int max_num=1000);
 
 #endif //POSTGRESQL_DATA_LOAD_H

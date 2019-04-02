@@ -92,6 +92,9 @@ void update_test(){
 
 int main(int argn, char *argv[]) {
     using namespace std;
-
+    char buffer[1000];
+    getcwd(buffer, 1000);
+    unordered_map<string, string> map = parse_properties_file(string(buffer) + "/config/pg_config.properties");
+    load_warehouse(map, 10);
     return 0;
 }
