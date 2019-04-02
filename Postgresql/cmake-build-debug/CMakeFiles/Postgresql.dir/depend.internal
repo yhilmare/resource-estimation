@@ -52,9 +52,9 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.cpp
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj
- C:/pgsql/include/libpq-fe.h
- C:/pgsql/include/pg_config_ext.h
- C:/pgsql/include/postgres_ext.h
+ C:/pgsql/simple_include/libpq-fe.h
+ C:/pgsql/simple_include/pg_config_ext.h
+ C:/pgsql/simple_include/postgres_ext.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/sqlexecute_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/exception/statement_exception.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h

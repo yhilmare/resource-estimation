@@ -13,9 +13,11 @@ namespace RANDOM_GEN {
 
     int make_number_string(int x, int y, char str[]);
 
-    int make_alpha_string (int x, int y, char str[]);
+    int make_alpha_string(int x, int y, char str[]);
 }
 
 void load_warehouse(std::unordered_map<std::string, std::string> &config, int max_num=1000);
+
+void load_item(std::unordered_map<std::string, std::string> &, int);
 
 #endif //POSTGRESQL_DATA_LOAD_H

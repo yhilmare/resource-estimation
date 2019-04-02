@@ -91,6 +91,82 @@ namespace RANDOM_GEN {
     }
 }
 
+void load_item(std::unordered_map<std::string, std::string> &config, int max_num){
+    using namespace std;
+    string host = config["PG_HOST"];
+    string password = config["PG_PASSWORD"];
+    string timout = config["PG_TIMEOUT"];
+    string database = config["PG_DATABASE"];
+    string user = config["PG_USER"];
+    string port = config["PG_PORT"];
+    pg_connection con(user.c_str(), password.c_str(),
+            host.c_str(), database.c_str(), port.c_str());
+    try{
+        con.set_auto_commit(false);
+        parameter_type types[] = {int_type, int_type, text_type, numeric_type, text_type};
+        string sql = "insert into item(i_id,i_im_id,i_name,i_price,i_data) values($1,$2,$3,$4,$5)";
+        pg_prepared_statement st = con.prepared_statement(sql, types);
+        int i_id;
+        int i_im_id;
+        char i_name[25];
+        float i_price;
+        char i_data[51];
+        int idatasiz;
+        int orig[max_num + 1];
+        int pos;
+        std::uniform_int_distribution<int> d(0, max_num);
+        extern std::default_random_engine e;
+        for (int i = 0; i < max_num / 10; i++){
+            orig[i] = 0;
+        }
+        for (int i = 0; i < max_num / 10; i++) {
+            do {
+                pos = d(e);
+            } while (orig[pos]);
+            orig[pos] = 1;
+        }
+        std::uniform_int_distribution<int> d1(1, 10000);
+        std::uniform_int_distribution<int> d2(100, 10000);
+
+        for (i_id = 1; i_id <= max_num; i_id++) {
+            i_im_id = d1(e);
+            i_name[RANDOM_GEN::make_alpha_string(14, 24, i_name)] = 0;
+            i_price = (d2(e)) / 100.0;
+            idatasiz = RANDOM_GEN::make_alpha_string(26, 50, i_data);
+            i_data[idatasiz] = 0;
+            if (orig[i_id]) {
+                std::uniform_int_distribution<int> d2(0, idatasiz - 8);
+                pos = d2(e);
+                i_data[pos] = 'o';
+                i_data[pos + 1] = 'r';
+                i_data[pos + 2] = 'i';
+                i_data[pos + 3] = 'g';
+                i_data[pos + 4] = 'i';
+                i_data[pos + 5] = 'n';
+                i_data[pos + 6] = 'a';
+                i_data[pos + 7] = 'l';
+            }
+            string i_id_s = parseInt(i_id);
+            st.set_value(0, i_id_s.c_str());
+            string i_im_id_s = parseInt(i_im_id);
+            st.set_value(1, i_im_id_s.c_str());
+            string i_name_s = get_pg_string(i_name);
+            st.set_value(2, i_name_s.c_str());
+            char i_price_s[20];
+            sprintf(i_price_s, "%.2f", i_price);
+            st.set_value(3, i_price_s);
+            string i_data_s = get_pg_string(i_data);
+            st.set_value(4, i_data_s.c_str());
+            st.execute_update();
+//            std::cout << i_id << "|" << i_im_id << "|" << i_name << "|" << i_price << "|" << i_data << std::endl;
+        }
+        con.commit();
+    }catch(exception &e){
+        cout << e.what() << endl;
+        con.roll_back();
+    }
+}
+
 void load_warehouse(std::unordered_map<std::string, std::string> &config,
         int max_num){
     using namespace std;
