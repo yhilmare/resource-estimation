@@ -34,7 +34,6 @@ namespace PG {
     }
 
     Date::Date() {
-        std::cout << "Hello,world" << std::endl;
         this->reset_time();
     }
 

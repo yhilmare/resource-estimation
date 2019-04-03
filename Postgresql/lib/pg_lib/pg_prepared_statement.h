@@ -9,6 +9,7 @@
 #include <libpq-fe.h>
 #include <vector>
 #include "pg_resultset.h"
+#include "../tools/date.h"
 
 enum parameter_type{
     date_type,
@@ -32,6 +33,7 @@ public:
     void set_value(int idx, const char *parameter);
     void set_int(int idx, int parameter);
     void set_float(int idx, float parameter);
+    void set_date(int idx, PG::Date parameter);
     void execute_update();
     pg_resultset execute_query();
 };

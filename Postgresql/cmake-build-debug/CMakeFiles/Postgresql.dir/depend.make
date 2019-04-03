@@ -33,6 +33,7 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/pg_con
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj: ../lib/tools/date.h
 
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
@@ -77,6 +78,7 @@ CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj: ../lib/tools/global_to
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
+CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: ../global_define.h
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: ../lib/pg_lib/pg_connection.h
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: ../lib/pg_lib/pg_resultset.h

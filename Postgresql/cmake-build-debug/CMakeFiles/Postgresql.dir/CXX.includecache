@@ -18,6 +18,8 @@ C:/pgsql/simple_include/postgres_ext.h
 pg_config_ext.h
 C:/pgsql/simple_include/pg_config_ext.h
 
+F:/repos/Resource_estimation/Postgresql/global_define.h
+
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
 libpq-fe.h
 -
@@ -37,6 +39,8 @@ vector
 -
 pg_resultset.h
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
+../tools/date.h
+F:/repos/Resource_estimation/Postgresql/lib/tools/date.h
 
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
 libpq-fe.h
@@ -83,6 +87,8 @@ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
 F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.h
 ../lib/tools/global_tools.h
 F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
+../global_define.h
+F:/repos/Resource_estimation/Postgresql/global_define.h
 
 F:/repos/Resource_estimation/Postgresql/load/data_load.h
 unordered_map

@@ -5,7 +5,6 @@
 #include "pg_prepared_statement.h"
 #include "exception/statement_exception.h"
 #include <regex>
-#include <time.h>
 #include <random>
 #include <iostream>
 #include "exception/sqlexecute_exception.h"
@@ -103,6 +102,17 @@ void pg_prepared_statement::set_float(int idx, float parameter) {
     char *tmp = new char[strlen(buffer) + 1];
     strcpy(tmp, buffer);
     tmp[strlen(buffer)] = 0;
+    this->parameters[idx] = tmp;
+}
+
+void pg_prepared_statement::set_date(int idx, PG::Date parameter) {
+    if (idx >= this->parameters_count){
+        throw statement_exception("The idx is bigger than the biggest parameter count");
+    }
+    std::string param = get_pg_date_string(parameter);
+    char *tmp = new char[strlen(param.c_str()) + 1];
+    strcpy(tmp, param.c_str());
+    tmp[strlen(param.c_str())] = 0;
     this->parameters[idx] = tmp;
 }
 

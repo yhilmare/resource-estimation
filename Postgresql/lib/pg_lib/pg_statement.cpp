@@ -44,7 +44,6 @@ void pg_statement::verify_sql_executeresult(PGresult *res) {
             std::cerr << PQresultErrorMessage(res) << std::endl;
             throw sqlexecute_exception(type);
         default:
-            std::clog << "Query/Update OK" << std::endl;
             break;
     }
 }

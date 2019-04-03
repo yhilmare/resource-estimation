@@ -14,6 +14,10 @@ namespace RANDOM_GEN {
     int make_number_string(int x, int y, char str[]);
 
     int make_alpha_string(int x, int y, char str[]);
+
+    void Lastname(int num, char *name);
+
+    int NURand (unsigned A, unsigned x, unsigned y);
 }
 
 void load_warehouse(std::unordered_map<std::string, std::string> &config, int max_num=1000);

@@ -95,6 +95,7 @@ int main(int argn, char *argv[]) {
     getcwd(buffer, 1000);
     unordered_map<string, string>
             map = parse_properties_file(string(buffer) + "/config/pg_config.properties");
+    load_item(map, 100000);
     load_warehouse(map, 10);
     return 0;
 }
