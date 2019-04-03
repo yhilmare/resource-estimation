@@ -99,10 +99,9 @@ void load_item(std::unordered_map<std::string, std::string> &config, int max_num
     string database = config["PG_DATABASE"];
     string user = config["PG_USER"];
     string port = config["PG_PORT"];
-    pg_connection con(user.c_str(), password.c_str(),
-            host.c_str(), database.c_str(), port.c_str());
     try{
-        con.set_auto_commit(false);
+        pg_connection con(user.c_str(), password.c_str(),
+                          host.c_str(), database.c_str(), port.c_str());
         parameter_type types[] = {int_type, int_type, text_type, numeric_type, text_type};
         string sql = "insert into item(i_id,i_im_id,i_name,i_price,i_data) values($1,$2,$3,$4,$5)";
         pg_prepared_statement st = con.prepared_statement(sql, types);
@@ -146,27 +145,20 @@ void load_item(std::unordered_map<std::string, std::string> &config, int max_num
                 i_data[pos + 6] = 'a';
                 i_data[pos + 7] = 'l';
             }
-            string i_id_s = parseInt(i_id);
-            st.set_value(0, i_id_s.c_str());
-            string i_im_id_s = parseInt(i_im_id);
-            st.set_value(1, i_im_id_s.c_str());
-            string i_name_s = get_pg_string(i_name);
-            st.set_value(2, i_name_s.c_str());
-            char i_price_s[20];
-            sprintf(i_price_s, "%.2f", i_price);
-            st.set_value(3, i_price_s);
-            string i_data_s = get_pg_string(i_data);
-            st.set_value(4, i_data_s.c_str());
+            st.set_int(0, i_id);
+            st.set_int(1, i_im_id);
+            st.set_value(2, i_name);
+            st.set_float(3, i_price);
+            st.set_value(4, i_data);
             st.execute_update();
-//            std::cout << i_id << "|" << i_im_id << "|" << i_name << "|" << i_price << "|" << i_data << std::endl;
         }
-        con.commit();
     }catch(exception &e){
         cout << e.what() << endl;
-        con.roll_back();
     }
 }
-
+void load_stock(int w_id,
+                pg_connection &con, int max_num);
+void load_district(int w_id, pg_connection &con, int DIST_PER_WARE);
 void load_warehouse(std::unordered_map<std::string, std::string> &config,
         int max_num){
     using namespace std;
@@ -176,9 +168,9 @@ void load_warehouse(std::unordered_map<std::string, std::string> &config,
     string database = config["PG_DATABASE"];
     string user = config["PG_USER"];
     string port = config["PG_PORT"];
-    pg_connection con(user.c_str(), password.c_str(), host.c_str(), database.c_str(), port.c_str());
     try{
-        con.set_auto_commit(false);
+        pg_connection con(user.c_str(), password.c_str(),
+                host.c_str(), database.c_str(), port.c_str());
         parameter_type types[] = {int_type, text_type, text_type, text_type,
                                   text_type, text_type, text_type, numeric_type,
                                   numeric_type};
@@ -195,34 +187,166 @@ void load_warehouse(std::unordered_map<std::string, std::string> &config,
         for (int i = 0; i < max_num; i ++){
             RANDOM_GEN::make_address(w_street_1, w_street_2, w_city, w_state, w_zip);
             w_name[RANDOM_GEN::make_alpha_string(6, 10, w_name)] = 0;
-            char w_tax_s[100];
-            sprintf(w_tax_s, "%.5f", d(e) / 100.0);
-            char w_ytd_s[100];
-            sprintf(w_ytd_s, "%.2f", 30000.0);
-            string w_id_s = parseInt(i);
-            st.set_value(0, w_id_s.c_str());
-            string w_name_s = get_pg_string(w_name);
-            st.set_value(1, w_name_s.c_str());
-            string w_street_1_s = get_pg_string(w_street_1);
-            st.set_value(2, w_street_1_s.c_str());
-            string w_street_2_s = get_pg_string(w_street_2);
-            st.set_value(3, w_street_2_s.c_str());
-            string w_city_s = get_pg_string(w_city);
-            st.set_value(4, w_city_s.c_str());
-            string w_state_s = get_pg_string(w_state);
-            st.set_value(5, w_state_s.c_str());
-            string w_zip_s = get_pg_string(w_zip);
-            st.set_value(6, w_zip_s.c_str());
-            st.set_value(7, w_tax_s);
-            st.set_value(8, w_ytd_s);
+            st.set_int(0, i);
+            st.set_value(1, w_name);
+            st.set_value(2, w_street_1);
+            st.set_value(3, w_street_2);
+            st.set_value(4, w_city);
+            st.set_value(5, w_state);
+            st.set_value(6, w_zip);
+            st.set_float(7, d(e) / 100.0);
+            st.set_float(8, 30000.0);
             st.execute_update();
-            cout << w_id_s.c_str() << "|" << w_name_s.c_str() << "|" << w_street_1_s.c_str()
-                 << "|" << w_street_2_s.c_str() << "|" << w_city_s.c_str() << "|" << w_state_s.c_str() << "|"
-                 << w_zip_s.c_str() << "|" << w_tax_s << "|" << w_ytd_s << endl;
+            load_stock(i, con, 1000);
+            load_district(i, con, 1000);
         }
-        con.commit();
     }catch (exception &e){
         cout << e.what() << endl;
-        con.roll_back();
+    }
+}
+
+void load_district(int w_id, pg_connection &con, int DIST_PER_WARE){
+    try{
+        int d_id;
+        int d_w_id;
+
+        char d_name[11];
+        char d_street_1[21];
+        char d_street_2[21];
+        char d_city[21];
+        char d_state[3];
+        char d_zip[10];
+
+        float d_tax;
+        float d_ytd;
+        int d_next_o_id;
+
+        d_w_id = w_id;
+        d_ytd = 30000.0;
+        d_next_o_id = 3001L;
+        extern std::default_random_engine e;
+        std::uniform_real_distribution<float> d(10, 20);
+
+        parameter_type types[] = {int_type, int_type, text_type, text_type,
+                                  text_type, text_type, text_type, text_type,
+                                  numeric_type, numeric_type, int_type};
+        std::string sql = "insert into district(d_id,d_w_id,d_name,d_street_1,d_street_2,d_city,d_state,d_zip,d_tax,d_ytd,d_next_o_id) "
+                          "values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)";
+        pg_prepared_statement st = con.prepared_statement(sql, types);
+        for (d_id = 1; d_id <= DIST_PER_WARE; d_id++) {
+
+            d_name[RANDOM_GEN::make_alpha_string(6L, 10L, d_name)] = 0;
+            RANDOM_GEN::make_address(d_street_1, d_street_2, d_city, d_state, d_zip);
+
+            d_tax = d(e) / 100.0;
+            st.set_int(0, d_id);
+            st.set_int(1, d_w_id);
+            st.set_value(2, d_name);
+            st.set_value(3, d_street_1);
+            st.set_value(4, d_street_2);
+            st.set_value(5, d_city);
+            st.set_value(6, d_state);
+            st.set_value(7, d_zip);
+            st.set_float(8, d_tax);
+            st.set_float(9, d_ytd);
+            st.set_int(10, d_next_o_id);
+            st.execute_update();
+        }
+    }catch(std::exception &e){
+        std::cout << e.what() << std::endl;
+    }
+}
+
+void load_stock(int w_id,
+        pg_connection &con, int max_num){
+    try{
+        int s_i_id;
+        int s_w_id;
+        int s_quantity;
+
+        char s_dist_01[25];
+        char s_dist_02[25];
+        char s_dist_03[25];
+        char s_dist_04[25];
+        char s_dist_05[25];
+        char s_dist_06[25];
+        char s_dist_07[25];
+        char s_dist_08[25];
+        char s_dist_09[25];
+        char s_dist_10[25];
+        char s_data[51];
+
+        int sdatasiz;
+        int orig[max_num + 1];
+        int pos;
+
+        s_w_id = w_id;
+
+        for (int i = 0; i < max_num / 10; i++){
+            orig[i] = 0;
+        }
+        extern std::default_random_engine e;
+        std::uniform_int_distribution<int> d(0, max_num);
+        for (int i = 0; i < max_num / 10; i++) {
+            do {
+                pos = d(e);
+            } while (orig[pos]);
+            orig[pos] = 1;
+        }
+        std::uniform_int_distribution<int> d1(10, 100);
+        parameter_type types[] = {int_type, int_type, int_type, text_type,
+                                  text_type, text_type, text_type, text_type,
+                                  text_type, text_type, text_type, text_type,
+                                  text_type,text_type};
+        std::string sql = "insert into stock(s_i_id,s_w_id,s_quantity,s_dist_01,"
+                          "s_dist_02,s_dist_03,s_dist_04,s_dist_05,s_dist_06,s_dist_07,"
+                          "s_dist_08,s_dist_09,s_dist_10,s_data) "
+                          "values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)";
+        pg_prepared_statement st = con.prepared_statement(sql, types);
+        for (s_i_id = 1; s_i_id <= max_num; s_i_id++) {
+            s_quantity = d1(e);
+            s_dist_01[RANDOM_GEN::make_alpha_string(24, 24, s_dist_01)] = 0;
+            s_dist_02[RANDOM_GEN::make_alpha_string(24, 24, s_dist_02)] = 0;
+            s_dist_03[RANDOM_GEN::make_alpha_string(24, 24, s_dist_03)] = 0;
+            s_dist_04[RANDOM_GEN::make_alpha_string(24, 24, s_dist_04)] = 0;
+            s_dist_05[RANDOM_GEN::make_alpha_string(24, 24, s_dist_05)] = 0;
+            s_dist_06[RANDOM_GEN::make_alpha_string(24, 24, s_dist_06)] = 0;
+            s_dist_07[RANDOM_GEN::make_alpha_string(24, 24, s_dist_07)] = 0;
+            s_dist_08[RANDOM_GEN::make_alpha_string(24, 24, s_dist_08)] = 0;
+            s_dist_09[RANDOM_GEN::make_alpha_string(24, 24, s_dist_09)] = 0;
+            s_dist_10[RANDOM_GEN::make_alpha_string(24, 24, s_dist_10)] = 0;
+            sdatasiz = RANDOM_GEN::make_alpha_string(26, 50, s_data);
+            s_data[sdatasiz] = 0;
+
+            if (orig[s_i_id]) {
+                std::uniform_int_distribution<int> d2(0, sdatasiz - 8);
+                pos = d2(e);
+                s_data[pos] = 'o';
+                s_data[pos + 1] = 'r';
+                s_data[pos + 2] = 'i';
+                s_data[pos + 3] = 'g';
+                s_data[pos + 4] = 'i';
+                s_data[pos + 5] = 'n';
+                s_data[pos + 6] = 'a';
+                s_data[pos + 7] = 'l';
+            }
+            st.set_int(0, s_i_id);
+            st.set_int(1, s_w_id);
+            st.set_int(2, s_quantity);
+            st.set_value(3, s_dist_01);
+            st.set_value(4, s_dist_02);
+            st.set_value(5, s_dist_03);
+            st.set_value(6, s_dist_04);
+            st.set_value(7, s_dist_05);
+            st.set_value(8, s_dist_06);
+            st.set_value(9, s_dist_07);
+            st.set_value(10, s_dist_08);
+            st.set_value(11, s_dist_09);
+            st.set_value(12, s_dist_10);
+            st.set_value(13, s_data);
+            st.execute_update();
+        }
+    }catch (std::exception &e){
+        std::cout << e.what() << std::endl;
     }
 }

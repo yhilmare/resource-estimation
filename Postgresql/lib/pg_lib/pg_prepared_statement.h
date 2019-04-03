@@ -30,6 +30,8 @@ public:
     ~pg_prepared_statement();
 
     void set_value(int idx, const char *parameter);
+    void set_int(int idx, int parameter);
+    void set_float(int idx, float parameter);
     void execute_update();
     pg_resultset execute_query();
 };

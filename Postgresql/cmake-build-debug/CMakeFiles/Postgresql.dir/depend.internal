@@ -44,6 +44,8 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
+ F:/repos/Resource_estimation/Postgresql/lib/tools/date.h
+ F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj
  C:/pgsql/include/libpq-fe.h
  C:/pgsql/include/pg_config_ext.h

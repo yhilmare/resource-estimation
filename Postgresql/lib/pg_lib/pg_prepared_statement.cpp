@@ -9,6 +9,8 @@
 #include <random>
 #include <iostream>
 #include "exception/sqlexecute_exception.h"
+#include "../tools/global_tools.h"
+#include <cstring>
 
 std::default_random_engine e;
 
@@ -81,11 +83,38 @@ pg_prepared_statement::pg_prepared_statement(PGconn *conn,
     PQclear(result);
 }
 
+void pg_prepared_statement::set_int(int idx, int parameter) {
+    if (idx >= this->parameters_count){
+        throw statement_exception("The idx is bigger than the biggest parameter count");
+    }
+    std::string param = parseInt(parameter);
+    char *tmp = new char[strlen(param.c_str()) + 1];
+    strcpy(tmp, param.c_str());
+    tmp[strlen(param.c_str())] = 0;
+    this->parameters[idx] = tmp;
+}
+
+void pg_prepared_statement::set_float(int idx, float parameter) {
+    if (idx >= this->parameters_count){
+        throw statement_exception("The idx is bigger than the biggest parameter count");
+    }
+    char buffer[100];
+    sprintf(buffer, "%.5f", parameter);
+    char *tmp = new char[strlen(buffer) + 1];
+    strcpy(tmp, buffer);
+    tmp[strlen(buffer)] = 0;
+    this->parameters[idx] = tmp;
+}
+
 void pg_prepared_statement::set_value(int idx, const char *parameter) {
     if (idx >= this->parameters_count){
         throw statement_exception("The idx is bigger than the biggest parameter count");
     }
-    this->parameters[idx] = parameter;
+    std::string param = get_pg_string(parameter);
+    char *tmp = new char[strlen(param.c_str()) + 1];
+    strcpy(tmp, param.c_str());
+    tmp[strlen(param.c_str())] = 0;
+    this->parameters[idx] = tmp;
 }
 
 void pg_prepared_statement::execute_update() {
@@ -103,8 +132,13 @@ void pg_prepared_statement::execute_update() {
     }
     execute += std::string(");");
     PGresult *res = PQexec(this->conn, execute.c_str());
-    this->verify_sql_executeresult(PQresultStatus(res));
+    this->verify_sql_executeresult(res);
     PQclear(res);
+    for (int i = 0; i < this->parameters.size(); i ++){
+        if (this->parameters[i]){
+            delete []this->parameters[i];
+        }
+    }
 }
 
 pg_resultset pg_prepared_statement::execute_query() {
@@ -122,7 +156,12 @@ pg_resultset pg_prepared_statement::execute_query() {
     }
     execute += std::string(");");
     PGresult *result_set = PQexec(this->conn, execute.c_str());
-    this->verify_sql_executeresult(PQresultStatus(result_set));
+    this->verify_sql_executeresult(result_set);
+    for (int i = 0; i < this->parameters.size(); i ++){
+        if (this->parameters[i]){
+            delete []this->parameters[i];
+        }
+    }
     return pg_resultset(result_set);
 }
 
@@ -130,6 +169,11 @@ pg_prepared_statement::~pg_prepared_statement() {
     std::string execute = std::string("deallocate prepare ") + this->prepared_name + std::string(";");
     PGresult *result = PQexec(this->conn, execute.c_str());
     PQclear(result);
+    for (int i = 0; i < this->parameters.size(); i ++){
+        if (this->parameters[i]){
+            delete []this->parameters[i];
+        }
+    }
 }
 
 

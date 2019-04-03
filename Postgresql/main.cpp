@@ -74,8 +74,7 @@ void update_test(){
 //        parameter_type types[] = {int_type, text_type, int_type, text_type};
         pg_prepared_statement st = con.prepared_statement(sql, types);
         for(int i = 0; i < 10; i ++){
-            string s = parseInt(25 + i);
-            st.set_value(0, s.c_str());
+            st.set_int(0, i);
 //            std::string tmp = get_pg_string("CANADA");
 //            st.set_value(1, tmp.c_str());
 //            st.set_value(2, "0");
@@ -94,7 +93,8 @@ int main(int argn, char *argv[]) {
     using namespace std;
     char buffer[1000];
     getcwd(buffer, 1000);
-    unordered_map<string, string> map = parse_properties_file(string(buffer) + "/config/pg_config.properties");
-    load_item(map, 100000);
+    unordered_map<string, string>
+            map = parse_properties_file(string(buffer) + "/config/pg_config.properties");
+    load_warehouse(map, 10);
     return 0;
 }
