@@ -78,6 +78,7 @@ pg_prepared_statement::pg_prepared_statement(PGconn *conn,
         }
     }
     this->prepare_prefix += (std::string(") as ") + this->sql);
+//    std::cout << this->prepare_prefix << std::endl;
     PGresult *result = PQexec(this->conn, this->prepare_prefix.c_str());
     PQclear(result);
 }
@@ -141,6 +142,7 @@ void pg_prepared_statement::execute_update() {
         }
     }
     execute += std::string(");");
+//    std::cout << execute << std::endl;
     PGresult *res = PQexec(this->conn, execute.c_str());
     this->verify_sql_executeresult(res);
     PQclear(res);

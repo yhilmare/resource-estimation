@@ -130,9 +130,9 @@ namespace RANDOM_GEN {
     }
 }
 
-void load_item(std::unordered_map<std::string, std::string> &config, int max_num){
+void load_item(std::unordered_map<std::string, std::string> &config){
     using namespace std;
-    clog << "Loading Table: item, Max Item: " << max_num << endl;
+    clog << "Loading Table: item, Max Item: " << STOCK_PER_WAREHOUSE << endl;
     string host = config["PG_HOST"];
     string password = config["PG_PASSWORD"];
     string timout = config["PG_TIMEOUT"];
@@ -152,14 +152,14 @@ void load_item(std::unordered_map<std::string, std::string> &config, int max_num
         float i_price;
         char i_data[51];
         int idatasiz;
-        int orig[max_num + 1];
+        int orig[STOCK_PER_WAREHOUSE + 1];
         int pos;
-        std::uniform_int_distribution<int> d(0, max_num);
+        std::uniform_int_distribution<int> d(0, STOCK_PER_WAREHOUSE);
         extern std::default_random_engine e;
-        for (int i = 0; i < max_num / 10; i++){
+        for (int i = 0; i < STOCK_PER_WAREHOUSE / 10; i++){
             orig[i] = 0;
         }
-        for (int i = 0; i < max_num / 10; i++) {
+        for (int i = 0; i < STOCK_PER_WAREHOUSE / 10; i++) {
             do {
                 pos = d(e);
             } while (orig[pos]);
@@ -168,7 +168,7 @@ void load_item(std::unordered_map<std::string, std::string> &config, int max_num
         std::uniform_int_distribution<int> d1(1, 10000);
         std::uniform_int_distribution<int> d2(100, 10000);
 
-        for (i_id = 1; i_id <= max_num; i_id++) {
+        for (i_id = 1; i_id <= STOCK_PER_WAREHOUSE; i_id++) {
             i_im_id = d1(e);
             i_name[RANDOM_GEN::make_alpha_string(14, 24, i_name)] = 0;
             i_price = (d2(e)) / 100.0;
@@ -231,7 +231,7 @@ void load_warehouse(std::unordered_map<std::string, std::string> &config,
         char w_city[21];
         char w_state[3];
         char w_zip[10];
-        for (int i = 0; i < max_num; i ++){
+        for (int i = 1; i <= max_num; i ++){
             RANDOM_GEN::make_address(w_street_1, w_street_2, w_city, w_state, w_zip);
             w_name[RANDOM_GEN::make_alpha_string(6, 10, w_name)] = 0;
             st.set_int(0, i);
@@ -254,6 +254,7 @@ void load_warehouse(std::unordered_map<std::string, std::string> &config,
 
 void load_customer(int w_id, int d_id,
                    pg_connection &con, int CUST_PER_DIST);
+void load_order(int w_id, int d_id, pg_connection &con, int ORD_PER_DIST);
 
 void load_district(int w_id, pg_connection &con, int DIST_PER_WARE){
     std::clog << "--> Loading Table: district, Max Item: " << DIST_PER_WARE << std::endl;
@@ -303,6 +304,7 @@ void load_district(int w_id, pg_connection &con, int DIST_PER_WARE){
             st.set_int(10, d_next_o_id);
             st.execute_update();
             load_customer(w_id, d_id, con, CUSTOMER_PER_DISTRICT);
+            load_order(w_id, d_id, con, ORDER_PER_DISTRICT);
         }
     }catch(std::exception &e){
         std::cout << e.what() << std::endl;
@@ -310,204 +312,126 @@ void load_district(int w_id, pg_connection &con, int DIST_PER_WARE){
 }
 
 void load_order(int w_id, int d_id, pg_connection &con, int ORD_PER_DIST){
-    int o_id;
-    int o_c_id;
-    int o_d_id;
-    int o_w_id;
-    int o_carrier_id;
-    int o_ol_cnt;
-    int ol;
-    int ol_i_id;
-    int ol_supply_w_id;
-    int ol_quantity;
-    float ol_amount;
-    char ol_dist_info[25];
-    float i_price;
-    float c_discount;
-    float  tmp_float;
+    std::clog << "-->--> Loading Table: order, Max Item: " << ORD_PER_DIST << std::endl;
+    std::clog << "-->--> Loading Table: new_order, Max Item: " << ORD_PER_DIST << std::endl;
+    std::clog << "-->--> Loading Table: order_line, Max Item: " << ORD_PER_DIST << std::endl;
+    try{
+        int o_id;
+        int o_c_id;
+        int o_d_id;
+        int o_w_id;
+        int o_carrier_id;
+        int o_ol_cnt;
+        int ol;
+        int ol_i_id;
+        int ol_supply_w_id;
+        int ol_quantity;
+        float ol_amount;
+        char ol_dist_info[25];
+        float  tmp_float;
 
-    o_d_id = d_id;
-    o_w_id = w_id;
+        PG::Date o_entry_d;
+        long seconds = o_entry_d.get_million_seconds();
 
-    extern std::default_random_engine e;
-    std::uniform_int_distribution<int> d(1, CUSTOMER_PER_DISTRICT);
-    std::uniform_int_distribution<int> d1(1, 10);
-    std::uniform_int_distribution<int> d2(5, 15);
-    for (o_id = 1; o_id <= ORD_PER_DIST; o_id++) {
+        o_d_id = d_id;
+        o_w_id = w_id;
 
-        /* Generate Order Data */
-        o_c_id = d(e);
-        o_carrier_id = d1(e);
-        o_ol_cnt = d2(e);
+        extern std::default_random_engine e;
+        std::uniform_int_distribution<int> d(1, CUSTOMER_PER_DISTRICT);
+        std::uniform_int_distribution<int> d1(1, 10);
+        std::uniform_int_distribution<int> d2(5, 15);
 
-        if (o_id > 2100) {	/* the last 900 orders have not been
-					 * delivered) */
-            /*EXEC SQL INSERT INTO
-                            orders
-                            values(:o_id,:o_d_id,:o_w_id,:o_c_id,
-                           :timestamp,
-                           NULL,:o_ol_cnt, 1);*/
+        parameter_type order_types[] = {int_type, int_type, int_type, int_type, date_type, int_type, int_type, int_type};
+        std::string order_sql = "insert into orders(o_id,o_d_id,o_w_id,o_c_id,"
+                                "o_entry_d,o_carrier_id,o_ol_cnt,o_all_local) values($1,$2,$3,$4,$5,$6,$7,$8)";
+        pg_prepared_statement order_st = con.prepared_statement(order_sql, order_types);
 
-            memset(param, 0, sizeof(MYSQL_BIND) * 6); /* initialize */
-            param[0].buffer_type = MYSQL_TYPE_LONG;
-            param[0].buffer = &o_id;
-            param[1].buffer_type = MYSQL_TYPE_LONG;
-            param[1].buffer = &o_d_id;
-            param[2].buffer_type = MYSQL_TYPE_LONG;
-            param[2].buffer = &o_w_id;
-            param[3].buffer_type = MYSQL_TYPE_LONG;
-            param[3].buffer = &o_c_id;
-            param[4].buffer_type = MYSQL_TYPE_STRING;
-            param[4].buffer = timestamp;
-            param[4].buffer_length = strlen(timestamp);
-            param[5].buffer_type = MYSQL_TYPE_LONG;
-            param[5].buffer = &o_ol_cnt;
-            if( mysql_stmt_bind_param(stmt[6], param) ) goto sqlerr;
-            if( try_stmt_execute(stmt[6]) ) goto retry;
+        std::uniform_int_distribution<long> d3(0L, 630720000L);
 
-            /*EXEC SQL INSERT INTO
-                            new_orders
-                            values(:o_id,:o_d_id,:o_w_id);*/
+        parameter_type n_o_types[] = {int_type, int_type, int_type};
+        std::string n_o_sql = "insert into new_orders(no_o_id,no_d_id,no_w_id) values($1,$2,$3)";
+        pg_prepared_statement n_o_st = con.prepared_statement(n_o_sql, n_o_types);
 
-            memset(param, 0, sizeof(MYSQL_BIND) * 3); /* initialize */
-            param[0].buffer_type = MYSQL_TYPE_LONG;
-            param[0].buffer = &o_id;
-            param[1].buffer_type = MYSQL_TYPE_LONG;
-            param[1].buffer = &o_d_id;
-            param[2].buffer_type = MYSQL_TYPE_LONG;
-            param[2].buffer = &o_w_id;
-            if( mysql_stmt_bind_param(stmt[7], param) ) goto sqlerr;
-            if( try_stmt_execute(stmt[7]) ) goto retry;
+        std::uniform_int_distribution<long> d4(1, STOCK_PER_WAREHOUSE);
+        std::uniform_int_distribution<long> d5(10, 10000);
 
-        } else {
-            /*EXEC SQL INSERT INTO
-                orders
-                values(:o_id,:o_d_id,:o_w_id,:o_c_id,
-                   :timestamp,
-                   :o_carrier_id,:o_ol_cnt, 1);*/
-
-            memset(param, 0, sizeof(MYSQL_BIND) * 7); /* initialize */
-            param[0].buffer_type = MYSQL_TYPE_LONG;
-            param[0].buffer = &o_id;
-            param[1].buffer_type = MYSQL_TYPE_LONG;
-            param[1].buffer = &o_d_id;
-            param[2].buffer_type = MYSQL_TYPE_LONG;
-            param[2].buffer = &o_w_id;
-            param[3].buffer_type = MYSQL_TYPE_LONG;
-            param[3].buffer = &o_c_id;
-            param[4].buffer_type = MYSQL_TYPE_STRING;
-            param[4].buffer = timestamp;
-            param[4].buffer_length = strlen(timestamp);
-            param[5].buffer_type = MYSQL_TYPE_LONG;
-            param[5].buffer = &o_carrier_id;
-            param[6].buffer_type = MYSQL_TYPE_LONG;
-            param[6].buffer = &o_ol_cnt;
-            if( mysql_stmt_bind_param(stmt[8], param) ) goto sqlerr;
-            if( try_stmt_execute(stmt[8]) ) goto retry;
-
-        }
-
-
-        if (option_debug)
-            printf("OID = %ld, CID = %ld, DID = %ld, WID = %ld\n",
-                   o_id, o_c_id, o_d_id, o_w_id);
-
-        for (ol = 1; ol <= o_ol_cnt; ol++) {
-            /* Generate Order Line Data */
-            ol_i_id = RandomNumber(1L, MAXITEMS);
-            ol_supply_w_id = o_w_id;
-            ol_quantity = 5;
-            ol_amount = 0.0;
-
-            ol_dist_info[ MakeAlphaString(24, 24, ol_dist_info) ] = 0;
-
-            tmp_float = (float) (RandomNumber(10L, 10000L)) / 100.0;
-
+        parameter_type ol_types[] = {int_type, int_type, int_type, int_type,
+                                     int_type, int_type, date_type, int_type,
+                                     numeric_type, text_type};
+        std::string ol_sql = "insert into order_line(ol_o_id,ol_d_id,ol_w_id,ol_number,ol_i_id,ol_supply_w_id,"
+                             "ol_delivery_d,ol_quantity,ol_amount,ol_dist_info) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)";
+        pg_prepared_statement ol_st = con.prepared_statement(ol_sql, ol_types);
+        for (o_id = 1; o_id <= ORD_PER_DIST; o_id++) {
+            o_c_id = d(e);
+            o_carrier_id = d1(e);
+            o_ol_cnt = d2(e);
+            PG::Date date(seconds - d3(e));
             if (o_id > 2100) {
-                /*EXEC SQL INSERT INTO
-                                order_line
-                                values(:o_id,:o_d_id,:o_w_id,:ol,
-                               :ol_i_id,:ol_supply_w_id, NULL,
-                               :ol_quantity,:tmp_float,:ol_dist_info);*/
+                order_st.set_int(0, o_id);
+                order_st.set_int(1, o_d_id);
+                order_st.set_int(2, o_w_id);
+                order_st.set_int(3, o_c_id);
+                order_st.set_date(4, date);
+                order_st.set_int(5, o_carrier_id);
+                order_st.set_int(6, o_ol_cnt);
+                order_st.set_int(7, 5000);
+                order_st.execute_update();
 
-                memset(param, 0, sizeof(MYSQL_BIND) * 9); /* initialize */
-                param[0].buffer_type = MYSQL_TYPE_LONG;
-                param[0].buffer = &o_id;
-                param[1].buffer_type = MYSQL_TYPE_LONG;
-                param[1].buffer = &o_d_id;
-                param[2].buffer_type = MYSQL_TYPE_LONG;
-                param[2].buffer = &o_w_id;
-                param[3].buffer_type = MYSQL_TYPE_LONG;
-                param[3].buffer = &ol;
-                param[4].buffer_type = MYSQL_TYPE_LONG;
-                param[4].buffer = &ol_i_id;
-                param[5].buffer_type = MYSQL_TYPE_LONG;
-                param[5].buffer = &ol_supply_w_id;
-                param[6].buffer_type = MYSQL_TYPE_LONG;
-                param[6].buffer = &ol_quantity;
-                param[7].buffer_type = MYSQL_TYPE_FLOAT;
-                param[7].buffer = &tmp_float;
-                param[8].buffer_type = MYSQL_TYPE_STRING;
-                param[8].buffer = ol_dist_info;
-                param[8].buffer_length = strlen(ol_dist_info);
-                if( mysql_stmt_bind_param(stmt[9], param) ) goto sqlerr;
-                if( try_stmt_execute(stmt[9]) ) goto retry;
-
+                n_o_st.set_int(0, o_id);
+                n_o_st.set_int(1, o_d_id);
+                n_o_st.set_int(2, o_w_id);
+                n_o_st.execute_update();
             } else {
-                /*EXEC SQL INSERT INTO
-                    order_line
-                    values(:o_id,:o_d_id,:o_w_id,:ol,
-                       :ol_i_id,:ol_supply_w_id,
-                       :timestamp,
-                       :ol_quantity,:ol_amount,:ol_dist_info);*/
-
-                memset(param, 0, sizeof(MYSQL_BIND) * 10); /* initialize */
-                param[0].buffer_type = MYSQL_TYPE_LONG;
-                param[0].buffer = &o_id;
-                param[1].buffer_type = MYSQL_TYPE_LONG;
-                param[1].buffer = &o_d_id;
-                param[2].buffer_type = MYSQL_TYPE_LONG;
-                param[2].buffer = &o_w_id;
-                param[3].buffer_type = MYSQL_TYPE_LONG;
-                param[3].buffer = &ol;
-                param[4].buffer_type = MYSQL_TYPE_LONG;
-                param[4].buffer = &ol_i_id;
-                param[5].buffer_type = MYSQL_TYPE_LONG;
-                param[5].buffer = &ol_supply_w_id;
-                param[6].buffer_type = MYSQL_TYPE_STRING;
-                param[6].buffer = timestamp;
-                param[6].buffer_length = strlen(timestamp);
-                param[7].buffer_type = MYSQL_TYPE_LONG;
-                param[7].buffer = &ol_quantity;
-                param[8].buffer_type = MYSQL_TYPE_FLOAT;
-                param[8].buffer = &ol_amount;
-                param[9].buffer_type = MYSQL_TYPE_STRING;
-                param[9].buffer = ol_dist_info;
-                param[9].buffer_length = strlen(ol_dist_info);
-                if( mysql_stmt_bind_param(stmt[10], param) ) goto sqlerr;
-                if( try_stmt_execute(stmt[10]) ) goto retry;
+                order_st.set_int(0, o_id);
+                order_st.set_int(1, o_d_id);
+                order_st.set_int(2, o_w_id);
+                order_st.set_int(3, o_c_id);
+                order_st.set_date(4, date);
+                order_st.set_int(5, o_carrier_id);
+                order_st.set_int(6, o_ol_cnt);
+                order_st.set_int(7, 5000);
+                order_st.execute_update();
             }
+            for (ol = 1; ol <= o_ol_cnt; ol++) {
+                /* Generate Order Line Data */
+                ol_i_id = d4(e);
+                ol_supply_w_id = o_w_id;
+                ol_quantity = 5;
+                ol_amount = 0.0;
 
-            if (option_debug)
-                printf("OL = %ld, IID = %ld, QUAN = %ld, AMT = %8.2f\n",
-                       ol, ol_i_id, ol_quantity, ol_amount);
+                ol_dist_info[RANDOM_GEN::make_alpha_string(24, 24, ol_dist_info)] = 0;
 
+                tmp_float = (float) (d5(e)) / 100.0;
+
+                if (o_id > 2100) {
+                    ol_st.set_int(0, o_id);
+                    ol_st.set_int(1, o_d_id);
+                    ol_st.set_int(2, o_w_id);
+                    ol_st.set_int(3, ol);
+                    ol_st.set_int(4, ol_i_id);
+                    ol_st.set_int(5, ol_supply_w_id);
+                    ol_st.set_date(6, date);
+                    ol_st.set_int(7, ol_quantity);
+                    ol_st.set_float(8, tmp_float);
+                    ol_st.set_value(9, ol_dist_info);
+                }else{
+                    ol_st.set_int(0, o_id);
+                    ol_st.set_int(1, o_d_id);
+                    ol_st.set_int(2, o_w_id);
+                    ol_st.set_int(3, ol);
+                    ol_st.set_int(4, ol_i_id);
+                    ol_st.set_int(5, ol_supply_w_id);
+                    ol_st.set_date(6, date);
+                    ol_st.set_int(7, ol_quantity);
+                    ol_st.set_float(8, ol_amount);
+                    ol_st.set_value(9, ol_dist_info);
+                }
+                ol_st.execute_update();
+            }
         }
-        if (!(o_id % 100)) {
-            printf(".");
-            fflush(stdout);
-
-            if (!(o_id % 1000))
-                printf(" %ld\n", o_id);
-        }
+    }catch(std::exception &e){
+        std::cout << e.what() << std::endl;
     }
-    /*EXEC SQL COMMIT WORK;*/
-    if( mysql_commit(mysql) ) goto sqlerr;
-
-    printf("Orders Done.\n");
-    return;
-    sqlerr:
-    Error(0);
 }
 
 void load_customer(int w_id, int d_id,

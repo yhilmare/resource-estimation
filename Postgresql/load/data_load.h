@@ -22,6 +22,6 @@ namespace RANDOM_GEN {
 
 void load_warehouse(std::unordered_map<std::string, std::string> &config, int max_num=1000);
 
-void load_item(std::unordered_map<std::string, std::string> &, int);
+void load_item(std::unordered_map<std::string, std::string> &);
 
 #endif //POSTGRESQL_DATA_LOAD_H
