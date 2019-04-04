@@ -24,4 +24,8 @@ void load_warehouse(std::unordered_map<std::string, std::string> &config, int ma
 
 void load_item(std::unordered_map<std::string, std::string> &);
 
+void generate_warehouse(int max_num=1000);
+
+void generate_item();
+
 #endif //POSTGRESQL_DATA_LOAD_H
