@@ -66,26 +66,6 @@ iostream
 iomanip
 -
 
-F:/repos/Resource_estimation/Postgresql/lib/tools/exceptions/file_exception.h
-exception
--
-string
--
-
-F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.cpp
-global_tools.h
-F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
-vector
--
-cstring
--
-fstream
--
-exceptions/file_exception.h
-F:/repos/Resource_estimation/Postgresql/lib/tools/exceptions/file_exception.h
-iterator
--
-
 F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
 string
 -

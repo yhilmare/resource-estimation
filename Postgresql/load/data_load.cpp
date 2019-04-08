@@ -908,12 +908,12 @@ void generate_order(int w_id, int d_id, int ORD_PER_DIST){
 
                 if (o_id > 2100) {
                     order_line << o_id << "|" << o_d_id  << "|" << o_w_id << "|"
-                               << ol << "|" << ol_i_id << "|" << ol_supply_w_id << date.get_local_date_string()
+                               << ol << "|" << ol_i_id << "|" << ol_supply_w_id << "|" << date.get_local_date_string()
                                << "|" << ol_quantity << "|" << tmp_float << "|" << ol_dist_info << std::endl;
 
                 }else{
                     order_line << o_id << "|" << o_d_id  << "|" << o_w_id << "|"
-                               << ol << "|" << ol_i_id << "|" << ol_supply_w_id << date.get_local_date_string()
+                               << ol << "|" << ol_i_id << "|" << ol_supply_w_id << "|" << date.get_local_date_string()
                                << "|" << ol_quantity << "|" << ol_amount << "|" << ol_dist_info << std::endl;
                 }
             }

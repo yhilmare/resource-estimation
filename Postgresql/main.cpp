@@ -43,7 +43,7 @@ void regex_test(){
 
 int main(int argn, char *argv[]) {
     using namespace std;
-    generate_item();
+//    generate_item();
     generate_warehouse(10);
 //    char buffer[1000];
 //    getcwd(buffer, 1000);
