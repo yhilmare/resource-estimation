@@ -88,6 +88,9 @@ CMakeFiles/Postgresql.dir/load/data_load.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.h
  F:/repos/Resource_estimation/Postgresql/load/data_load.cpp
  F:/repos/Resource_estimation/Postgresql/load/data_load.h
+CMakeFiles/Postgresql.dir/load/driver.cpp.obj
+ F:/repos/Resource_estimation/Postgresql/load/driver.cpp
+ F:/repos/Resource_estimation/Postgresql/load/driver.h
 CMakeFiles/Postgresql.dir/main.cpp.obj
  C:/pgsql/simple_include/libpq-fe.h
  C:/pgsql/simple_include/pg_config_ext.h

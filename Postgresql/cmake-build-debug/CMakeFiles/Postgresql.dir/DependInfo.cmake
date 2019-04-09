@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "F:/repos/Resource_estimation/Postgresql/lib/tools/exceptions/file_exception.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/lib/tools/global_tools.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/load/data_load.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/load/data_load.cpp.obj"
+  "F:/repos/Resource_estimation/Postgresql/load/driver.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/load/driver.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/main.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

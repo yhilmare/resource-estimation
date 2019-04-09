@@ -88,6 +88,9 @@ CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: ../lib/tools/global_tools.h
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: ../load/data_load.cpp
 CMakeFiles/Postgresql.dir/load/data_load.cpp.obj: ../load/data_load.h
 
+CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../load/driver.cpp
+CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../load/driver.h
+
 CMakeFiles/Postgresql.dir/main.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: C:/pgsql/simple_include/postgres_ext.h

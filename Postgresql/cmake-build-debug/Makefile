@@ -473,6 +473,33 @@ load/data_load.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/load/data_load.cpp.s
 .PHONY : load/data_load.cpp.s
 
+load/driver.obj: load/driver.cpp.obj
+
+.PHONY : load/driver.obj
+
+# target to build an object file
+load/driver.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/load/driver.cpp.obj
+.PHONY : load/driver.cpp.obj
+
+load/driver.i: load/driver.cpp.i
+
+.PHONY : load/driver.i
+
+# target to preprocess a source file
+load/driver.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/load/driver.cpp.i
+.PHONY : load/driver.cpp.i
+
+load/driver.s: load/driver.cpp.s
+
+.PHONY : load/driver.s
+
+# target to generate assembly for a file
+load/driver.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/load/driver.cpp.s
+.PHONY : load/driver.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -548,6 +575,9 @@ help:
 	@echo ... load/data_load.obj
 	@echo ... load/data_load.i
 	@echo ... load/data_load.s
+	@echo ... load/driver.obj
+	@echo ... load/driver.i
+	@echo ... load/driver.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

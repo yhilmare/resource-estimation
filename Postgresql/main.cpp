@@ -41,9 +41,8 @@ void regex_test(){
     }
 }
 
-int main(int argn, char *argv[]) {
-    using namespace std;
-//    generate_item();
+void load_data(){
+    generate_item();
     generate_warehouse(10);
 //    char buffer[1000];
 //    getcwd(buffer, 1000);
@@ -51,5 +50,10 @@ int main(int argn, char *argv[]) {
 //            map = parse_properties_file(string(buffer) + "/config/pg_config.properties");
 //    load_item(map);
 //    load_warehouse(map, 10);
+}
+
+int main(int argn, char *argv[]) {
+    using namespace std;
+
     return 0;
 }
