@@ -57,21 +57,20 @@ int main(int argn, char *argv[]) {
     using namespace std;
     pg_connection con("ilmare", "123456",
                       "10.69.35.174", "tpcc", "5432");
-    clock_t start = clock();
     con.set_auto_commit(false);
-    string sql1 = "select count(*) from order_line where ol_o_id=1";
-    pg_statement st = con.create_statement();
-    pg_resultset res = st.execute_query(sql1);
-    cout << (clock() - start) << endl;
+    string sql1 = "select count(*) from warehouse where w_id=$1";
+    parameter_type types[] = {int_type};
+    pg_prepared_statement st = con.prepared_statement(sql1, types);
+    st.set_int(0, 1);
+    pg_resultset res = st.analyse_sql();
     while(res.has_next()){
         for(int i = 0; i < res.get_column_count(); i ++){
             cout << res.get_value(i) << " ";
         }
         cout << endl;
     }
-    string sql2 = "select count(*) from order_line where ol_o_id=2";
-    pg_resultset res1 = st.execute_query(sql2);
-    cout << (clock() - start) << endl;
+    st.set_int(0, 2);
+    pg_resultset res1 = st.analyse_sql();
     while(res1.has_next()){
         for(int i = 0; i < res1.get_column_count(); i ++){
             cout << res1.get_value(i) << " ";

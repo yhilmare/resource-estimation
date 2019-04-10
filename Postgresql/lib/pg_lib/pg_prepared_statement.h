@@ -37,6 +37,7 @@ public:
     void set_date(int idx, PG::Date parameter);
     void execute_update();
     pg_resultset execute_query();
+    pg_resultset analyse_sql();
 };
 
 

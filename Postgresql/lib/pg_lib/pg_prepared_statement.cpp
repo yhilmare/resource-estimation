@@ -181,6 +181,32 @@ pg_resultset pg_prepared_statement::execute_query() {
     return pg_resultset(result_set);
 }
 
+pg_resultset pg_prepared_statement::analyse_sql() {
+    std::string execute = std::string("explain analyse execute ") + this->prepared_name + std::string("(");
+    for (std::vector<const char *>::iterator iter = this->parameters.begin();
+         iter != this->parameters.end(); iter ++){
+        if (!(*iter)){
+            throw statement_exception("The parameter count is not enough");
+        }
+        if ((iter + 1) == this->parameters.end()){
+            execute += std::string(*iter);
+        }else{
+            execute += (std::string(*iter) + std::string(","));
+        }
+    }
+    execute += std::string(");");
+    PGresult *result_set = PQexec(this->conn, execute.c_str());
+    this->execute_sql = execute;
+    this->verify_sql_executeresult(result_set);
+    for (int i = 0; i < this->parameters.size(); i ++){
+        if (this->parameters[i]){
+            delete []this->parameters[i];
+            this->parameters[i] = NULL;
+        }
+    }
+    return pg_resultset(result_set);
+}
+
 pg_prepared_statement::~pg_prepared_statement() {
     std::string execute = std::string("deallocate prepare ") + this->prepared_name + std::string(";");
     PGresult *result = PQexec(this->conn, execute.c_str());
