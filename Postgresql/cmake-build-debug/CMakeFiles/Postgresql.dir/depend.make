@@ -47,9 +47,9 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj: ../lib/pg_li
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj: ../lib/tools/date.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj: ../lib/tools/global_tools.h
 
-CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: C:/pgsql/include/libpq-fe.h
-CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: C:/pgsql/include/pg_config_ext.h
-CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: C:/pgsql/include/postgres_ext.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/pg_lib/exception/resultset_nullpointer_exception.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/pg_lib/pg_resultset.cpp
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/pg_lib/pg_resultset.h

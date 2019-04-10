@@ -27,8 +27,9 @@ private:
     std::string prepare_prefix;
     std::string prepared_name;
 public:
+    std::string execute_sql;
     pg_prepared_statement(PGconn *conn, std::string &sql, parameter_type types[]);
-    ~pg_prepared_statement();
+    virtual ~pg_prepared_statement();
 
     void set_value(int idx, const char *parameter);
     void set_int(int idx, int parameter);

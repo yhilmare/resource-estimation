@@ -16,7 +16,10 @@ private:
     int cursor;
 public:
     pg_resultset(PGresult *res);
+    pg_resultset(const pg_resultset &);
     ~pg_resultset();
+
+    pg_resultset &operator=(const pg_resultset &);
 
     bool has_next();
     int get_column_count();

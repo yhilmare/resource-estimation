@@ -6,6 +6,26 @@
 #include "exception/resultset_nullpointer_exception.h"
 #include <iostream>
 
+pg_resultset& pg_resultset::operator=(const pg_resultset &res) {
+    if (this == &res){
+        return *this;
+    }
+    this->close();
+    this->result_set = res.result_set;
+    this->column_count = res.column_count;
+    this->row_count = res.row_count;
+    this->cursor = -1;
+    return *this;
+}
+
+pg_resultset::pg_resultset(const pg_resultset &res) {
+    this->close();
+    this->result_set = res.result_set;
+    this->column_count = res.column_count;
+    this->row_count = res.row_count;
+    this->cursor = -1;
+}
+
 pg_resultset::pg_resultset(PGresult *res): result_set(res), cursor(-1){
     if (this->result_set == NULL){
         throw resultset_nullpointer_exception(std::string("The resultset is NULL"));
@@ -17,6 +37,7 @@ pg_resultset::pg_resultset(PGresult *res): result_set(res), cursor(-1){
 void pg_resultset::close() {
     if (this->result_set){
         PQclear(this->result_set);
+        this->result_set = NULL;
     }
 }
 

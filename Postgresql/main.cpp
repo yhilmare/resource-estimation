@@ -7,6 +7,7 @@
 #include <direct.h>
 #include <pthread.h>
 #include <random>
+#include <time.h>
 #include "global_define.h"
 #include "lib/pg_lib/pg_connection.h"
 #include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
@@ -54,6 +55,29 @@ void load_data(){
 
 int main(int argn, char *argv[]) {
     using namespace std;
-
+    pg_connection con("ilmare", "123456",
+                      "10.69.35.174", "tpcc", "5432");
+    clock_t start = clock();
+    con.set_auto_commit(false);
+    string sql1 = "select count(*) from order_line where ol_o_id=1";
+    pg_statement st = con.create_statement();
+    pg_resultset res = st.execute_query(sql1);
+    cout << (clock() - start) << endl;
+    while(res.has_next()){
+        for(int i = 0; i < res.get_column_count(); i ++){
+            cout << res.get_value(i) << " ";
+        }
+        cout << endl;
+    }
+    string sql2 = "select count(*) from order_line where ol_o_id=2";
+    pg_resultset res1 = st.execute_query(sql2);
+    cout << (clock() - start) << endl;
+    while(res1.has_next()){
+        for(int i = 0; i < res1.get_column_count(); i ++){
+            cout << res1.get_value(i) << " ";
+        }
+        cout << endl;
+    }
+    con.commit();
     return 0;
 }

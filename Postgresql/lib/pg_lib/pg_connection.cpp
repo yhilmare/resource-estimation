@@ -21,6 +21,7 @@ pg_connection::pg_connection(const pg_connection &obj) {
     this->connection_status = PQstatus(this->pg_conn);
     if (this->connection_status != CONNECTION_OK){
         PQfinish(this->pg_conn);
+        this->pg_conn = NULL;
         throw conn_fail_exception(this->connection_status);
     }
 }
@@ -35,6 +36,7 @@ pg_connection::pg_connection(const char *connection_info) {
     this->connection_status = PQstatus(this->pg_conn);
     if (this->connection_status != CONNECTION_OK){
         PQfinish(this->pg_conn);
+        this->pg_conn = NULL;
         throw conn_fail_exception(this->connection_status);
     }
 }
@@ -43,6 +45,7 @@ pg_connection::~pg_connection() {
     PGresult *result = PQexec(this->pg_conn, "deallocate prepare all;");
     PQclear(result);
     delete [] this->conn_info;
+    this->conn_info = NULL;
     this->close();
 }
 
@@ -79,6 +82,7 @@ pg_connection::pg_connection(const char *user_name, const char *password,
     this->connection_status = PQstatus(this->pg_conn);
     if (this->connection_status != CONNECTION_OK){
         PQfinish(this->pg_conn);
+        this->pg_conn = NULL;
         throw conn_fail_exception(this->connection_status);
     }
 }
@@ -91,6 +95,7 @@ pg_statement pg_connection::create_statement() {
 void pg_connection::close() {
     if (this->pg_conn){
         PQfinish(this->pg_conn);
+        this->pg_conn = NULL;
     }
 }
 

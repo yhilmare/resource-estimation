@@ -12,23 +12,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fca637b-a884-4004-a7df-e209a083d2f6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/load/driver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_connection.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_prepared_statement.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/load/data_load.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/load/data_load.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/objects1.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Postgresql.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Postgresql.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Postgresql.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Postgresql.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pg_lib/pg_connection.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pg_lib/pg_connection.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pg_lib/pg_resultset.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pg_lib/pg_resultset.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -106,19 +106,19 @@
     <session id="-1867806032">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="21" />
           <entry key="project.open.time.0" value="5" />
-          <entry key="project.open.time.3" value="6" />
+          <entry key="project.open.time.3" value="8" />
           <entry key="project.open.time.4" value="3" />
           <entry key="project.open.time.5" value="5" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="20" />
+          <entry key="project.opened" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cpp" value="73" />
-          <entry key="h" value="73" />
+          <entry key="cpp" value="80" />
+          <entry key="h" value="78" />
           <entry key="properties" value="16" />
           <entry key="txt" value="8" />
         </counts>
@@ -126,14 +126,14 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CMakeLists.txt" value="8" />
-          <entry key="ObjectiveC" value="146" />
+          <entry key="ObjectiveC" value="158" />
           <entry key="PLAIN_TEXT" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="28640" />
-          <entry key="h" value="3481" />
+          <entry key="cpp" value="31760" />
+          <entry key="h" value="3563" />
           <entry key="properties" value="148" />
           <entry key="txt" value="140" />
         </counts>
@@ -141,7 +141,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CMakeLists.txt" value="140" />
-          <entry key="ObjectiveC" value="32121" />
+          <entry key="ObjectiveC" value="35323" />
           <entry key="PLAIN_TEXT" value="148" />
         </counts>
       </usages-collector>
@@ -152,8 +152,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="44" column="4" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
+            <state relative-caret-position="369">
+              <caret line="61" column="19" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="19" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -162,24 +162,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/load/driver.cpp">
+        <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/load/driver.h">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/global_define.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
+            <state relative-caret-position="44">
+              <caret line="152" column="39" selection-start-line="152" selection-start-column="39" selection-end-line="152" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -187,10 +173,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/load/data_load.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22180">
-              <caret line="1109" column="43" selection-start-line="1109" selection-start-column="43" selection-end-line="1109" selection-end-column="43" />
+            <state relative-caret-position="4440">
+              <caret line="222" column="22" selection-start-line="222" selection-start-column="22" selection-end-line="222" selection-end-column="22" />
               <folding>
                 <element signature="e#49#71#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+              <folding>
+                <element signature="e#49#74#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -211,8 +209,6 @@
         <option value="$PROJECT_DIR$/lib/pg_lib/exception/resultset_nullpointer_exception.h" />
         <option value="$PROJECT_DIR$/lib/pg_lib/exception/sqlexecute_exception.h" />
         <option value="$PROJECT_DIR$/lib/pg_lib/exception/statement_exception.h" />
-        <option value="$PROJECT_DIR$/lib/pg_lib/pg_resultset.h" />
-        <option value="$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp" />
         <option value="$PROJECT_DIR$/lib/tools/global_define.h" />
         <option value="$PROJECT_DIR$/lib/tools/date.h" />
         <option value="$PROJECT_DIR$/lib/pg_lib/exception/statement_exception.cpp" />
@@ -225,21 +221,23 @@
         <option value="$PROJECT_DIR$/lib/tools/global_tools.h" />
         <option value="$PROJECT_DIR$/lib/pg_lib/pg_connection.h" />
         <option value="$PROJECT_DIR$/config/pg_config.properties" />
-        <option value="$PROJECT_DIR$/lib/pg_lib/pg_connection.cpp" />
         <option value="$PROJECT_DIR$/cmake-build-debug/config/pg_config.properties" />
         <option value="$PROJECT_DIR$/lib/pg_lib/pg_statement.h" />
-        <option value="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.h" />
         <option value="$PROJECT_DIR$/lib/tools/date.cpp" />
         <option value="$PROJECT_DIR$/lib/pg_lib/pg_statement.cpp" />
-        <option value="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" />
         <option value="$PROJECT_DIR$/second.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/global_define.h" />
         <option value="$PROJECT_DIR$/lib/tools/global_tools.cpp" />
         <option value="$PROJECT_DIR$/load/data_load.h" />
         <option value="$PROJECT_DIR$/load/data_load.cpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/load/driver.cpp" />
+        <option value="$PROJECT_DIR$/lib/pg_lib/pg_resultset.h" />
+        <option value="$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp" />
+        <option value="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.h" />
+        <option value="$PROJECT_DIR$/lib/pg_lib/pg_connection.cpp" />
+        <option value="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
   </component>
@@ -250,7 +248,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="231" />
     <option name="y" value="3" />
     <option name="width" value="1400" />
@@ -383,11 +381,13 @@
       <workItem from="1554706092712" duration="621000" />
       <workItem from="1554773133600" duration="3869000" />
       <workItem from="1554797546898" duration="614000" />
+      <workItem from="1554868536170" duration="6424000" />
+      <workItem from="1554884533936" duration="6084000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192430000" />
+    <option name="totallyTimeSpent" value="204938000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -399,15 +399,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11513859" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11727079" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25883576" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25883576" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991684" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -633,13 +633,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/tools/date.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -661,45 +654,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="812">
-          <caret line="65" column="24" selection-start-line="65" selection-start-column="24" selection-end-line="65" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_resultset.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_statement.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="15" column="44" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_connection.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1068">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_connection.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
           <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_statement.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
     </entry>
@@ -708,13 +666,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="134" column="22" lean-forward="true" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -732,12 +683,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/load/driver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/load/driver.h">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/global_define.h">
       <provider selected="true" editor-type-id="text-editor">
@@ -746,23 +693,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/load/driver.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_statement.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/load/data_load.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22180">
-          <caret line="1109" column="43" selection-start-line="1109" selection-start-column="43" selection-end-line="1109" selection-end-column="43" />
+        <state relative-caret-position="4440">
+          <caret line="222" column="22" selection-start-line="222" selection-start-column="22" selection-end-line="222" selection-end-column="22" />
           <folding>
             <element signature="e#49#71#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/load/driver.h">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_statement.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="15" column="44" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_connection.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1580">
+          <caret line="84" column="29" selection-start-line="84" selection-start-column="29" selection-end-line="84" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_resultset.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding>
+            <element signature="e#136#161#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+          <folding>
+            <element signature="e#49#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="152" column="39" selection-start-line="152" selection-start-column="39" selection-end-line="152" selection-end-column="39" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="44" column="4" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
+        <state relative-caret-position="369">
+          <caret line="61" column="19" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="19" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

@@ -144,11 +144,13 @@ void pg_prepared_statement::execute_update() {
     execute += std::string(");");
 //    std::cout << execute << std::endl;
     PGresult *res = PQexec(this->conn, execute.c_str());
+    this->execute_sql = execute;
     this->verify_sql_executeresult(res);
     PQclear(res);
     for (int i = 0; i < this->parameters.size(); i ++){
         if (this->parameters[i]){
             delete []this->parameters[i];
+            this->parameters[i] = NULL;
         }
     }
 }
@@ -168,10 +170,12 @@ pg_resultset pg_prepared_statement::execute_query() {
     }
     execute += std::string(");");
     PGresult *result_set = PQexec(this->conn, execute.c_str());
+    this->execute_sql = execute;
     this->verify_sql_executeresult(result_set);
     for (int i = 0; i < this->parameters.size(); i ++){
         if (this->parameters[i]){
             delete []this->parameters[i];
+            this->parameters[i] = NULL;
         }
     }
     return pg_resultset(result_set);
@@ -184,6 +188,7 @@ pg_prepared_statement::~pg_prepared_statement() {
     for (int i = 0; i < this->parameters.size(); i ++){
         if (this->parameters[i]){
             delete []this->parameters[i];
+            this->parameters[i] = NULL;
         }
     }
 }
