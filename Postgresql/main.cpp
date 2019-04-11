@@ -17,6 +17,8 @@
 #include "lib/tools/date.h"
 #include "lib/tools/global_tools.h"
 #include "load/data_load.h"
+#include "load/driver.h"
+#include "./tpcc/sequence.h"
 
 
 void regex_test(){
@@ -53,30 +55,62 @@ void load_data(){
 //    load_warehouse(map, 10);
 }
 
+void *thread_main(void *);
+
+struct thread_arg{
+    std::unordered_map<std::string, std::string> config;
+    int thread_num;
+    thread_arg(std::unordered_map<std::string, std::string> map, int num):config(map), thread_num(num){}
+};
+
 int main(int argn, char *argv[]) {
     using namespace std;
-    pg_connection con("ilmare", "123456",
-                      "10.69.35.174", "tpcc", "5432");
-    con.set_auto_commit(false);
-    string sql1 = "select count(*) from warehouse where w_id=$1";
-    parameter_type types[] = {int_type};
-    pg_prepared_statement st = con.prepared_statement(sql1, types);
-    st.set_int(0, 1);
-    pg_resultset res = st.analyse_sql();
-    while(res.has_next()){
-        for(int i = 0; i < res.get_column_count(); i ++){
-            cout << res.get_value(i) << " ";
-        }
-        cout << endl;
-    }
-    st.set_int(0, 2);
-    pg_resultset res1 = st.analyse_sql();
-    while(res1.has_next()){
-        for(int i = 0; i < res1.get_column_count(); i ++){
-            cout << res1.get_value(i) << " ";
-        }
-        cout << endl;
-    }
-    con.commit();
+
+    char buffer[1000];
+    getcwd(buffer, 1000);
+    unordered_map<string, string> map =
+            parse_properties_file(string(buffer) + "/config/pg_config.properties");
+    int thread_num = 10;
+    thread_arg arg(map, thread_num);
+    thread_main((void *)&arg);
+
+//    pthread_t t1, t2;
+//
+//    pthread_create(&t1, NULL, thread_main, (void *) &map);
+//    pthread_create(&t2, NULL, thread_main, (void *) &map);
+//
+//    pthread_join(t1, NULL);
+//    pthread_join(t2, NULL);
+
     return 0;
+}
+
+void *thread_main(void *param){
+
+    using namespace std;
+    thread_arg *arg = (thread_arg *)param;
+    unordered_map<string, string> config = arg->config;
+    int thread_num = arg->thread_num;
+
+    string host = config["PG_HOST"];
+    string password = config["PG_PASSWORD"];
+    string timout = config["PG_TIMEOUT"];
+    string database = config["PG_DATABASE"];
+    string user = config["PG_USER"];
+    string port = config["PG_PORT"];
+
+    seq_init(10,10,1,1,1);
+
+    pg_connection con(user.c_str(), password.c_str(),
+            host.c_str(), database.c_str(), port.c_str());
+    vector<pg_prepared_statement> val;
+    for (int i = 0; i < sizeof(SQL_STRING) / sizeof(string); i ++){
+        string sql = SQL_STRING[i];
+        const parameter_type *type = SQL_PARAMETER_TYPE[i];
+        pg_prepared_statement tmp_st = con.prepared_statement(sql, type);
+        val.push_back(tmp_st);
+        cout << tmp_st.get_prepared_name() << ": " << tmp_st.get_parameters_count() << endl;
+    }
+    driver(con, val, thread_num);
+    return param;
 }

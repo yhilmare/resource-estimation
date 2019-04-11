@@ -266,6 +266,34 @@ CMakeFiles/Postgresql.dir/load/driver.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Postgresql.dir/load/driver.cpp.s"
 	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\repos\Resource_estimation\Postgresql\load\driver.cpp -o CMakeFiles\Postgresql.dir\load\driver.cpp.s
 
+CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: CMakeFiles/Postgresql.dir/flags.make
+CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: CMakeFiles/Postgresql.dir/includes_CXX.rsp
+CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: ../tpcc/sequence.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Postgresql.dir\tpcc\sequence.cpp.obj -c F:\repos\Resource_estimation\Postgresql\tpcc\sequence.cpp
+
+CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\repos\Resource_estimation\Postgresql\tpcc\sequence.cpp > CMakeFiles\Postgresql.dir\tpcc\sequence.cpp.i
+
+CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\repos\Resource_estimation\Postgresql\tpcc\sequence.cpp -o CMakeFiles\Postgresql.dir\tpcc\sequence.cpp.s
+
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: CMakeFiles/Postgresql.dir/flags.make
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: CMakeFiles/Postgresql.dir/includes_CXX.rsp
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../tpcc/neword.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Postgresql.dir\tpcc\neword.cpp.obj -c F:\repos\Resource_estimation\Postgresql\tpcc\neword.cpp
+
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Postgresql.dir/tpcc/neword.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\repos\Resource_estimation\Postgresql\tpcc\neword.cpp > CMakeFiles\Postgresql.dir\tpcc\neword.cpp.i
+
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Postgresql.dir/tpcc/neword.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\repos\Resource_estimation\Postgresql\tpcc\neword.cpp -o CMakeFiles\Postgresql.dir\tpcc\neword.cpp.s
+
 # Object files for target Postgresql
 Postgresql_OBJECTS = \
 "CMakeFiles/Postgresql.dir/main.cpp.obj" \
@@ -282,7 +310,9 @@ Postgresql_OBJECTS = \
 "CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj" \
 "CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj" \
 "CMakeFiles/Postgresql.dir/load/data_load.cpp.obj" \
-"CMakeFiles/Postgresql.dir/load/driver.cpp.obj"
+"CMakeFiles/Postgresql.dir/load/driver.cpp.obj" \
+"CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj" \
+"CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj"
 
 # External object files for target Postgresql
 Postgresql_EXTERNAL_OBJECTS =
@@ -302,11 +332,13 @@ Postgresql.exe: CMakeFiles/Postgresql.dir/lib/tools/global_tools.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/load/data_load.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/load/driver.cpp.obj
+Postgresql.exe: CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj
+Postgresql.exe: CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj
 Postgresql.exe: CMakeFiles/Postgresql.dir/build.make
 Postgresql.exe: CMakeFiles/Postgresql.dir/linklibs.rsp
 Postgresql.exe: CMakeFiles/Postgresql.dir/objects1.rsp
 Postgresql.exe: CMakeFiles/Postgresql.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable Postgresql.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\repos\Resource_estimation\Postgresql\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX executable Postgresql.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Postgresql.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

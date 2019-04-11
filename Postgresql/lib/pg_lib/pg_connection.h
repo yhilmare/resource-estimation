@@ -33,7 +33,7 @@ public:
     pg_connection &operator=(const pg_connection &);
 
     pg_statement create_statement();
-    pg_prepared_statement prepared_statement(std::string &, parameter_type[]);
+    pg_prepared_statement prepared_statement(std::string &, const parameter_type[]);
     void close();
 
     friend std::ostream &operator<<(std::ostream &os, const pg_connection &con);

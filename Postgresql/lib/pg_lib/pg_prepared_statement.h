@@ -28,7 +28,7 @@ private:
     std::string prepared_name;
 public:
     std::string execute_sql;
-    pg_prepared_statement(PGconn *conn, std::string &sql, parameter_type types[]);
+    pg_prepared_statement(PGconn *conn, std::string &sql, const parameter_type types[]);
     virtual ~pg_prepared_statement();
 
     void set_value(int idx, const char *parameter);
@@ -36,6 +36,8 @@ public:
     void set_float(int idx, float parameter);
     void set_date(int idx, PG::Date parameter);
     void execute_update();
+    int get_parameters_count();
+    std::string get_prepared_name();
     pg_resultset execute_query();
     pg_resultset analyse_sql();
 };

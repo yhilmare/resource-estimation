@@ -14,7 +14,7 @@
 std::default_random_engine e;
 
 pg_prepared_statement::pg_prepared_statement(PGconn *conn,
-        std::string &sql, parameter_type types[]): pg_statement(conn) {
+        std::string &sql, const parameter_type types[]): pg_statement(conn) {
     int count = 0;
     std::regex pattern(R"pattern(\$[0-9]*)pattern");
     this->sql = sql;
@@ -92,6 +92,14 @@ void pg_prepared_statement::set_int(int idx, int parameter) {
     strcpy(tmp, param.c_str());
     tmp[strlen(param.c_str())] = 0;
     this->parameters[idx] = tmp;
+}
+
+int pg_prepared_statement::get_parameters_count() {
+    return this->parameters_count;
+}
+
+std::string pg_prepared_statement::get_prepared_name() {
+    return this->prepared_name;
 }
 
 void pg_prepared_statement::set_float(int idx, float parameter) {

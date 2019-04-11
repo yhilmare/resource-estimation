@@ -14,6 +14,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Postgresql.dir/lib/tools/exceptions/file_exception.cpp.obj"
   "CMakeFiles/Postgresql.dir/load/data_load.cpp.obj"
   "CMakeFiles/Postgresql.dir/load/driver.cpp.obj"
+  "CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj"
+  "CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj"
   "Postgresql.pdb"
   "Postgresql.exe"
   "Postgresql.exe.manifest"

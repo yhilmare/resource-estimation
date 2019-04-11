@@ -169,6 +169,18 @@
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/main.cpp">
 			<Option target="Postgresql"/>
 		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/tpcc/neword.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/tpcc/neword.h">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/tpcc/sequence.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/tpcc/sequence.h">
+			<Option target="Postgresql"/>
+		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

@@ -527,6 +527,60 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+tpcc/neword.obj: tpcc/neword.cpp.obj
+
+.PHONY : tpcc/neword.obj
+
+# target to build an object file
+tpcc/neword.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj
+.PHONY : tpcc/neword.cpp.obj
+
+tpcc/neword.i: tpcc/neword.cpp.i
+
+.PHONY : tpcc/neword.i
+
+# target to preprocess a source file
+tpcc/neword.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/neword.cpp.i
+.PHONY : tpcc/neword.cpp.i
+
+tpcc/neword.s: tpcc/neword.cpp.s
+
+.PHONY : tpcc/neword.s
+
+# target to generate assembly for a file
+tpcc/neword.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/neword.cpp.s
+.PHONY : tpcc/neword.cpp.s
+
+tpcc/sequence.obj: tpcc/sequence.cpp.obj
+
+.PHONY : tpcc/sequence.obj
+
+# target to build an object file
+tpcc/sequence.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj
+.PHONY : tpcc/sequence.cpp.obj
+
+tpcc/sequence.i: tpcc/sequence.cpp.i
+
+.PHONY : tpcc/sequence.i
+
+# target to preprocess a source file
+tpcc/sequence.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.i
+.PHONY : tpcc/sequence.cpp.i
+
+tpcc/sequence.s: tpcc/sequence.cpp.s
+
+.PHONY : tpcc/sequence.s
+
+# target to generate assembly for a file
+tpcc/sequence.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.s
+.PHONY : tpcc/sequence.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -581,6 +635,12 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... tpcc/neword.obj
+	@echo ... tpcc/neword.i
+	@echo ... tpcc/neword.s
+	@echo ... tpcc/sequence.obj
+	@echo ... tpcc/sequence.i
+	@echo ... tpcc/sequence.s
 .PHONY : help
 
 

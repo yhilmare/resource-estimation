@@ -161,7 +161,7 @@ void pg_connection::commit() {
     }
 }
 
-pg_prepared_statement pg_connection::prepared_statement(std::string &sql, parameter_type types[]) {
+pg_prepared_statement pg_connection::prepared_statement(std::string &sql, const parameter_type types[]) {
     pg_prepared_statement st = pg_prepared_statement(this->pg_conn, sql, types);
     return st;
 }
