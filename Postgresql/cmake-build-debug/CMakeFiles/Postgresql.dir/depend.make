@@ -53,6 +53,8 @@ CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: C:/pgsql/simple_inclu
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/pg_lib/exception/resultset_nullpointer_exception.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/pg_lib/pg_resultset.cpp
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/pg_lib/pg_resultset.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/lib/pg_lib/pg_resultset.cpp.obj: ../lib/tools/global_tools.h
 
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
 CMakeFiles/Postgresql.dir/lib/pg_lib/pg_statement.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
@@ -93,12 +95,12 @@ CMakeFiles/Postgresql.dir/load/driver.cpp.obj: C:/pgsql/simple_include/libpq-fe.
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: .././lib/pg_lib/pg_prepared_statement.h
-CMakeFiles/Postgresql.dir/load/driver.cpp.obj: .././lib/pg_lib/pg_resultset.h
-CMakeFiles/Postgresql.dir/load/driver.cpp.obj: .././lib/tools/date.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../global_define.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../lib/pg_lib/pg_connection.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../lib/tools/date.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../load/data_load.h
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../load/driver.cpp
 CMakeFiles/Postgresql.dir/load/driver.cpp.obj: ../load/driver.h
@@ -120,6 +122,19 @@ CMakeFiles/Postgresql.dir/main.cpp.obj: ../lib/tools/global_tools.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../load/data_load.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../load/driver.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../main.cpp
+
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: .././lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../global_define.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_connection.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_resultset.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../tpcc/neword.cpp
+CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../tpcc/neword.h
 
 CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: ../tpcc/sequence.cpp
 CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: ../tpcc/sequence.h

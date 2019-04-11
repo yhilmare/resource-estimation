@@ -65,7 +65,6 @@ struct thread_arg{
 
 int main(int argn, char *argv[]) {
     using namespace std;
-
     char buffer[1000];
     getcwd(buffer, 1000);
     unordered_map<string, string> map =

@@ -29,6 +29,9 @@ public:
     std::string get_field(int idx);
 
     char *get_value(int idx);
+    std::string get_string(int idx);
+    float get_float(int idx);
+    int get_int(int idx);
     void close();
 };
 

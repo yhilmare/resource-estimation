@@ -5,6 +5,7 @@
 #include "pg_resultset.h"
 #include "exception/resultset_nullpointer_exception.h"
 #include <iostream>
+#include "../tools/global_tools.h"
 
 pg_resultset& pg_resultset::operator=(const pg_resultset &res) {
     if (this == &res){
@@ -62,6 +63,40 @@ char* pg_resultset::get_value(int idx) {
         throw resultset_nullpointer_exception(std::string("cursor is bigger than row count"));
     }
 }
+
+std::string pg_resultset::get_string(int idx) {
+    if (idx >= this->column_count){
+        throw resultset_nullpointer_exception(std::string("idx is bigger than the biggest column count"));
+    }
+    if (this->cursor < this->get_tuples_count()){
+        return std::string(PQgetvalue(this->result_set, this->cursor, idx));
+    }else{
+        throw resultset_nullpointer_exception(std::string("cursor is bigger than row count"));
+    }
+}
+
+int pg_resultset::get_int(int idx) {
+    if (idx >= this->column_count){
+        throw resultset_nullpointer_exception(std::string("idx is bigger than the biggest column count"));
+    }
+    if (this->cursor < this->get_tuples_count()){
+        return atoi(PQgetvalue(this->result_set, this->cursor, idx));
+    }else{
+        throw resultset_nullpointer_exception(std::string("cursor is bigger than row count"));
+    }
+}
+
+float pg_resultset::get_float(int idx) {
+    if (idx >= this->column_count){
+        throw resultset_nullpointer_exception(std::string("idx is bigger than the biggest column count"));
+    }
+    if (this->cursor < this->get_tuples_count()){
+        return atof(PQgetvalue(this->result_set, this->cursor, idx));
+    }else{
+        throw resultset_nullpointer_exception(std::string("cursor is bigger than row count"));
+    }
+}
+
 int pg_resultset::get_tuples_count() {
     return this->row_count;
 }
