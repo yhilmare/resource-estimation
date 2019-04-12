@@ -135,7 +135,16 @@ CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj
  F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
  F:/repos/Resource_estimation/Postgresql/lib/tools/date.h
  F:/repos/Resource_estimation/Postgresql/tpcc/neword.cpp
- F:/repos/Resource_estimation/Postgresql/tpcc/neword.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj
+ C:/pgsql/simple_include/libpq-fe.h
+ C:/pgsql/simple_include/pg_config_ext.h
+ C:/pgsql/simple_include/postgres_ext.h
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_connection.h
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_prepared_statement.h
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_resultset.h
+ F:/repos/Resource_estimation/Postgresql/lib/pg_lib/pg_statement.h
+ F:/repos/Resource_estimation/Postgresql/lib/tools/date.h
+ F:/repos/Resource_estimation/Postgresql/tpcc/payment.cpp
 CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj
  F:/repos/Resource_estimation/Postgresql/tpcc/sequence.cpp
  F:/repos/Resource_estimation/Postgresql/tpcc/sequence.h

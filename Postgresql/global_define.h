@@ -22,6 +22,7 @@
 #define MAX_NUM_ITEMS 15
 #define MAX_ITEM_LEN 24
 #define MAXITEMS 100000
+#define MAX_RETRY 2000
 
 #include <string>
 #include "./lib/pg_lib/pg_prepared_statement.h"
@@ -35,7 +36,7 @@ const parameter_type type5[] = {int_type};
 const parameter_type type6[] = {int_type, int_type};
 const parameter_type type7[] = {int_type, int_type, int_type};
 const parameter_type type8[] = {int_type, int_type, int_type, int_type, int_type, int_type, int_type, numeric_type, text_type};
-const parameter_type type9[] = {int_type, numeric_type};
+const parameter_type type9[] = {numeric_type, int_type};
 const parameter_type type10[] = {int_type};
 const parameter_type type11[] = {numeric_type, int_type, int_type};
 const parameter_type type12[] = {int_type, int_type};
@@ -55,7 +56,7 @@ const parameter_type type25[] = {int_type, int_type};
 const parameter_type type26[] = {int_type, int_type, int_type};
 const parameter_type type27[] = {int_type, int_type, int_type};
 const parameter_type type28[] = {int_type, int_type, int_type, int_type};
-const parameter_type type29[] = {int_type, int_type, int_type, int_type};
+const parameter_type type29[] = {date_type, int_type, int_type, int_type};
 const parameter_type type30[] = {int_type, int_type, int_type};
 const parameter_type type31[] = {numeric_type, int_type, int_type, int_type};
 const parameter_type type32[] = {int_type, int_type};
@@ -102,6 +103,7 @@ const std::string SQL_STRING[] = {
         "UPDATE orders SET o_carrier_id = $1 WHERE o_id = $2 AND o_d_id = $3 AND o_w_id = $4",
         "UPDATE order_line SET ol_delivery_d = $1 WHERE ol_o_id = $2 AND ol_d_id = $3 AND ol_w_id = $4",
         "SELECT SUM(ol_amount) FROM order_line WHERE ol_o_id = $1 AND ol_d_id = $2 AND ol_w_id = $3",
+
         "UPDATE customer SET c_balance = c_balance + $1 , c_delivery_cnt = c_delivery_cnt + 1 WHERE c_id = $2 AND c_d_id = $3 AND c_w_id = $4",
         "SELECT d_next_o_id FROM district WHERE d_id = $1 AND d_w_id = $2",
         "SELECT DISTINCT ol_i_id FROM order_line WHERE ol_w_id = $1 AND ol_d_id = $2 AND ol_o_id < $3 AND ol_o_id >= ($4 - 20)",

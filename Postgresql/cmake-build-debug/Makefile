@@ -527,6 +527,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+tpcc/delivery.obj: tpcc/delivery.cpp.obj
+
+.PHONY : tpcc/delivery.obj
+
+# target to build an object file
+tpcc/delivery.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj
+.PHONY : tpcc/delivery.cpp.obj
+
+tpcc/delivery.i: tpcc/delivery.cpp.i
+
+.PHONY : tpcc/delivery.i
+
+# target to preprocess a source file
+tpcc/delivery.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.i
+.PHONY : tpcc/delivery.cpp.i
+
+tpcc/delivery.s: tpcc/delivery.cpp.s
+
+.PHONY : tpcc/delivery.s
+
+# target to generate assembly for a file
+tpcc/delivery.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.s
+.PHONY : tpcc/delivery.cpp.s
+
 tpcc/neword.obj: tpcc/neword.cpp.obj
 
 .PHONY : tpcc/neword.obj
@@ -553,6 +580,60 @@ tpcc/neword.s: tpcc/neword.cpp.s
 tpcc/neword.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/neword.cpp.s
 .PHONY : tpcc/neword.cpp.s
+
+tpcc/ordstat.obj: tpcc/ordstat.cpp.obj
+
+.PHONY : tpcc/ordstat.obj
+
+# target to build an object file
+tpcc/ordstat.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj
+.PHONY : tpcc/ordstat.cpp.obj
+
+tpcc/ordstat.i: tpcc/ordstat.cpp.i
+
+.PHONY : tpcc/ordstat.i
+
+# target to preprocess a source file
+tpcc/ordstat.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.i
+.PHONY : tpcc/ordstat.cpp.i
+
+tpcc/ordstat.s: tpcc/ordstat.cpp.s
+
+.PHONY : tpcc/ordstat.s
+
+# target to generate assembly for a file
+tpcc/ordstat.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.s
+.PHONY : tpcc/ordstat.cpp.s
+
+tpcc/payment.obj: tpcc/payment.cpp.obj
+
+.PHONY : tpcc/payment.obj
+
+# target to build an object file
+tpcc/payment.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj
+.PHONY : tpcc/payment.cpp.obj
+
+tpcc/payment.i: tpcc/payment.cpp.i
+
+.PHONY : tpcc/payment.i
+
+# target to preprocess a source file
+tpcc/payment.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/payment.cpp.i
+.PHONY : tpcc/payment.cpp.i
+
+tpcc/payment.s: tpcc/payment.cpp.s
+
+.PHONY : tpcc/payment.s
+
+# target to generate assembly for a file
+tpcc/payment.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/payment.cpp.s
+.PHONY : tpcc/payment.cpp.s
 
 tpcc/sequence.obj: tpcc/sequence.cpp.obj
 
@@ -635,9 +716,18 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... tpcc/delivery.obj
+	@echo ... tpcc/delivery.i
+	@echo ... tpcc/delivery.s
 	@echo ... tpcc/neword.obj
 	@echo ... tpcc/neword.i
 	@echo ... tpcc/neword.s
+	@echo ... tpcc/ordstat.obj
+	@echo ... tpcc/ordstat.i
+	@echo ... tpcc/ordstat.s
+	@echo ... tpcc/payment.obj
+	@echo ... tpcc/payment.i
+	@echo ... tpcc/payment.s
 	@echo ... tpcc/sequence.obj
 	@echo ... tpcc/sequence.i
 	@echo ... tpcc/sequence.s

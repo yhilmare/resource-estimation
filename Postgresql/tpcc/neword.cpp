@@ -1,8 +1,10 @@
 //
 // Created by Administrator on 2019/4/11.
 //
-
-#include "neword.h"
+#include "../lib/pg_lib/pg_connection.h"
+#include "../lib/pg_lib/pg_prepared_statement.h"
+#include "../lib/pg_lib/pg_resultset.h"
+#include <vector>
 #include "../global_define.h"
 #include <random>
 #include <cstring>
@@ -265,7 +267,7 @@ int neword(int t_num, int w_id_arg, int d_id_arg,
     }catch(const std::exception &e){
         con.roll_back();
         std::cerr << e.what() << std::endl;
-        return -1;
+        return 1;
     }
     return 0;
 }

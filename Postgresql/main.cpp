@@ -44,15 +44,17 @@ void regex_test(){
     }
 }
 
+int num_ware = 10;
+
 void load_data(){
     generate_item();
-    generate_warehouse(10);
+    generate_warehouse(num_ware);
 //    char buffer[1000];
 //    getcwd(buffer, 1000);
 //    unordered_map<string, string>
 //            map = parse_properties_file(string(buffer) + "/config/pg_config.properties");
 //    load_item(map);
-//    load_warehouse(map, 10);
+//    load_warehouse(map, num_ware);
 }
 
 void *thread_main(void *);

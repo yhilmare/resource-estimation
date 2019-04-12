@@ -134,7 +134,16 @@ CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/tools/date.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../tpcc/neword.cpp
-CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../tpcc/neword.h
+
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/pg_lib/pg_connection.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/pg_lib/pg_resultset.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../tpcc/payment.cpp
 
 CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: ../tpcc/sequence.cpp
 CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: ../tpcc/sequence.h
