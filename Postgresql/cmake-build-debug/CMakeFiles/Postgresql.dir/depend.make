@@ -123,6 +123,18 @@ CMakeFiles/Postgresql.dir/main.cpp.obj: ../load/data_load.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../load/driver.h
 CMakeFiles/Postgresql.dir/main.cpp.obj: ../main.cpp
 
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: .././lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../global_define.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/pg_lib/pg_connection.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/pg_lib/pg_resultset.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../tpcc/delivery.cpp
+
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
@@ -134,6 +146,16 @@ CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../lib/tools/date.h
 CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj: ../tpcc/neword.cpp
+
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/pg_lib/pg_connection.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/pg_lib/pg_resultset.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../tpcc/ordstat.cpp
 
 CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
 CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
@@ -147,4 +169,16 @@ CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../tpcc/payment.cpp
 
 CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: ../tpcc/sequence.cpp
 CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj: ../tpcc/sequence.h
+
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: C:/pgsql/simple_include/libpq-fe.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: C:/pgsql/simple_include/pg_config_ext.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: C:/pgsql/simple_include/postgres_ext.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: .././lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../global_define.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/pg_lib/pg_connection.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/pg_lib/pg_prepared_statement.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/pg_lib/pg_resultset.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/pg_lib/pg_statement.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../tpcc/slev.cpp
 

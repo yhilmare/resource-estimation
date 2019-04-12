@@ -187,6 +187,9 @@
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/tpcc/sequence.h">
 			<Option target="Postgresql"/>
 		</Unit>
+		<Unit filename="F:/repos/Resource_estimation/Postgresql/tpcc/slev.cpp">
+			<Option target="Postgresql"/>
+		</Unit>
 		<Unit filename="F:/repos/Resource_estimation/Postgresql/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

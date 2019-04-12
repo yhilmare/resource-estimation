@@ -23,7 +23,7 @@ case 9: strncpy(ol_dist_info, s_dist_09, 25); break; \
 case 10: strncpy(ol_dist_info, s_dist_10, 25); break; \
 }
 
-int neword(int t_num, int w_id_arg, int d_id_arg,
+int neword(int w_id_arg, int d_id_arg,
         int c_id_arg, int o_ol_cnt_arg, int o_all_local_arg,
         int itemid[], int supware[], int qty[], pg_connection &con,
         std::vector<pg_prepared_statement> &val) {

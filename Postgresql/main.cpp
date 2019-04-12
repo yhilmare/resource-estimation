@@ -73,7 +73,7 @@ int main(int argn, char *argv[]) {
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     int thread_num = 10;
     thread_arg arg(map, thread_num);
-    thread_main((void *)&arg);
+//    thread_main((void *)&arg);
 
 //    pthread_t t1, t2;
 //

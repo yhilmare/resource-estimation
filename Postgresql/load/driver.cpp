@@ -13,22 +13,25 @@
 int num_node = 0;
 extern int num_ware;
 
-int neword(int t_num, int w_id_arg, int d_id_arg,
+int neword(int w_id_arg, int d_id_arg,
            int c_id_arg, int o_ol_cnt_arg, int o_all_local_arg,
            int itemid[], int supware[], int qty[], pg_connection &con,
            std::vector<pg_prepared_statement> &val);
 
-int payment(int t_num, int w_id_arg, int d_id_arg, int byname,
+int payment(int w_id_arg, int d_id_arg, int byname,
             int c_w_id_arg, int c_d_id_arg, int c_id_arg,
             char c_last_arg[], float h_amount_arg, pg_connection &con,
             std::vector<pg_prepared_statement> &val);
 
-int ordstat(int t_num, int w_id_arg, int d_id_arg, int byname,
+int ordstat(int w_id_arg, int d_id_arg, int byname,
             int c_id_arg, char c_last_arg[], pg_connection &con,
             std::vector<pg_prepared_statement> &val);
 
-int delivery(int t_num, int w_id_arg, int o_carrier_id_arg,
+int delivery(int w_id_arg, int o_carrier_id_arg,
              pg_connection &con, std::vector<pg_prepared_statement> &val);
+
+int slev(int w_id_arg, int d_id_arg,	int level_arg,
+         pg_connection &con, std::vector<pg_prepared_statement> &val);
 
 
 int do_neword (pg_connection &con,
@@ -40,15 +43,38 @@ int do_payment(pg_connection &con,
 int do_ordstat (pg_connection &con,
                 std::vector<pg_prepared_statement> &val, int t_num);
 
+int do_delivery(pg_connection &con,
+                std::vector<pg_prepared_statement> &val,int t_num);
+
+int do_slev (pg_connection &con,
+             std::vector<pg_prepared_statement> &val, int t_num);
+
 
 int driver(pg_connection &con, std::vector<pg_prepared_statement> &val, int thread_num){
     int total_time = EXECUTE_TIME * 1000;
     clock_t start = clock();
 
     while((clock() - start) <= total_time){
-
+        switch(seq_get()){
+            case 0:
+                do_neword(con, val, thread_num);
+                break;
+            case 1:
+                do_payment(con, val, thread_num);
+                break;
+            case 2:
+                do_ordstat(con, val, thread_num);
+                break;
+            case 3:
+                do_delivery(con, val, thread_num);
+                break;
+            case 4:
+                do_slev(con, val, thread_num);
+                break;
+            default:
+                std::cerr << "Error - Unknown sequence." << std::endl;
+        }
     }
-
     return 0;
 }
 
@@ -68,13 +94,13 @@ int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int 
     int num_conn = t_num;
     int c_num;
     int i, ret;
-    int  w_id, d_id, c_id, ol_cnt;
-    int  all_local = 1;
-    int  notfound = MAXITEMS + 1;
+    int w_id, d_id, c_id, ol_cnt;
+    int all_local = 1;
+    int notfound = MAXITEMS + 1;
     int rbk;
-    int  itemid[MAX_NUM_ITEMS];
-    int  supware[MAX_NUM_ITEMS];
-    int  qty[MAX_NUM_ITEMS];
+    int itemid[MAX_NUM_ITEMS];
+    int supware[MAX_NUM_ITEMS];
+    int qty[MAX_NUM_ITEMS];
 
     if(num_node == 0){
         std::uniform_int_distribution<int> d(1, num_ware);
@@ -112,7 +138,7 @@ int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int 
     }
 
     for (i = 0; i < MAX_RETRY; i++) {
-        ret = neword(t_num, w_id, d_id, c_id, ol_cnt,
+        ret = neword(w_id, d_id, c_id, ol_cnt,
                 all_local, itemid, supware, qty, con, val);
         if(!ret){
             break;
@@ -128,7 +154,7 @@ int do_payment(pg_connection &con,
     int c_num;
     int num_conn = t_num;
     int byname, i, ret;
-    int  w_id, d_id, c_w_id, c_d_id, c_id, h_amount;
+    int w_id, d_id, c_w_id, c_d_id, c_id, h_amount;
     char c_last[17];
 
     if(num_node == 0){
@@ -157,13 +183,12 @@ int do_payment(pg_connection &con,
     if (d2(e) <= 85) {
         c_w_id = w_id;
         c_d_id = d_id;
-    }else{
+    }else {
         c_w_id = other_ware(w_id);
         c_d_id = d(e);
     }
-
     for (i = 0; i < MAX_RETRY; i++) {
-        ret = payment(t_num, w_id, d_id, byname, c_w_id, c_d_id,
+        ret = payment(w_id, d_id, byname, c_w_id, c_d_id,
                 c_id, c_last, h_amount, con, val);
         if(!ret){
             break;
@@ -202,7 +227,7 @@ int do_ordstat (pg_connection &con,
         byname = 0; /* select by customer id */
     }
     for (i = 0; i < MAX_RETRY; i++) {
-        ret = ordstat(t_num, w_id, d_id, byname, c_id, c_last, con, val);
+        ret = ordstat(w_id, d_id, byname, c_id, c_last, con, val);
         if(!ret){
             break;
         }
@@ -212,65 +237,63 @@ int do_ordstat (pg_connection &con,
 
 
 int do_delivery(pg_connection &con,
-        std::vector<pg_prepared_statement> &val,int t_num) {
+        std::vector<pg_prepared_statement> &val, int t_num) {
+    extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
     int i,ret;
-    clock_t clk1,clk2;
-    double rt;
-    struct timespec tbuf1;
-    struct timespec tbuf2;
-    int  w_id, o_carrier_id;
+    int w_id, o_carrier_id;
 
-    if(num_node==0){
-        w_id = RandomNumber(1, num_ware);
+    if(num_node == 0){
+        std::uniform_int_distribution<int> d(1, num_ware);
+        w_id = d(e);
     }else{
-        c_num = ((num_node * t_num)/num_conn); /* drop moduls */
-        w_id = RandomNumber(1 + (num_ware * c_num)/num_node,
-                            (num_ware * (c_num + 1))/num_node);
+        c_num = ((num_node * t_num) / num_conn); /* drop moduls */
+        std::uniform_int_distribution<int> d(1 + (num_ware * c_num) / num_node,
+                                             (num_ware * (c_num + 1)) / num_node);
+        w_id = d(e);
     }
-    o_carrier_id = RandomNumber(1, 10);
 
-    clk1 = clock_gettime(CLOCK_MONOTONIC, &tbuf1 );
+    std::uniform_int_distribution<int> d(1, 10);
+    o_carrier_id = d(e);
+
     for (i = 0; i < MAX_RETRY; i++) {
-        ret = delivery(t_num, w_id, o_carrier_id);
-        clk2 = clock_gettime(CLOCK_MONOTONIC, &tbuf2 );
-
-        if(ret){
-
-            rt = (double)(tbuf2.tv_sec * 1000.0 + tbuf2.tv_nsec/1000000.0-tbuf1.tv_sec * 1000.0 - tbuf1.tv_nsec/1000000.0);
-            if(rt > max_rt[3])
-                max_rt[3]=rt;
-            total_rt[3] += rt;
-            hist_inc(3, rt );
-            if(counting_on){
-                if( rt < rt_limit[3]){
-                    success[3]++;
-                    success2[3][t_num]++;
-                }else{
-                    late[3]++;
-                    late2[3][t_num]++;
-                }
-            }
-
-            return (1); /* end */
-        }else{
-
-            if(counting_on){
-                retry[3]++;
-                retry2[3][t_num]++;
-            }
-
+        ret = delivery(w_id, o_carrier_id, con, val);
+        if(!ret){
+            break;
         }
     }
+    return 0;
+}
 
-    if(counting_on){
-        retry[3]--;
-        retry2[3][t_num]--;
-        failure[3]++;
-        failure2[3][t_num]++;
+int do_slev (pg_connection &con,
+             std::vector<pg_prepared_statement> &val, int t_num) {
+    extern std::default_random_engine e;
+    int num_conn = t_num;
+    int c_num;
+    int i,ret;
+    int w_id, d_id, level;
+
+    if(num_node == 0){
+        std::uniform_int_distribution<int> d(1, num_ware);
+        w_id = d(e);
+    }else{
+        c_num = ((num_node * t_num) / num_conn); /* drop moduls */
+        std::uniform_int_distribution<int> d(1 + (num_ware * c_num) / num_node,
+                                             (num_ware * (c_num + 1)) / num_node);
+        w_id = d(e);
     }
+    std::uniform_int_distribution<int> d(1, DISTRICT_PER_WAREHOUSE);
+    d_id = d(e);
 
-    return (0);
+    std::uniform_int_distribution<int> d1(10, 20);
+    level = d1(e);
 
+    for (i = 0; i < MAX_RETRY; i++) {
+        ret = slev(w_id, d_id, level, con, val);
+        if(!ret){
+            break;
+        }
+    }
+    return 0;
 }

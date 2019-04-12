@@ -24,6 +24,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "F:/repos/Resource_estimation/Postgresql/tpcc/ordstat.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/tpcc/payment.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/tpcc/sequence.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.obj"
+  "F:/repos/Resource_estimation/Postgresql/tpcc/slev.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

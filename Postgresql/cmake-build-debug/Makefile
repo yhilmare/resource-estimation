@@ -662,6 +662,33 @@ tpcc/sequence.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/sequence.cpp.s
 .PHONY : tpcc/sequence.cpp.s
 
+tpcc/slev.obj: tpcc/slev.cpp.obj
+
+.PHONY : tpcc/slev.obj
+
+# target to build an object file
+tpcc/slev.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj
+.PHONY : tpcc/slev.cpp.obj
+
+tpcc/slev.i: tpcc/slev.cpp.i
+
+.PHONY : tpcc/slev.i
+
+# target to preprocess a source file
+tpcc/slev.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/slev.cpp.i
+.PHONY : tpcc/slev.cpp.i
+
+tpcc/slev.s: tpcc/slev.cpp.s
+
+.PHONY : tpcc/slev.s
+
+# target to generate assembly for a file
+tpcc/slev.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/slev.cpp.s
+.PHONY : tpcc/slev.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -731,6 +758,9 @@ help:
 	@echo ... tpcc/sequence.obj
 	@echo ... tpcc/sequence.i
 	@echo ... tpcc/sequence.s
+	@echo ... tpcc/slev.obj
+	@echo ... tpcc/slev.i
+	@echo ... tpcc/slev.s
 .PHONY : help
 
 

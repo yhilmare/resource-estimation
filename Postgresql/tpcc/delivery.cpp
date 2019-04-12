@@ -9,7 +9,7 @@
 #include <cstring>
 #include <random>
 
-int delivery(int t_num, int w_id_arg, int o_carrier_id_arg,
+int delivery(int w_id_arg, int o_carrier_id_arg,
         pg_connection &con, std::vector<pg_prepared_statement> &val) {
     int w_id = w_id_arg;
     int o_carrier_id = o_carrier_id_arg;

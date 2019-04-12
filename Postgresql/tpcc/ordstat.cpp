@@ -9,7 +9,7 @@
 #include <random>
 
 
-int ordstat(int t_num, int w_id_arg, int d_id_arg, int byname,
+int ordstat(int w_id_arg, int d_id_arg, int byname,
         int c_id_arg, char c_last_arg[], pg_connection &con,
             std::vector<pg_prepared_statement> &val){
     int w_id = w_id_arg;

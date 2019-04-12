@@ -19,6 +19,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj"
   "CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj"
   "CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj"
+  "CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj"
   "Postgresql.pdb"
   "Postgresql.exe"
   "Postgresql.exe.manifest"

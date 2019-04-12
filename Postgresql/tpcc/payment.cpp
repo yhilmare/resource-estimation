@@ -9,7 +9,7 @@
 #include <cstring>
 #include <random>
 
-int payment(int t_num, int w_id_arg, int d_id_arg, int byname,
+int payment(int w_id_arg, int d_id_arg, int byname,
         int c_w_id_arg, int c_d_id_arg, int c_id_arg,
         char c_last_arg[], float h_amount_arg, pg_connection &con,
         std::vector<pg_prepared_statement> &val) {
