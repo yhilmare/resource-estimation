@@ -11,6 +11,7 @@
 
 int delivery(int w_id_arg, int o_carrier_id_arg,
         pg_connection &con, std::vector<pg_prepared_statement> &val) {
+    std::clog << "delivery..." << std::endl;
     int w_id = w_id_arg;
     int o_carrier_id = o_carrier_id_arg;
     int d_id;
@@ -19,7 +20,6 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
     float ol_total;
     PG::Date current;
     long seconds = current.get_million_seconds();
-
     try{
         con.set_auto_commit(false);
         extern std::default_random_engine e;

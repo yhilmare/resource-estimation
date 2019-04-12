@@ -23,7 +23,6 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
     int o_id;
     char o_entry_d[25];
     char ol_delivery_d[25];
-
     try{
         con.set_auto_commit(false);
         if (byname) {
@@ -46,7 +45,6 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             st1.set_int(0, c_w_id);
             st1.set_int(1, c_d_id);
             st1.set_value(2, c_last);
-
             pg_resultset res1 = st1.execute_query();
             while(res1.has_next()){
                 strcpy(c_first, res1.get_value(1));
@@ -87,7 +85,6 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             o_id = res3.get_int(0);
             strcpy(o_entry_d, res3.get_value(1));
         }
-
         /*
          * const parameter_type type24[] = {int_type, int_type, int_type};
          * "SELECT ol_i_id, ol_supply_w_id, ol_quantity, ol_amount, ol_delivery_d FROM order_line WHERE ol_w_id = $1 AND ol_d_id = $2 AND ol_o_id = $3",

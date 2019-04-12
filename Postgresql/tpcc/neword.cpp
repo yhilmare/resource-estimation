@@ -27,7 +27,6 @@ int neword(int w_id_arg, int d_id_arg,
         int c_id_arg, int o_ol_cnt_arg, int o_all_local_arg,
         int itemid[], int supware[], int qty[], pg_connection &con,
         std::vector<pg_prepared_statement> &val) {
-
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int c_id = c_id_arg;
@@ -76,7 +75,6 @@ int neword(int w_id_arg, int d_id_arg,
     int min_num;
     int i,j,tmp,swp;
     int ol_num_seq[MAX_NUM_ITEMS];
-
     try{
         con.set_auto_commit(false);
         pg_prepared_statement st = val[0];
@@ -87,7 +85,6 @@ int neword(int w_id_arg, int d_id_arg,
         st.set_int(0, w_id);
         st.set_int(1, d_id);
         st.set_int(2, c_id);
-
         pg_resultset res = st.execute_query();
         while(res.has_next()){
             c_discount = res.get_float(0);
@@ -117,7 +114,6 @@ int neword(int w_id_arg, int d_id_arg,
         st2.set_int(0, d_next_o_id);
         st2.set_int(1, d_id);
         st2.set_int(2, w_id);
-
         st2.execute_update();
 
         pg_prepared_statement st3 = val[3];
@@ -133,7 +129,6 @@ int neword(int w_id_arg, int d_id_arg,
         st3.set_date(4, date);
         st3.set_int(5, o_ol_cnt);
         st3.set_int(6, o_all_local);
-
         st3.execute_update();
 
         pg_prepared_statement st4 = val[4];
@@ -144,9 +139,7 @@ int neword(int w_id_arg, int d_id_arg,
         st4.set_int(0, o_id);
         st4.set_int(1, d_id);
         st4.set_int(2, w_id);
-
         st4.execute_update();
-
         for (i = 0; i < o_ol_cnt; i++) {
             ol_num_seq[i] = i;
         }
@@ -165,7 +158,6 @@ int neword(int w_id_arg, int d_id_arg,
                 ol_num_seq[i] = swp;
             }
         }
-
         for (ol_number = 1; ol_number <= o_ol_cnt; ol_number++) {
             ol_supply_w_id = supware[ol_num_seq[ol_number - 1]];
             ol_i_id = itemid[ol_num_seq[ol_number - 1]];
@@ -177,7 +169,6 @@ int neword(int w_id_arg, int d_id_arg,
              * const parameter_type type5[] = {int_type};
              * */
             st5.set_int(0, ol_i_id);
-
             pg_resultset res2 = st5.execute_query();
             while(res2.has_next()){
                 i_price = res2.get_float(0);
@@ -196,7 +187,6 @@ int neword(int w_id_arg, int d_id_arg,
              * */
             st6.set_int(0, ol_i_id);
             st6.set_int(1, ol_supply_w_id);
-
             pg_resultset res3 = st6.execute_query();
             while(res.has_next()){
                 s_quantity = res3.get_int(0);
@@ -222,7 +212,6 @@ int neword(int w_id_arg, int d_id_arg,
             } else{
                 bg[ol_num_seq[ol_number - 1]] = 'G';
             }
-
             if (s_quantity > ol_quantity){
                 s_quantity = s_quantity - ol_quantity;
             } else{
@@ -237,7 +226,6 @@ int neword(int w_id_arg, int d_id_arg,
             st7.set_int(0, s_quantity);
             st7.set_int(1, ol_i_id);
             st7.set_int(2, ol_supply_w_id);
-
             st7.execute_update();
 
             ol_amount = ol_quantity * i_price * (1 + w_tax + d_tax) * (1 - c_discount);
@@ -260,7 +248,6 @@ int neword(int w_id_arg, int d_id_arg,
             st8.set_int(6, ol_quantity);
             st8.set_float(7, ol_amount);
             st8.set_value(8, ol_dist_info);
-
             st8.execute_update();
         }
         con.commit();

@@ -73,7 +73,7 @@ int main(int argn, char *argv[]) {
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     int thread_num = 10;
     thread_arg arg(map, thread_num);
-//    thread_main((void *)&arg);
+    thread_main((void *)&arg);
 
 //    pthread_t t1, t2;
 //
@@ -87,8 +87,10 @@ int main(int argn, char *argv[]) {
 }
 
 void *thread_main(void *param){
-
     using namespace std;
+
+    std::clog << "This is Thread"
+
     thread_arg *arg = (thread_arg *)param;
     unordered_map<string, string> config = arg->config;
     int thread_num = arg->thread_num;
@@ -110,8 +112,7 @@ void *thread_main(void *param){
         const parameter_type *type = SQL_PARAMETER_TYPE[i];
         pg_prepared_statement tmp_st = con.prepared_statement(sql, type);
         val.push_back(tmp_st);
-        cout << tmp_st.get_prepared_name() << ": " << tmp_st.get_parameters_count() << endl;
     }
-    driver(con, val, thread_num);
+//    driver(con, val, thread_num);
     return param;
 }

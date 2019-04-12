@@ -22,7 +22,7 @@
 #define MAX_NUM_ITEMS 15
 #define MAX_ITEM_LEN 24
 #define MAXITEMS 100000
-#define MAX_RETRY 2000
+#define MAX_RETRY 3
 
 #include <string>
 #include "./lib/pg_lib/pg_prepared_statement.h"
