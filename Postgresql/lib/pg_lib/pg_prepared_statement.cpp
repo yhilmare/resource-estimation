@@ -80,6 +80,7 @@ pg_prepared_statement::pg_prepared_statement(PGconn *conn,
     this->prepare_prefix += (std::string(") as ") + this->sql);
 //    std::cout << this->prepare_prefix << std::endl;
     PGresult *result = PQexec(this->conn, this->prepare_prefix.c_str());
+    this->verify_sql_executeresult(result);
     PQclear(result);
 }
 
@@ -216,9 +217,9 @@ pg_resultset pg_prepared_statement::analyse_sql() {
 }
 
 pg_prepared_statement::~pg_prepared_statement() {
-    std::string execute = std::string("deallocate prepare ") + this->prepared_name + std::string(";");
-    PGresult *result = PQexec(this->conn, execute.c_str());
-    PQclear(result);
+//    std::string execute = std::string("deallocate prepare ") + this->prepared_name + std::string(";");
+//    PGresult *result = PQexec(this->conn, execute.c_str());
+//    PQclear(result);
     for (int i = 0; i < this->parameters.size(); i ++){
         if (this->parameters[i]){
             delete []this->parameters[i];

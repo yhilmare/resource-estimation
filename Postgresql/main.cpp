@@ -73,23 +73,22 @@ int main(int argn, char *argv[]) {
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     int thread_num = 10;
     thread_arg arg(map, thread_num);
-    thread_main((void *)&arg);
-
-//    pthread_t t1, t2;
-//
-//    pthread_create(&t1, NULL, thread_main, (void *) &map);
-//    pthread_create(&t2, NULL, thread_main, (void *) &map);
-//
-//    pthread_join(t1, NULL);
-//    pthread_join(t2, NULL);
-
+//    thread_main((void *)&arg);
+    pthread_t t1, t2;
+    pthread_create(&t1, NULL, thread_main, (void *) &map);
+    pthread_create(&t2, NULL, thread_main, (void *) &map);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
     return 0;
 }
 
 void *thread_main(void *param){
     using namespace std;
 
-    std::clog << "This is Thread"
+    pthread_t t = pthread_self();
+    std::clog << "This is Thread: [" << t << "]@"
+              << (void *)&t << ", function [thread_main]@"
+              << (void *)thread_main << std::endl;
 
     thread_arg *arg = (thread_arg *)param;
     unordered_map<string, string> config = arg->config;
@@ -102,7 +101,7 @@ void *thread_main(void *param){
     string user = config["PG_USER"];
     string port = config["PG_PORT"];
 
-    seq_init(10,10,1,1,1);
+    seq_init(10, 10, 1, 1, 1);
 
     pg_connection con(user.c_str(), password.c_str(),
             host.c_str(), database.c_str(), port.c_str());
@@ -113,6 +112,6 @@ void *thread_main(void *param){
         pg_prepared_statement tmp_st = con.prepared_statement(sql, type);
         val.push_back(tmp_st);
     }
-//    driver(con, val, thread_num);
+    driver(con, val, thread_num);
     return param;
 }

@@ -48,7 +48,8 @@ int do_delivery(pg_connection &con,
 int do_slev (pg_connection &con,
              std::vector<pg_prepared_statement> &val, int t_num);
 
-int driver(pg_connection &con, std::vector<pg_prepared_statement> &val, int thread_num){
+int driver(pg_connection &con,
+        std::vector<pg_prepared_statement> &val, int thread_num){
     int total_time = EXECUTE_TIME * 1000;
     clock_t start = clock();
     while((clock() - start) <= total_time){
@@ -88,7 +89,10 @@ int other_ware (int home_ware) {
 
 int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int t_num) {
 
-    std::clog << "do_neword" << std::endl;
+    pthread_t t = pthread_self();
+    std::clog << "This is Thread: [" << t << "]@"
+              << (void *)&t << ", function [do_neword]@"
+              << (void *)do_neword << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
@@ -149,7 +153,10 @@ int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int 
 int do_payment(pg_connection &con,
         std::vector<pg_prepared_statement> &val, int t_num) {
 
-    std::clog << "do_payment" << std::endl;
+    pthread_t t = pthread_self();
+    std::clog << "This is Thread: [" << t << "]@"
+              << (void *)&t << ", function [do_payment]@"
+              << (void *)do_payment << std::endl;
     extern std::default_random_engine e;
     int c_num;
     int num_conn = t_num;
@@ -197,10 +204,13 @@ int do_payment(pg_connection &con,
     return 0;
 }
 
-int do_ordstat (pg_connection &con,
+int do_ordstat(pg_connection &con,
                        std::vector<pg_prepared_statement> &val, int t_num) {
 
-    std::clog << "do_ordstat" << std::endl;
+    pthread_t t = pthread_self();
+    std::clog << "This is Thread: [" << t << "]@"
+              << (void *)&t << ", function [do_ordstat]@"
+              << (void *)do_ordstat << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
@@ -240,7 +250,10 @@ int do_ordstat (pg_connection &con,
 int do_delivery(pg_connection &con,
         std::vector<pg_prepared_statement> &val, int t_num) {
 
-    std::clog << "do_delivery" << std::endl;
+    pthread_t t = pthread_self();
+    std::clog << "This is Thread: [" << t << "]@"
+              << (void *)&t << ", function [do_delivery]@"
+              << (void *)do_delivery << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
@@ -271,7 +284,11 @@ int do_delivery(pg_connection &con,
 
 int do_slev (pg_connection &con,
              std::vector<pg_prepared_statement> &val, int t_num) {
-    std::clog << "do_slev" << std::endl;
+
+    pthread_t t = pthread_self();
+    std::clog << "This is Thread: [" << t << "]@"
+              << (void *)&t << ", function [do_slev]@"
+              << (void *)do_slev << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
