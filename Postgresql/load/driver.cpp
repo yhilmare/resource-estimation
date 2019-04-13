@@ -99,7 +99,7 @@ int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int 
     int i, ret;
     int w_id, d_id, c_id, ol_cnt;
     int all_local = 1;
-    int notfound = MAXITEMS + 1;
+    int notfound = STOCK_PER_WAREHOUSE + 1;
     int rbk;
     int itemid[MAX_NUM_ITEMS];
     int supware[MAX_NUM_ITEMS];
@@ -126,7 +126,7 @@ int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int 
 
     std::uniform_int_distribution<int> d3(1, 10);
     for (i = 0; i < ol_cnt; i++) {
-        itemid[i] = RANDOM_GEN::NURand(8191, 1, MAXITEMS);
+        itemid[i] = RANDOM_GEN::NURand(8191, 1, STOCK_PER_WAREHOUSE);
         if ((i == ol_cnt - 1) && (rbk == 1)) {
             itemid[i] = notfound;
         }

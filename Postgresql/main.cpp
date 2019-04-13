@@ -74,11 +74,11 @@ int main(int argn, char *argv[]) {
     int thread_num = 10;
     thread_arg arg(map, thread_num);
 //    thread_main((void *)&arg);
-    pthread_t t1, t2;
-    pthread_create(&t1, NULL, thread_main, (void *) &map);
-    pthread_create(&t2, NULL, thread_main, (void *) &map);
-    pthread_join(t1, NULL);
-    pthread_join(t2, NULL);
+    for (int i = 0; i < thread_num; i ++){
+        pthread_t t1;
+        pthread_create(&t1, NULL, thread_main, (void *) &map);
+        pthread_join(t1, NULL);
+    }
     return 0;
 }
 

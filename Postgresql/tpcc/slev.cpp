@@ -34,10 +34,10 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         while(res.has_next()){
             d_next_o_id = res.get_int(0);
         }
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [slev]@" << (void *)slev
-                  << ", pg_prepared_statement [st]@"
-                  << (void *)&st << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [slev]@" << (void *)slev
+//                  << ", pg_prepared_statement [st]@"
+//                  << (void *)&st << std::endl;
 
         /*
          * const parameter_type type33[] = {int_type, int_type, int_type, int_type};
@@ -53,10 +53,10 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         while(res1.has_next()){
             ol_i_id = res1.get_int(0);
         }
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [slev]@" << (void *)slev
-                  << ", pg_prepared_statement [st1]@"
-                  << (void *)&st1 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [slev]@" << (void *)slev
+//                  << ", pg_prepared_statement [st1]@"
+//                  << (void *)&st1 << std::endl;
         /*
          * "SELECT count(*) FROM stock WHERE s_w_id = $1 AND s_i_id = $2 AND s_quantity < $3"
          * const parameter_type type34[] = {int_type, int_type, int_type};
@@ -67,10 +67,10 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         st2.set_int(1, ol_i_id);
         st2.set_int(2, level);
         pg_resultset res2 = st2.execute_query();
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [slev]@" << (void *)slev
-                  << ", pg_prepared_statement [st2]@"
-                  << (void *)&st2 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [slev]@" << (void *)slev
+//                  << ", pg_prepared_statement [st2]@"
+//                  << (void *)&st2 << std::endl;
         con.commit();
     }catch(std::exception &e){
         con.roll_back();

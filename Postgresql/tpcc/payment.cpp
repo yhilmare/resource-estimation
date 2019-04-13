@@ -64,10 +64,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
         st.set_float(0, h_amount);
         st.set_int(1, w_id);
         st.execute_update();
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [payment]@" << (void *)payment
-                  << ", pg_prepared_statement [st]@"
-                  << (void *)&st << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [payment]@" << (void *)payment
+//                  << ", pg_prepared_statement [st]@"
+//                  << (void *)&st << std::endl;
         /*
          * "SELECT w_street_1, w_street_2, w_city, w_state, w_zip, w_name FROM warehouse WHERE w_id = $1",
          * const parameter_type type10[] = {int_type};
@@ -84,10 +84,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             strcpy(w_zip, res.get_value(4));
             strcpy(w_name, res.get_value(5));
         }
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [payment]@" << (void *)payment
-                  << ", pg_prepared_statement [st1]@"
-                  << (void *)&st1 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [payment]@" << (void *)payment
+//                  << ", pg_prepared_statement [st1]@"
+//                  << (void *)&st1 << std::endl;
         /*
          * const parameter_type type11[] = {numeric_type, int_type, int_type};
          * "UPDATE district SET d_ytd = d_ytd + $1 WHERE d_w_id = $2 AND d_id = $3",
@@ -98,10 +98,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
         st2.set_int(1, w_id);
         st2.set_int(2, d_id);
         st2.execute_update();
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [payment]@" << (void *)payment
-                  << ", pg_prepared_statement [st2]@"
-                  << (void *)&st2 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [payment]@" << (void *)payment
+//                  << ", pg_prepared_statement [st2]@"
+//                  << (void *)&st2 << std::endl;
         /*
          * const parameter_type type12[] = {int_type, int_type};
          * "SELECT d_street_1, d_street_2, d_city, d_state, d_zip, d_name FROM district WHERE d_w_id = $1 AND d_id = $2",
@@ -119,10 +119,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             strcpy(d_zip, res1.get_value(4));
             strcpy(d_name, res1.get_value(5));
         }
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [payment]@" << (void *)payment
-                  << ", pg_prepared_statement [st3]@"
-                  << (void *)&st3 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [payment]@" << (void *)payment
+//                  << ", pg_prepared_statement [st3]@"
+//                  << (void *)&st3 << std::endl;
         if (byname) {
             strcpy(c_last, c_last_arg);
             /*
@@ -135,10 +135,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             st4.set_int(1, c_d_id);
             st4.set_value(2, c_last);
             pg_resultset res2 = st4.execute_query();
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [payment]@" << (void *)payment
-                      << ", pg_prepared_statement [st4]@"
-                      << (void *)&st4 << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [payment]@" << (void *)payment
+//                      << ", pg_prepared_statement [st4]@"
+//                      << (void *)&st4 << std::endl;
             /*
              * const parameter_type type14[] = {int_type, int_type, text_type};
              * "SELECT c_id FROM customer WHERE c_w_id = $1 AND c_d_id = $2 AND c_last = $3 ORDER BY c_first",
@@ -152,10 +152,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             while(res3.has_next()){
                 c_id = res3.get_int(0);
             }
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [payment]@" << (void *)payment
-                      << ", pg_prepared_statement [st5]@"
-                      << (void *)&st5 << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [payment]@" << (void *)payment
+//                      << ", pg_prepared_statement [st5]@"
+//                      << (void *)&st5 << std::endl;
         }
         /*
          * "SELECT c_first, c_middle, c_last, c_street_1, c_street_2, c_city, c_state,
@@ -184,10 +184,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             c_balance = res4.get_float(12);
             strcpy(c_since, res4.get_value(13));
         }
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [payment]@" << (void *)payment
-                  << ", pg_prepared_statement [st6]@"
-                  << (void *)&st6 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [payment]@" << (void *)payment
+//                  << ", pg_prepared_statement [st6]@"
+//                  << (void *)&st6 << std::endl;
         c_balance = c_balance - h_amount;
         c_credit[2] = '\0';
         if (strstr(c_credit, "BC")) {
@@ -204,10 +204,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             while(res5.has_next()){
                 strcpy(c_data, res5.get_value(0));
             }
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [payment]@" << (void *)payment
-                      << ", pg_prepared_statement [st7]@"
-                      << (void *)&st7 << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [payment]@" << (void *)payment
+//                      << ", pg_prepared_statement [st7]@"
+//                      << (void *)&st7 << std::endl;
             /*
              * "UPDATE customer SET c_balance = $1, c_data = $2 WHERE c_w_id = $3 AND c_d_id = $4 AND c_id = $5",
              * const parameter_type type17[] = {numeric_type, text_type, int_type, int_type, int_type};
@@ -220,10 +220,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             st8.set_int(3, c_d_id);
             st8.set_int(4, c_id);
             st8.execute_update();
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [payment]@" << (void *)payment
-                      << ", pg_prepared_statement [st8]@"
-                      << (void *)&st8 << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [payment]@" << (void *)payment
+//                      << ", pg_prepared_statement [st8]@"
+//                      << (void *)&st8 << std::endl;
         } else {
             /*
              * const parameter_type type18[] = {numeric_type, int_type, int_type, int_type};
@@ -236,10 +236,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             st9.set_int(2, c_d_id);
             st9.set_int(3, c_id);
             st9.execute_update();
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [payment]@" << (void *)payment
-                      << ", pg_prepared_statement [st9]@"
-                      << (void *)&st9 << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [payment]@" << (void *)payment
+//                      << ", pg_prepared_statement [st9]@"
+//                      << (void *)&st9 << std::endl;
         }
         strncpy(h_data, w_name, 10);
         h_data[10] = '\0';
@@ -266,10 +266,10 @@ int payment(int w_id_arg, int d_id_arg, int byname,
         st10.set_float(6, h_amount);
         st10.set_value(7, h_data);
         st10.execute_update();
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [payment]@" << (void *)payment
-                  << ", pg_prepared_statement [st10]@"
-                  << (void *)&st10 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [payment]@" << (void *)payment
+//                  << ", pg_prepared_statement [st10]@"
+//                  << (void *)&st10 << std::endl;
         con.commit();
     }catch(std::exception &e){
         con.roll_back();

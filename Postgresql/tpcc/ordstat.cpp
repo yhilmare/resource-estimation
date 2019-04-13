@@ -41,10 +41,10 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             st.set_int(1, c_d_id);
             st.set_value(2, c_last);
             pg_resultset res = st.execute_query();
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
-                      << ", pg_prepared_statement [st]@"
-                      << (void *)&st << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
+//                      << ", pg_prepared_statement [st]@"
+//                      << (void *)&st << std::endl;
 
             /*
              * "SELECT c_balance, c_first, c_middle, c_last FROM customer WHERE c_w_id = $1 AND c_d_id = $2 AND c_last = $3 ORDER BY c_first",
@@ -60,10 +60,10 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
                 strcpy(c_middle, res1.get_value(2));
                 strcpy(c_last, res1.get_value(3));
             }
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
-                      << ", pg_prepared_statement [st1]@"
-                      << (void *)&st1 << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
+//                      << ", pg_prepared_statement [st1]@"
+//                      << (void *)&st1 << std::endl;
         } else {
             /*
              * const parameter_type type22[] = {int_type, int_type, int_type};
@@ -80,10 +80,10 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
                 strcpy(c_middle, res2.get_value(2));
                 strcpy(c_last, res2.get_value(3));
             }
-            std::clog << " ----> Thread: [" << t << "]@"
-                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
-                      << ", pg_prepared_statement [st2]@"
-                      << (void *)&st2 << std::endl;
+//            std::clog << " ----> Thread: [" << t << "]@"
+//                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
+//                      << ", pg_prepared_statement [st2]@"
+//                      << (void *)&st2 << std::endl;
         }
         /*
          * "SELECT o_id, o_entry_d, COALESCE(o_carrier_id,0) FROM orders WHERE o_w_id = $1
@@ -103,10 +103,10 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             o_id = res3.get_int(0);
             strcpy(o_entry_d, res3.get_value(1));
         }
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
-                  << ", pg_prepared_statement [st3]@"
-                  << (void *)&st3 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
+//                  << ", pg_prepared_statement [st3]@"
+//                  << (void *)&st3 << std::endl;
         /*
          * const parameter_type type24[] = {int_type, int_type, int_type};
          * "SELECT ol_i_id, ol_supply_w_id, ol_quantity, ol_amount, ol_delivery_d FROM order_line WHERE ol_w_id = $1 AND ol_d_id = $2 AND ol_o_id = $3",
@@ -120,10 +120,10 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
         while(res4.has_next()){
             strcpy(ol_delivery_d, res4.get_value(4));
         }
-        std::clog << " ----> Thread: [" << t << "]@"
-                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
-                  << ", pg_prepared_statement [st4]@"
-                  << (void *)&st4 << std::endl;
+//        std::clog << " ----> Thread: [" << t << "]@"
+//                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
+//                  << ", pg_prepared_statement [st4]@"
+//                  << (void *)&st4 << std::endl;
         con.commit();
     }catch(std::exception &e){
         con.roll_back();
