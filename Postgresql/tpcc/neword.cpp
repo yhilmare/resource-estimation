@@ -23,15 +23,15 @@ case 9: strncpy(ol_dist_info, s_dist_09, 25); break; \
 default: strncpy(ol_dist_info, s_dist_10, 25); break; \
 }
 
-int neword(int w_id_arg, int d_id_arg,
-        int c_id_arg, int o_ol_cnt_arg, int o_all_local_arg,
+int neword(int w_id_arg, int d_id_arg, int c_id_arg,
+        int o_ol_cnt_arg, int o_all_local_arg,
         int itemid[], int supware[], int qty[], pg_connection &con,
-        std::vector<pg_prepared_statement> &val) {
-
+           std::vector<pg_prepared_statement> &val) {
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [neword]@"
               << (void *)neword << std::endl;
+    extern std::default_random_engine e;
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int c_id = c_id_arg;
@@ -43,10 +43,6 @@ int neword(int w_id_arg, int d_id_arg,
     float w_tax;
     int d_next_o_id;
     float d_tax;
-    PG::Date current;
-    long seconds = current.get_million_seconds();
-    extern std::default_random_engine e;
-    std::uniform_int_distribution<long> d3(0L, 630720000L);
     int o_id;
     char i_name[25];
     float i_price;
@@ -69,6 +65,9 @@ int neword(int w_id_arg, int d_id_arg,
     float ol_amount;
     int ol_number;
     int ol_quantity;
+    PG::Date current;
+    long seconds = current.get_million_seconds();
+    std::uniform_int_distribution<long> d3(0L, 630720000L);
 
     char iname[MAX_NUM_ITEMS][MAX_ITEM_LEN];
     char bg[MAX_NUM_ITEMS];
@@ -78,15 +77,16 @@ int neword(int w_id_arg, int d_id_arg,
     float total = 0.0;
 
     int min_num;
-    int i,j,tmp,swp;
+    int i, j, tmp, swp;
     int ol_num_seq[MAX_NUM_ITEMS];
+
     try{
         con.set_auto_commit(false);
-        pg_prepared_statement st = val[0];
         /*
-         * SELECT c_discount, c_last, c_credit, w_tax FROM customer, warehouse WHERE w_id = $1 AND c_w_id = w_id AND c_d_id = $2 AND c_id = $3
          * const parameter_type type0[] = {int_type, int_type, int_type};
+         * "SELECT c_discount, c_last, c_credit, w_tax FROM customer, warehouse WHERE w_id = $1 AND c_w_id = w_id AND c_d_id = $2 AND c_id = $3",
          * */
+        pg_prepared_statement st = val[0];
         st.set_int(0, w_id);
         st.set_int(1, d_id);
         st.set_int(2, c_id);
@@ -97,16 +97,11 @@ int neword(int w_id_arg, int d_id_arg,
             strcpy(c_credit, res.get_value(2));
             w_tax = res.get_float(3);
         }
-//        std::clog << " ----> Thread: [" << t << "]@"
-//                  << (void *)&t << ", function [neword]@" << (void *)neword
-//                  << ", pg_prepared_statement [st]@"
-//                  << (void *)&st << std::endl;
-
-        pg_prepared_statement st1 = val[1];
         /*
-         * const parameter_type type1[] = {int_type, int_type};
          * "SELECT d_next_o_id, d_tax FROM district WHERE d_id = $1 AND d_w_id = $2 FOR UPDATE",
+         * const parameter_type type1[] = {int_type, int_type};
          * */
+        pg_prepared_statement st1 = val[1];
         st1.set_int(0, d_id);
         st1.set_int(1, w_id);
         pg_resultset res1 = st1.execute_query();
@@ -114,32 +109,23 @@ int neword(int w_id_arg, int d_id_arg,
             d_next_o_id = res1.get_int(0);
             d_tax = res1.get_float(1);
         }
-//        std::clog << " ----> Thread: [" << t << "]@"
-//                  << (void *)&t << ", function [neword]@" << (void *)neword
-//                  << ", pg_prepared_statement [st1]@"
-//                  << (void *)&st1 << std::endl;
-
-        pg_prepared_statement st2 = val[2];
-
         /*
          * const parameter_type type2[] = {int_type, int_type, int_type};
          * "UPDATE district SET d_next_o_id = $1 + 1 WHERE d_id = $2 AND d_w_id = $3",
          * */
+        pg_prepared_statement st2 = val[2];
         st2.set_int(0, d_next_o_id);
         st2.set_int(1, d_id);
         st2.set_int(2, w_id);
         st2.execute_update();
-//        std::clog << " ----> Thread: [" << t << "]@"
-//                  << (void *)&t << ", function [neword]@" << (void *)neword
-//                  << ", pg_prepared_statement [st2]@"
-//                  << (void *)&st2 << std::endl;
-        o_id = d_next_o_id;
 
-        pg_prepared_statement st3 = val[3];
+        o_id = d_next_o_id;
         /*
-         * const parameter_type type3[] = {int_type, int_type, int_type, int_type, date_type, int_type, int_type};
          * "INSERT INTO orders (o_id, o_d_id, o_w_id, o_c_id, o_entry_d, o_ol_cnt, o_all_local) VALUES($1, $2, $3, $4, $5, $6, $7)",
+         * const parameter_type type3[] = {int_type, int_type, int_type, int_type, date_type, int_type, int_type};
          * */
+        pg_prepared_statement st3 = val[3];
+        std::cout << o_id << " " << d_id << " " << w_id << std::endl;
         st3.set_int(0, o_id);
         st3.set_int(1, d_id);
         st3.set_int(2, w_id);
@@ -149,24 +135,16 @@ int neword(int w_id_arg, int d_id_arg,
         st3.set_int(5, o_ol_cnt);
         st3.set_int(6, o_all_local);
         st3.execute_update();
-//        std::clog << " ----> Thread: [" << t << "]@"
-//                  << (void *)&t << ", function [neword]@" << (void *)neword
-//                  << ", pg_prepared_statement [st3]@"
-//                  << (void *)&st3 << std::endl;
-
-        pg_prepared_statement st4 = val[4];
         /*
-         * {int_type, int_type, int_type};
+         * const parameter_type type4[] = {int_type, int_type, int_type};
          * "INSERT INTO new_orders (no_o_id, no_d_id, no_w_id) VALUES ($1,$2,$3)",
          * */
+        pg_prepared_statement st4 = val[4];
         st4.set_int(0, o_id);
         st4.set_int(1, d_id);
         st4.set_int(2, w_id);
         st4.execute_update();
-//        std::clog << " ----> Thread: [" << t << "]@"
-//                  << (void *)&t << ", function [neword]@" << (void *)neword
-//                  << ", pg_prepared_statement [st4]@"
-//                  << (void *)&st4 << std::endl;
+
         for (i = 0; i < o_ol_cnt; i++) {
             ol_num_seq[i] = i;
         }
@@ -190,11 +168,11 @@ int neword(int w_id_arg, int d_id_arg,
             ol_i_id = itemid[ol_num_seq[ol_number - 1]];
             ol_quantity = qty[ol_num_seq[ol_number - 1]];
 
-            pg_prepared_statement st5 = val[5];
             /*
              * "SELECT i_price, i_name, i_data FROM item WHERE i_id = $1",
              * const parameter_type type5[] = {int_type};
              * */
+            pg_prepared_statement st5 = val[5];
             st5.set_int(0, ol_i_id);
             pg_resultset res2 = st5.execute_query();
             while(res2.has_next()){
@@ -202,20 +180,15 @@ int neword(int w_id_arg, int d_id_arg,
                 strcpy(i_name, res2.get_value(1));
                 strcpy(i_data, res2.get_value(2));
             }
-//            std::clog << " ----> Thread: [" << t << "]@"
-//                      << (void *)&t << ", function [neword]@" << (void *)neword
-//                      << ", pg_prepared_statement [st5]@"
-//                      << (void *)&st5 << std::endl;
             price[ol_num_seq[ol_number - 1]] = i_price;
             strncpy(iname[ol_num_seq[ol_number - 1]], i_name, 25);
-
-            pg_prepared_statement st6 = val[6];
             /*
-             * "SELECT s_quantity, s_data, s_dist_01, s_dist_02, s_dist_03, s_dist_04,
-             * s_dist_05, s_dist_06, s_dist_07, s_dist_08, s_dist_09, s_dist_10 FROM
-             * stock WHERE s_i_id = $1 AND s_w_id = $2 FOR UPDATE",
              * const parameter_type type6[] = {int_type, int_type};
+             * "SELECT s_quantity, s_data, s_dist_01, s_dist_02, s_dist_03, s_dist_04,
+             * s_dist_05, s_dist_06, s_dist_07, s_dist_08, s_dist_09, s_dist_10
+             * FROM stock WHERE s_i_id = $1 AND s_w_id = $2 FOR UPDATE",
              * */
+            pg_prepared_statement st6 = val[6];
             st6.set_int(0, ol_i_id);
             st6.set_int(1, ol_supply_w_id);
             pg_resultset res3 = st6.execute_query();
@@ -233,51 +206,41 @@ int neword(int w_id_arg, int d_id_arg,
                 strcpy(s_dist_09, res3.get_value(10));
                 strcpy(s_dist_10, res3.get_value(11));
             }
-//            std::clog << " ----> Thread: [" << t << "]@"
-//                      << (void *)&t << ", function [neword]@" << (void *)neword
-//                      << ", pg_prepared_statement [st6]@"
-//                      << (void *)&st6 << std::endl;
 
             pick_dist_info(ol_dist_info, d_id);
             stock[ol_num_seq[ol_number - 1]] = s_quantity;
 
-            if ((strstr(i_data, "original") != NULL) &&
-                (strstr(s_data, "original") != NULL)){
+            if ((strstr(i_data, "original") != NULL) && (strstr(s_data, "original") != NULL)){
                 bg[ol_num_seq[ol_number - 1]] = 'B';
             } else{
                 bg[ol_num_seq[ol_number - 1]] = 'G';
             }
+
             if (s_quantity > ol_quantity){
                 s_quantity = s_quantity - ol_quantity;
-            } else{
+            }else{
                 s_quantity = s_quantity - ol_quantity + 91;
             }
 
-            pg_prepared_statement st7 = val[7];
             /*
-             * const parameter_type type7[] = {int_type, int_type, int_type};
              * "UPDATE stock SET s_quantity = $1 WHERE s_i_id = $2 AND s_w_id = $3",
+             * const parameter_type type7[] = {int_type, int_type, int_type};
              * */
+            pg_prepared_statement st7 = val[7];
             st7.set_int(0, s_quantity);
             st7.set_int(1, ol_i_id);
             st7.set_int(2, ol_supply_w_id);
             st7.execute_update();
-//            std::clog << " ----> Thread: [" << t << "]@"
-//                      << (void *)&t << ", function [neword]@" << (void *)neword
-//                      << ", pg_prepared_statement [st7]@"
-//                      << (void *)&st7 << std::endl;
 
             ol_amount = ol_quantity * i_price * (1 + w_tax + d_tax) * (1 - c_discount);
             amt[ol_num_seq[ol_number - 1]] = ol_amount;
             total += ol_amount;
-
-            pg_prepared_statement st8 = val[8];
             /*
              * const parameter_type type8[] = {int_type, int_type, int_type, int_type, int_type, int_type, int_type, numeric_type, text_type};
-             * "INSERT INTO order_line (ol_o_id, ol_d_id, ol_w_id, ol_number,
-             * ol_i_id, ol_supply_w_id, ol_quantity, ol_amount, ol_dist_info)
+             * "INSERT INTO order_line (ol_o_id, ol_d_id, ol_w_id, ol_number, ol_i_id, ol_supply_w_id, ol_quantity, ol_amount, ol_dist_info)
              * VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
              * */
+            pg_prepared_statement st8 = val[8];
             st8.set_int(0, o_id);
             st8.set_int(1, d_id);
             st8.set_int(2, w_id);
@@ -287,14 +250,9 @@ int neword(int w_id_arg, int d_id_arg,
             st8.set_int(6, ol_quantity);
             st8.set_float(7, ol_amount);
             st8.set_value(8, ol_dist_info);
-            st8.execute_update();
-//            std::clog << " ----> Thread: [" << t << "]@"
-//                      << (void *)&t << ", function [neword]@" << (void *)neword
-//                      << ", pg_prepared_statement [st8]@"
-//                      << (void *)&st8 << std::endl;
         }
         con.commit();
-    }catch(const std::exception &e){
+    }catch(std::exception &e){
         con.roll_back();
         std::cerr << e.what() << std::endl;
         return 1;

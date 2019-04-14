@@ -35,7 +35,7 @@ public:
     void set_int(int idx, int parameter);
     void set_float(int idx, float parameter);
     void set_date(int idx, PG::Date parameter);
-    void execute_update();
+    int execute_update();
     int get_parameters_count();
     std::string get_prepared_name();
     pg_resultset execute_query();

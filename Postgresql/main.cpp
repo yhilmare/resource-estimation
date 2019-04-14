@@ -69,14 +69,14 @@ int main(int argn, char *argv[]) {
     using namespace std;
     char buffer[1000];
     getcwd(buffer, 1000);
-    unordered_map<string, string> map =
+    unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
-    int thread_num = 10;
-    thread_arg arg(map, thread_num);
+    int thread_num = 3;
+    thread_arg arg(config, thread_num);
 //    thread_main((void *)&arg);
     for (int i = 0; i < thread_num; i ++){
         pthread_t t1;
-        pthread_create(&t1, NULL, thread_main, (void *) &map);
+        pthread_create(&t1, NULL, thread_main, (void *) &arg);
         pthread_join(t1, NULL);
     }
     return 0;

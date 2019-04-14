@@ -13,11 +13,13 @@ class pg_statement {
 protected:
     std::string sql;
     PGconn *conn;
+    int effect_num;
     void verify_sql_executeresult(PGresult *);
 public:
     pg_statement(PGconn *conn);
 
-    virtual void execute_update(const std::string &);
+    int get_effect_count();
+    virtual int execute_update(const std::string &);
     virtual pg_resultset execute_query(const std::string &);
 };
 

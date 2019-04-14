@@ -137,7 +137,7 @@ void pg_prepared_statement::set_value(int idx, const char *parameter) {
     this->parameters[idx] = tmp;
 }
 
-void pg_prepared_statement::execute_update() {
+int pg_prepared_statement::execute_update() {
     std::string execute = std::string("execute ") + this->prepared_name + std::string("(");
     for (std::vector<const char *>::iterator iter = this->parameters.begin();
          iter != this->parameters.end(); iter ++){
@@ -153,6 +153,8 @@ void pg_prepared_statement::execute_update() {
     execute += std::string(");");
 //    std::cout << execute << std::endl;
     PGresult *res = PQexec(this->conn, execute.c_str());
+    int tmp = atoi(PQcmdTuples(res));
+    this->effect_num = tmp;
     this->execute_sql = execute;
     this->verify_sql_executeresult(res);
     PQclear(res);
@@ -162,6 +164,7 @@ void pg_prepared_statement::execute_update() {
             this->parameters[i] = NULL;
         }
     }
+    return tmp;
 }
 
 pg_resultset pg_prepared_statement::execute_query() {
@@ -179,6 +182,7 @@ pg_resultset pg_prepared_statement::execute_query() {
     }
     execute += std::string(");");
     PGresult *result_set = PQexec(this->conn, execute.c_str());
+    this->effect_num = atoi(PQcmdTuples(result_set));
     this->execute_sql = execute;
     this->verify_sql_executeresult(result_set);
     for (int i = 0; i < this->parameters.size(); i ++){

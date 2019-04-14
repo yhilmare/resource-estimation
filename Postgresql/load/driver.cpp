@@ -50,7 +50,7 @@ int do_slev (pg_connection &con,
 
 int driver(pg_connection &con,
         std::vector<pg_prepared_statement> &val, int thread_num){
-    int total_time = EXECUTE_TIME * 1000;
+    int total_time = (EXECUTE_TIME * 1000) / thread_num;
     clock_t start = clock();
     while((clock() - start) <= total_time){
         switch(seq_get()){

@@ -14,16 +14,20 @@ pg_statement::pg_statement(PGconn *conn) {
     this->conn = conn;
 }
 
-void pg_statement::execute_update(const std::string &sql) {
+int pg_statement::execute_update(const std::string &sql) {
     this->sql = sql;
     PGresult *result_set = PQexec(this->conn, this->sql.c_str());
+    int tmp = atoi(PQcmdTuples(result_set));
+    this->effect_num = tmp;
     this->verify_sql_executeresult(result_set);
     PQclear(result_set);
+    return tmp;
 }
 
 pg_resultset pg_statement::execute_query(const std::string &sql) {
     this->sql = sql;
     PGresult *result_set = PQexec(this->conn, this->sql.c_str());
+    this->effect_num = atoi(PQcmdTuples(result_set));
     this->verify_sql_executeresult(result_set);
     return pg_resultset(result_set);
 }
@@ -48,3 +52,6 @@ void pg_statement::verify_sql_executeresult(PGresult *res) {
     }
 }
 
+int pg_statement::get_effect_count() {
+    return this->effect_num;
+}
