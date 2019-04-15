@@ -8,6 +8,7 @@
 #include "../global_define.h"
 #include <random>
 #include <cstring>
+#include "./container/transaction_obj.h"
 
 #define pick_dist_info(ol_dist_info,ol_supply_w_id) \
 switch(ol_supply_w_id) { \
@@ -26,12 +27,14 @@ default: strncpy(ol_dist_info, s_dist_10, 25); break; \
 int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         int o_ol_cnt_arg, int o_all_local_arg,
         int itemid[], int supware[], int qty[], pg_connection &con,
-        std::vector<pg_prepared_statement> &val) {
+        std::vector<pg_prepared_statement> &val, file_obj *obj) {
 
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [neword]@"
               << (void *)neword << std::endl;
+    transaction_obj tran_obj;
+    std::string tran_name = t + "@neword";
     extern std::default_random_engine e;
     int w_id = w_id_arg;
     int d_id = d_id_arg;
@@ -98,6 +101,10 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             strcpy(c_credit, res.get_value(2));
             w_tax = res.get_float(3);
         }
+        tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
+                res.get_tuples_count(), clock() - obj->start, tran_name));
+        tran_obj.add_item(transaction_item(SHARED_LOCK, "warehouse",
+                res.get_tuples_count(), clock() - obj->start, tran_name));
         /*
          * "SELECT d_next_o_id, d_tax FROM district WHERE d_id = $1 AND d_w_id = $2 FOR UPDATE",
          * const parameter_type type1[] = {int_type, int_type};
@@ -110,6 +117,8 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             d_next_o_id = res1.get_int(0);
             d_tax = res1.get_float(1);
         }
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "district",
+                res1.get_tuples_count(), clock() - obj->start, tran_name));
         /*
          * const parameter_type type2[] = {int_type, int_type, int_type};
          * "UPDATE district SET d_next_o_id = $1 + 1 WHERE d_id = $2 AND d_w_id = $3",
@@ -118,7 +127,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st2.set_int(0, d_next_o_id);
         st2.set_int(1, d_id);
         st2.set_int(2, w_id);
-        st2.execute_update();
+        int row_count = st2.execute_update();
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "district",
+                row_count, clock() - obj->start, tran_name));
 
         o_id = d_next_o_id;
         /*
@@ -134,7 +145,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st3.set_date(4, date);
         st3.set_int(5, o_ol_cnt);
         st3.set_int(6, o_all_local);
-        st3.execute_update();
+        row_count = st3.execute_update();
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "orders",
+                row_count, clock() - obj->start, tran_name));
         /*
          * const parameter_type type4[] = {int_type, int_type, int_type};
          * "INSERT INTO new_orders (no_o_id, no_d_id, no_w_id) VALUES ($1,$2,$3)",
@@ -143,8 +156,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st4.set_int(0, o_id);
         st4.set_int(1, d_id);
         st4.set_int(2, w_id);
-        st4.execute_update();
-
+        row_count = st4.execute_update();
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "new_orders",
+                row_count, clock() - obj->start, tran_name));
         for (i = 0; i < o_ol_cnt; i++) {
             ol_num_seq[i] = i;
         }
@@ -180,6 +194,8 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
                 strcpy(i_name, res2.get_value(1));
                 strcpy(i_data, res2.get_value(2));
             }
+            tran_obj.add_item(transaction_item(SHARED_LOCK, "item",
+                    res2.get_tuples_count(), clock() - obj->start, tran_name));
             price[ol_num_seq[ol_number - 1]] = i_price;
             strncpy(iname[ol_num_seq[ol_number - 1]], i_name, 25);
             /*
@@ -206,7 +222,8 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
                 strcpy(s_dist_09, res3.get_value(10));
                 strcpy(s_dist_10, res3.get_value(11));
             }
-
+            tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "stock",
+                    res3.get_tuples_count(), clock() - obj->start, tran_name));
             pick_dist_info(ol_dist_info, d_id);
             stock[ol_num_seq[ol_number - 1]] = s_quantity;
 
@@ -230,7 +247,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st7.set_int(0, s_quantity);
             st7.set_int(1, ol_i_id);
             st7.set_int(2, ol_supply_w_id);
-            st7.execute_update();
+            row_count = st7.execute_update();
+            tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "stock",
+                    row_count, clock() - obj->start, tran_name));
 
             ol_amount = ol_quantity * i_price * (1 + w_tax + d_tax) * (1 - c_discount);
             amt[ol_num_seq[ol_number - 1]] = ol_amount;
@@ -250,8 +269,20 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st8.set_int(6, ol_quantity);
             st8.set_float(7, ol_amount);
             st8.set_value(8, ol_dist_info);
+            row_count = st8.execute_update();
+            tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "order_line",
+                    row_count, clock() - obj->start, tran_name));
         }
         con.commit();
+        pthread_mutex_lock(&obj->mutex);
+        for(int idx = 0; idx < tran_obj.size(); idx ++){
+            transaction_item item = tran_obj[idx];
+            obj->out << item.tran_name << " "
+                     << item.mode << " " << item.table
+                     << " " << item.row << " "
+                     << item.t << std::endl;
+        }
+        pthread_mutex_unlock(&obj->mutex);
     }catch(std::exception &e){
         con.roll_back();
         std::cerr << e.what() << std::endl;

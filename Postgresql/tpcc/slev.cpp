@@ -8,14 +8,17 @@
 #include <vector>
 #include <cstring>
 #include <random>
+#include "./container/transaction_obj.h"
 
 int slev(int w_id_arg, int d_id_arg,	int level_arg,
-        pg_connection &con, std::vector<pg_prepared_statement> &val) {
+        pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj) {
 
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [slev]@"
               << (void *)slev << std::endl;
+    transaction_obj tran_obj;
+    std::string tran_name = t + "@slev";
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int level = level_arg;
@@ -34,6 +37,8 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         while(res.has_next()){
             d_next_o_id = res.get_int(0);
         }
+        tran_obj.add_item(transaction_item(SHARED_LOCK, "district",
+                res.get_tuples_count(), clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st]@"
@@ -53,6 +58,8 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         while(res1.has_next()){
             ol_i_id = res1.get_int(0);
         }
+        tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
+                res1.get_tuples_count(), clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st1]@"
@@ -67,11 +74,22 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         st2.set_int(1, ol_i_id);
         st2.set_int(2, level);
         pg_resultset res2 = st2.execute_query();
+        tran_obj.add_item(transaction_item(SHARED_LOCK, "stock",
+                res2.get_tuples_count(), clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st2]@"
 //                  << (void *)&st2 << std::endl;
         con.commit();
+        pthread_mutex_lock(&obj->mutex);
+        for(int idx = 0; idx < tran_obj.size(); idx ++){
+            transaction_item item = tran_obj[idx];
+            obj->out << item.tran_name << " "
+                     << item.mode << " " << item.table
+                     << " " << item.row << " "
+                     << item.t << std::endl;
+        }
+        pthread_mutex_unlock(&obj->mutex);
     }catch(std::exception &e){
         con.roll_back();
         std::cerr << e.what() << std::endl;

@@ -8,16 +8,20 @@
 #include <vector>
 #include <cstring>
 #include <random>
+#include "../global_define.h"
+#include "./container/transaction_obj.h"
 
 int payment(int w_id_arg, int d_id_arg, int byname,
         int c_w_id_arg, int c_d_id_arg, int c_id_arg,
         char c_last_arg[], float h_amount_arg, pg_connection &con,
-        std::vector<pg_prepared_statement> &val) {
+        std::vector<pg_prepared_statement> &val, file_obj *obj) {
 
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [payment]@"
               << (void *)payment << std::endl;
+    transaction_obj tran_obj;
+    std::string tran_name = t + "@payment";
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int c_id = c_id_arg;
@@ -63,7 +67,9 @@ int payment(int w_id_arg, int d_id_arg, int byname,
         pg_prepared_statement st = val[9];
         st.set_float(0, h_amount);
         st.set_int(1, w_id);
-        st.execute_update();
+        int row_count = st.execute_update();
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "warehouse",
+                row_count, clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [payment]@" << (void *)payment
 //                  << ", pg_prepared_statement [st]@"
@@ -84,6 +90,8 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             strcpy(w_zip, res.get_value(4));
             strcpy(w_name, res.get_value(5));
         }
+        tran_obj.add_item(transaction_item(SHARED_LOCK, "warehouse",
+                res.get_tuples_count(), clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [payment]@" << (void *)payment
 //                  << ", pg_prepared_statement [st1]@"
@@ -97,7 +105,9 @@ int payment(int w_id_arg, int d_id_arg, int byname,
         st2.set_float(0, h_amount);
         st2.set_int(1, w_id);
         st2.set_int(2, d_id);
-        st2.execute_update();
+        row_count = st2.execute_update();
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "district",
+                row_count, clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [payment]@" << (void *)payment
 //                  << ", pg_prepared_statement [st2]@"
@@ -119,6 +129,8 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             strcpy(d_zip, res1.get_value(4));
             strcpy(d_name, res1.get_value(5));
         }
+        tran_obj.add_item(transaction_item(SHARED_LOCK, "district",
+                res1.get_tuples_count(), clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [payment]@" << (void *)payment
 //                  << ", pg_prepared_statement [st3]@"
@@ -135,6 +147,8 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             st4.set_int(1, c_d_id);
             st4.set_value(2, c_last);
             pg_resultset res2 = st4.execute_query();
+            tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
+                    res2.get_tuples_count(), clock() - obj->start, tran_name));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [payment]@" << (void *)payment
 //                      << ", pg_prepared_statement [st4]@"
@@ -152,6 +166,8 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             while(res3.has_next()){
                 c_id = res3.get_int(0);
             }
+            tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
+                    res3.get_tuples_count(), clock() - obj->start, tran_name));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [payment]@" << (void *)payment
 //                      << ", pg_prepared_statement [st5]@"
@@ -184,6 +200,8 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             c_balance = res4.get_float(12);
             strcpy(c_since, res4.get_value(13));
         }
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "customer",
+                res4.get_tuples_count(), clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [payment]@" << (void *)payment
 //                  << ", pg_prepared_statement [st6]@"
@@ -204,6 +222,8 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             while(res5.has_next()){
                 strcpy(c_data, res5.get_value(0));
             }
+            tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
+                    res5.get_tuples_count(), clock() - obj->start, tran_name));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [payment]@" << (void *)payment
 //                      << ", pg_prepared_statement [st7]@"
@@ -219,7 +239,9 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             st8.set_int(2, c_w_id);
             st8.set_int(3, c_d_id);
             st8.set_int(4, c_id);
-            st8.execute_update();
+            row_count = st8.execute_update();
+            tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "customer",
+                    row_count, clock() - obj->start, tran_name));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [payment]@" << (void *)payment
 //                      << ", pg_prepared_statement [st8]@"
@@ -235,7 +257,9 @@ int payment(int w_id_arg, int d_id_arg, int byname,
             st9.set_int(1, c_w_id);
             st9.set_int(2, c_d_id);
             st9.set_int(3, c_id);
-            st9.execute_update();
+            row_count = st9.execute_update();
+            tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "customer",
+                    row_count, clock() - obj->start, tran_name));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [payment]@" << (void *)payment
 //                      << ", pg_prepared_statement [st9]@"
@@ -265,12 +289,23 @@ int payment(int w_id_arg, int d_id_arg, int byname,
         st10.set_date(5, date);
         st10.set_float(6, h_amount);
         st10.set_value(7, h_data);
-        st10.execute_update();
+        row_count = st10.execute_update();
+        tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "history",
+                row_count, clock() - obj->start, tran_name));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [payment]@" << (void *)payment
 //                  << ", pg_prepared_statement [st10]@"
 //                  << (void *)&st10 << std::endl;
         con.commit();
+        pthread_mutex_lock(&obj->mutex);
+        for(int idx = 0; idx < tran_obj.size(); idx ++){
+            transaction_item item = tran_obj[idx];
+            obj->out << item.tran_name << " "
+                     << item.mode << " " << item.table
+                     << " " << item.row << " "
+                     << item.t << std::endl;
+        }
+        pthread_mutex_unlock(&obj->mutex);
     }catch(std::exception &e){
         con.roll_back();
         std::cerr << e.what() << std::endl;

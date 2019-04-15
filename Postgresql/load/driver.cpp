@@ -16,58 +16,60 @@ extern int num_ware;
 int neword(int w_id_arg, int d_id_arg,
            int c_id_arg, int o_ol_cnt_arg, int o_all_local_arg,
            int itemid[], int supware[], int qty[], pg_connection &con,
-           std::vector<pg_prepared_statement> &val);
+           std::vector<pg_prepared_statement> &val, file_obj *obj);
 
 int payment(int w_id_arg, int d_id_arg, int byname,
             int c_w_id_arg, int c_d_id_arg, int c_id_arg,
             char c_last_arg[], float h_amount_arg, pg_connection &con,
-            std::vector<pg_prepared_statement> &val);
+            std::vector<pg_prepared_statement> &val, file_obj *obj);
 
 int ordstat(int w_id_arg, int d_id_arg, int byname,
             int c_id_arg, char c_last_arg[], pg_connection &con,
-            std::vector<pg_prepared_statement> &val);
+            std::vector<pg_prepared_statement> &val, file_obj *obj);
 
 int delivery(int w_id_arg, int o_carrier_id_arg,
-             pg_connection &con, std::vector<pg_prepared_statement> &val);
+             pg_connection &con, std::vector<pg_prepared_statement> &val,
+             file_obj *obj);
 
-int slev(int w_id_arg, int d_id_arg,	int level_arg,
-         pg_connection &con, std::vector<pg_prepared_statement> &val);
+int slev(int w_id_arg, int d_id_arg, int level_arg,
+        pg_connection &con, std::vector<pg_prepared_statement> &val,
+        file_obj *obj);
 
-int do_neword (pg_connection &con,
+int do_neword (pg_connection &con, file_obj *obj,
         std::vector<pg_prepared_statement> &val, int t_num);
 
-int do_payment(pg_connection &con,
+int do_payment(pg_connection &con, file_obj *obj,
                std::vector<pg_prepared_statement> &val, int t_num);
 
-int do_ordstat (pg_connection &con,
+int do_ordstat (pg_connection &con, file_obj *obj,
                 std::vector<pg_prepared_statement> &val, int t_num);
 
-int do_delivery(pg_connection &con,
+int do_delivery(pg_connection &con, file_obj *obj,
                 std::vector<pg_prepared_statement> &val,int t_num);
 
-int do_slev (pg_connection &con,
+int do_slev (pg_connection &con, file_obj *obj,
              std::vector<pg_prepared_statement> &val, int t_num);
 
 int driver(pg_connection &con,
-        std::vector<pg_prepared_statement> &val, int thread_num){
+        std::vector<pg_prepared_statement> &val, int thread_num, file_obj *obj){
     int total_time = (EXECUTE_TIME * 1000) / thread_num;
     clock_t start = clock();
     while((clock() - start) <= total_time){
         switch(seq_get()){
             case 0:
-                do_neword(con, val, thread_num);
+                do_neword(con, obj, val, thread_num);
                 break;
             case 1:
-                do_payment(con, val, thread_num);
+                do_payment(con, obj, val, thread_num);
                 break;
             case 2:
-                do_ordstat(con, val, thread_num);
+                do_ordstat(con, obj, val, thread_num);
                 break;
             case 3:
-                do_delivery(con, val, thread_num);
+                do_delivery(con, obj, val, thread_num);
                 break;
             case 4:
-                do_slev(con, val, thread_num);
+                do_slev(con, obj, val, thread_num);
                 break;
             default:
                 std::cerr << "Error - Unknown sequence." << std::endl;
@@ -87,7 +89,7 @@ int other_ware (int home_ware) {
     return tmp;
 }
 
-int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int t_num) {
+int do_neword (pg_connection &con, file_obj *obj, std::vector<pg_prepared_statement> &val, int t_num) {
 
     pthread_t t = pthread_self();
     std::clog << "This is Thread: [" << t << "]@"
@@ -142,7 +144,7 @@ int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int 
 
     for (i = 0; i < MAX_RETRY; i++) {
         ret = neword(w_id, d_id, c_id, ol_cnt,
-                all_local, itemid, supware, qty, con, val);
+                all_local, itemid, supware, qty, con, val, obj);
         if(!ret){
             break;
         }
@@ -150,7 +152,7 @@ int do_neword (pg_connection &con, std::vector<pg_prepared_statement> &val, int 
     return 0;
 }
 
-int do_payment(pg_connection &con,
+int do_payment(pg_connection &con, file_obj *obj,
         std::vector<pg_prepared_statement> &val, int t_num) {
 
     pthread_t t = pthread_self();
@@ -196,7 +198,7 @@ int do_payment(pg_connection &con,
     }
     for (i = 0; i < MAX_RETRY; i++) {
         ret = payment(w_id, d_id, byname, c_w_id, c_d_id,
-                c_id, c_last, h_amount, con, val);
+                c_id, c_last, h_amount, con, val, obj);
         if(!ret){
             break;
         }
@@ -204,8 +206,8 @@ int do_payment(pg_connection &con,
     return 0;
 }
 
-int do_ordstat(pg_connection &con,
-                       std::vector<pg_prepared_statement> &val, int t_num) {
+int do_ordstat(pg_connection &con, file_obj *obj,
+        std::vector<pg_prepared_statement> &val, int t_num) {
 
     pthread_t t = pthread_self();
     std::clog << "This is Thread: [" << t << "]@"
@@ -239,7 +241,7 @@ int do_ordstat(pg_connection &con,
         byname = 0; /* select by customer id */
     }
     for (i = 0; i < MAX_RETRY; i++) {
-        ret = ordstat(w_id, d_id, byname, c_id, c_last, con, val);
+        ret = ordstat(w_id, d_id, byname, c_id, c_last, con, val, obj);
         if(!ret){
             break;
         }
@@ -247,7 +249,7 @@ int do_ordstat(pg_connection &con,
     return 0;
 }
 
-int do_delivery(pg_connection &con,
+int do_delivery(pg_connection &con, file_obj *obj,
         std::vector<pg_prepared_statement> &val, int t_num) {
 
     pthread_t t = pthread_self();
@@ -274,7 +276,7 @@ int do_delivery(pg_connection &con,
     o_carrier_id = d(e);
 
     for (i = 0; i < MAX_RETRY; i++) {
-        ret = delivery(w_id, o_carrier_id, con, val);
+        ret = delivery(w_id, o_carrier_id, con, val, obj);
         if(!ret){
             break;
         }
@@ -282,7 +284,7 @@ int do_delivery(pg_connection &con,
     return 0;
 }
 
-int do_slev (pg_connection &con,
+int do_slev (pg_connection &con, file_obj *obj,
              std::vector<pg_prepared_statement> &val, int t_num) {
 
     pthread_t t = pthread_self();
@@ -311,7 +313,7 @@ int do_slev (pg_connection &con,
     level = d1(e);
 
     for (i = 0; i < MAX_RETRY; i++) {
-        ret = slev(w_id, d_id, level, con, val);
+        ret = slev(w_id, d_id, level, con, val, obj);
         if(!ret){
             break;
         }

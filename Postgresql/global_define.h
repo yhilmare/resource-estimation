@@ -108,4 +108,37 @@ const std::string SQL_STRING[] = {
         "SELECT count(*) FROM stock WHERE s_w_id = $1 AND s_i_id = $2 AND s_quantity < $3"
 };
 
+#include <fstream>
+#include <unordered_map>
+
+struct file_obj{
+    std::ofstream out;
+    pthread_mutex_t mutex;
+    clock_t start;
+    file_obj(std::string file_path){
+        out.open(file_path.c_str(), std::ios_base::app | std::ios_base::out);
+        if (!out.is_open()){
+            exit(EXIT_FAILURE);
+        }
+        mutex = PTHREAD_MUTEX_INITIALIZER;
+        start = clock();
+    }
+    ~file_obj(){
+        out.close();
+    }
+};
+
+struct thread_arg{
+    std::unordered_map<std::string, std::string> config;
+    int thread_num;
+    file_obj *obj;
+    thread_arg(std::unordered_map<std::string, std::string> map, int num,
+               std::string file_path):config(map), thread_num(num){
+        obj = new file_obj(file_path.c_str());
+    }
+    ~thread_arg(){
+        delete obj;
+    }
+};
+
 #endif //POSTGRESQL_GLOBAL_DEFINE_H

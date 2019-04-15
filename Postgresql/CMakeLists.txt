@@ -26,6 +26,6 @@ add_executable(Postgresql main.cpp
         lib/tools/global_tools.cpp
         lib/tools/exceptions/file_exception.cpp load/data_load.cpp
         load/driver.cpp tpcc/sequence.cpp tpcc/neword.cpp
-        tpcc/payment.cpp tpcc/ordstat.cpp tpcc/delivery.cpp tpcc/slev.cpp)
+        tpcc/payment.cpp tpcc/ordstat.cpp tpcc/delivery.cpp tpcc/slev.cpp tpcc/container/transaction_obj.cpp tpcc/container/transaction_obj.h)
 
 target_link_libraries(Postgresql libpq.dll)

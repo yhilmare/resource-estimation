@@ -19,6 +19,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "F:/repos/Resource_estimation/Postgresql/load/data_load.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/load/data_load.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/load/driver.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/load/driver.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/main.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj"
+  "F:/repos/Resource_estimation/Postgresql/tpcc/container/transaction_obj.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/container/transaction_obj.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/tpcc/delivery.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/tpcc/neword.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj"
   "F:/repos/Resource_estimation/Postgresql/tpcc/ordstat.cpp" "F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj"

@@ -11,6 +11,6 @@
 #include <vector>
 
 int driver(pg_connection &,
-        std::vector<pg_prepared_statement> &, int);
+        std::vector<pg_prepared_statement> &, int, file_obj *);
 
 #endif //POSTGRESQL_DRIVER_H

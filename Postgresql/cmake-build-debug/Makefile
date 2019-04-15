@@ -527,6 +527,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+tpcc/container/transaction_obj.obj: tpcc/container/transaction_obj.cpp.obj
+
+.PHONY : tpcc/container/transaction_obj.obj
+
+# target to build an object file
+tpcc/container/transaction_obj.cpp.obj:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/container/transaction_obj.cpp.obj
+.PHONY : tpcc/container/transaction_obj.cpp.obj
+
+tpcc/container/transaction_obj.i: tpcc/container/transaction_obj.cpp.i
+
+.PHONY : tpcc/container/transaction_obj.i
+
+# target to preprocess a source file
+tpcc/container/transaction_obj.cpp.i:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/container/transaction_obj.cpp.i
+.PHONY : tpcc/container/transaction_obj.cpp.i
+
+tpcc/container/transaction_obj.s: tpcc/container/transaction_obj.cpp.s
+
+.PHONY : tpcc/container/transaction_obj.s
+
+# target to generate assembly for a file
+tpcc/container/transaction_obj.cpp.s:
+	$(MAKE) -f CMakeFiles\Postgresql.dir\build.make CMakeFiles/Postgresql.dir/tpcc/container/transaction_obj.cpp.s
+.PHONY : tpcc/container/transaction_obj.cpp.s
+
 tpcc/delivery.obj: tpcc/delivery.cpp.obj
 
 .PHONY : tpcc/delivery.obj
@@ -743,6 +770,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... tpcc/container/transaction_obj.obj
+	@echo ... tpcc/container/transaction_obj.i
+	@echo ... tpcc/container/transaction_obj.s
 	@echo ... tpcc/delivery.obj
 	@echo ... tpcc/delivery.i
 	@echo ... tpcc/delivery.s

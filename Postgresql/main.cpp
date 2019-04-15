@@ -3,7 +3,6 @@
 #include <vector>
 #include <exception>
 #include <cstring>
-#include <fstream>
 #include <direct.h>
 #include <pthread.h>
 #include <random>
@@ -19,6 +18,7 @@
 #include "load/data_load.h"
 #include "load/driver.h"
 #include "./tpcc/sequence.h"
+#include "./tpcc/container/transaction_obj.h"
 
 
 void regex_test(){
@@ -59,11 +59,9 @@ void load_data(){
 
 void *thread_main(void *);
 
-struct thread_arg{
-    std::unordered_map<std::string, std::string> config;
-    int thread_num;
-    thread_arg(std::unordered_map<std::string, std::string> map, int num):config(map), thread_num(num){}
-};
+void parse_transaction(transaction_item *p){
+    std::cout << *p << std::endl;
+}
 
 int main(int argn, char *argv[]) {
     using namespace std;
@@ -72,7 +70,7 @@ int main(int argn, char *argv[]) {
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     int thread_num = 10;
-    thread_arg arg(config, thread_num);
+    thread_arg arg(config, thread_num, "f:/data.txt");
 //    thread_main((void *)&arg);
     for (int i = 0; i < thread_num; i ++){
         pthread_t t1;
@@ -112,6 +110,6 @@ void *thread_main(void *param){
         pg_prepared_statement tmp_st = con.prepared_statement(sql, type);
         val.push_back(tmp_st);
     }
-    driver(con, val, thread_num);
+    driver(con, val, thread_num, arg->obj);
     return param;
 }
