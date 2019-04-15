@@ -71,7 +71,7 @@ int main(int argn, char *argv[]) {
     getcwd(buffer, 1000);
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
-    int thread_num = 3;
+    int thread_num = 10;
     thread_arg arg(config, thread_num);
 //    thread_main((void *)&arg);
     for (int i = 0; i < thread_num; i ++){

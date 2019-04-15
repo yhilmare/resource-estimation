@@ -26,7 +26,8 @@ default: strncpy(ol_dist_info, s_dist_10, 25); break; \
 int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         int o_ol_cnt_arg, int o_all_local_arg,
         int itemid[], int supware[], int qty[], pg_connection &con,
-           std::vector<pg_prepared_statement> &val) {
+        std::vector<pg_prepared_statement> &val) {
+
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [neword]@"
@@ -125,7 +126,6 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
          * const parameter_type type3[] = {int_type, int_type, int_type, int_type, date_type, int_type, int_type};
          * */
         pg_prepared_statement st3 = val[3];
-        std::cout << o_id << " " << d_id << " " << w_id << std::endl;
         st3.set_int(0, o_id);
         st3.set_int(1, d_id);
         st3.set_int(2, w_id);

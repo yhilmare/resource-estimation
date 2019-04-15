@@ -279,7 +279,7 @@ void load_district(int w_id, pg_connection &con, int DIST_PER_WARE){
 
         d_w_id = w_id;
         d_ytd = 30000.0;
-        d_next_o_id = 3001L;
+        d_next_o_id = 4200L;
         extern std::default_random_engine e;
         std::uniform_real_distribution<float> d(10, 20);
 

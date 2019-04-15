@@ -16,7 +16,7 @@
 #define CUSTOMER_PER_DISTRICT 548
 #define ORDER_PER_DISTRICT 4200
 
-#define EXECUTE_TIME 18
+#define EXECUTE_TIME 3600
 
 /* definitions for new order transaction */
 #define MAX_NUM_ITEMS 15
@@ -79,7 +79,6 @@ const std::string SQL_STRING[] = {
         "SELECT i_price, i_name, i_data FROM item WHERE i_id = $1",
         "SELECT s_quantity, s_data, s_dist_01, s_dist_02, s_dist_03, s_dist_04, s_dist_05, s_dist_06, s_dist_07, s_dist_08, s_dist_09, s_dist_10 FROM stock WHERE s_i_id = $1 AND s_w_id = $2 FOR UPDATE",
         "UPDATE stock SET s_quantity = $1 WHERE s_i_id = $2 AND s_w_id = $3",
-
         "INSERT INTO order_line (ol_o_id, ol_d_id, ol_w_id, ol_number, ol_i_id, ol_supply_w_id, ol_quantity, ol_amount, ol_dist_info) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
         "UPDATE warehouse SET w_ytd = w_ytd + $1 WHERE w_id = $2",
         "SELECT w_street_1, w_street_2, w_city, w_state, w_zip, w_name FROM warehouse WHERE w_id = $1",
