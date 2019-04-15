@@ -23,6 +23,8 @@
 #define MAX_ITEM_LEN 24
 #define MAX_RETRY 3
 
+#include <fstream>
+#include <unordered_map>
 #include <string>
 #include "./lib/pg_lib/pg_prepared_statement.h"
 
@@ -107,9 +109,6 @@ const std::string SQL_STRING[] = {
         "SELECT DISTINCT ol_i_id FROM order_line WHERE ol_w_id = $1 AND ol_d_id = $2 AND ol_o_id < $3 AND ol_o_id >= ($4 - 20)",
         "SELECT count(*) FROM stock WHERE s_w_id = $1 AND s_i_id = $2 AND s_quantity < $3"
 };
-
-#include <fstream>
-#include <unordered_map>
 
 struct file_obj{
     std::ofstream out;

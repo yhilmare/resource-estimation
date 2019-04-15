@@ -1,25 +1,24 @@
-#include <iostream>
 #include <regex>
 #include <vector>
-#include <exception>
-#include <cstring>
-#include <direct.h>
-#include <pthread.h>
 #include <random>
 #include <time.h>
+#include <cstring>
+#include <direct.h>
+#include <iostream>
+#include <exception>
+#include <pthread.h>
+#include "load/driver.h"
 #include "global_define.h"
-#include "lib/pg_lib/pg_connection.h"
-#include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
+#include "lib/tools/date.h"
+#include "load/data_load.h"
+#include "./tpcc/sequence.h"
+#include "lib/tools/global_tools.h"
 #include "lib/pg_lib/pg_statement.h"
 #include "lib/pg_lib/pg_resultset.h"
-#include "lib/pg_lib/pg_prepared_statement.h"
-#include "lib/tools/date.h"
-#include "lib/tools/global_tools.h"
-#include "load/data_load.h"
-#include "load/driver.h"
-#include "./tpcc/sequence.h"
+#include "lib/pg_lib/pg_connection.h"
 #include "./tpcc/container/transaction_obj.h"
-
+#include "lib/pg_lib/pg_prepared_statement.h"
+#include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
 
 void regex_test(){
     using namespace std;
@@ -58,10 +57,6 @@ void load_data(){
 }
 
 void *thread_main(void *);
-
-void parse_transaction(transaction_item *p){
-    std::cout << *p << std::endl;
-}
 
 int main(int argn, char *argv[]) {
     using namespace std;

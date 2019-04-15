@@ -1,11 +1,10 @@
 //
 // Created by Administrator on 2019/3/26.
 //
-
-#include "pg_resultset.h"
-#include "exception/resultset_nullpointer_exception.h"
 #include <iostream>
+#include "pg_resultset.h"
 #include "../tools/global_tools.h"
+#include "exception/resultset_nullpointer_exception.h"
 
 pg_resultset& pg_resultset::operator=(const pg_resultset &res) {
     if (this == &res){

@@ -6,8 +6,8 @@
 #include <vector>
 #include <cstring>
 #include <fstream>
-#include "exceptions/file_exception.h"
 #include <iterator>
+#include "exceptions/file_exception.h"
 
 const std::string parseInt(int num){
     using namespace std;

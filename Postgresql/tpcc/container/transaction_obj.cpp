@@ -17,6 +17,7 @@ void transaction_obj::add_item(const transaction_item &item) {
     item_tmp->t = item.t;
     item_tmp->mode = item.mode;
     item_tmp->row = item.row;
+    item_tmp->tran_name = item.tran_name;
     this->cursor->pNext = item_tmp;
     this->cursor = item_tmp;
     this->cursor->pNext = NULL;

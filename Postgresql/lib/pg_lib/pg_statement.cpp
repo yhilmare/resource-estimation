@@ -1,11 +1,10 @@
 //
 // Created by Administrator on 2019/3/25.
 //
-
+#include <iostream>
 #include "pg_statement.h"
 #include "exception/statement_exception.h"
 #include "exception/sqlexecute_exception.h"
-#include <iostream>
 
 pg_statement::pg_statement(PGconn *conn) {
     if (conn == NULL){

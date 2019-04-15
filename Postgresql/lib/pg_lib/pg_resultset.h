@@ -5,8 +5,8 @@
 #ifndef POSTGRESQL_PG_RESULTSET_H
 #define POSTGRESQL_PG_RESULTSET_H
 
-#include <libpq-fe.h>
 #include <string>
+#include <libpq-fe.h>
 
 class pg_resultset {
 private:

@@ -1,15 +1,15 @@
 //
 // Created by Administrator on 2019/3/26.
 //
-
-#include "pg_prepared_statement.h"
-#include "exception/statement_exception.h"
 #include <regex>
 #include <random>
-#include <iostream>
-#include "exception/sqlexecute_exception.h"
-#include "../tools/global_tools.h"
 #include <cstring>
+#include <iostream>
+#include "pg_prepared_statement.h"
+#include "../tools/global_tools.h"
+#include "exception/statement_exception.h"
+#include "exception/sqlexecute_exception.h"
+
 
 std::default_random_engine e;
 

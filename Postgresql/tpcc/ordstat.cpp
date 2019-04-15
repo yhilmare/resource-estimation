@@ -1,15 +1,15 @@
 //
 // Created by Administrator on 2019/4/12.
 //
-#include "../lib/pg_lib/pg_connection.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
-#include "../lib/pg_lib/pg_resultset.h"
 #include <vector>
 #include <cstring>
 #include <random>
 #include "../global_define.h"
+#include "../lib/pg_lib/pg_resultset.h"
+#include "../lib/pg_lib/pg_connection.h"
 #include "./container/transaction_obj.h"
-
+#include "../lib/pg_lib/pg_prepared_statement.h"
+#include "../lib/tools/global_tools.h"
 
 int ordstat(int w_id_arg, int d_id_arg, int byname,
         int c_id_arg, char c_last_arg[], pg_connection &con,
@@ -20,7 +20,7 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
               << (void *)&t << ", function [ordstat]@"
               << (void *)ordstat << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = t + "@ordstat";
+    std::string tran_name = parseInt((int)t) + "@ordstat";
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int c_id = c_id_arg;

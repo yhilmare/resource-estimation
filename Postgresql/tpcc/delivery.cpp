@@ -1,14 +1,15 @@
 //
 // Created by Administrator on 2019/4/12.
 //
-#include "../lib/pg_lib/pg_connection.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
-#include "../lib/pg_lib/pg_resultset.h"
-#include "../global_define.h"
 #include <vector>
 #include <cstring>
 #include <random>
+#include "../global_define.h"
+#include "../lib/pg_lib/pg_resultset.h"
+#include "../lib/pg_lib/pg_connection.h"
 #include "./container/transaction_obj.h"
+#include "../lib/pg_lib/pg_prepared_statement.h"
+#include "../lib/tools/global_tools.h"
 
 //transaction_item(lock_type type, std::string table_name,
 //        int line, clock_t time): mode(type),
@@ -24,7 +25,7 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [delivery]@"
               << (void *)delivery << std::endl;
-    std::string tran_name = t + "@delivery";
+    std::string tran_name = parseInt((int)t) + "@delivery";
     int w_id = w_id_arg;
     int o_carrier_id = o_carrier_id_arg;
     int d_id;

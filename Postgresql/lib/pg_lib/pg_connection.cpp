@@ -1,15 +1,14 @@
 //
 // Created by ilmare on 2/24/19.
 //
-
-#include "pg_connection.h"
-#include "exception/conn_info_nullpointer_exception.h"
-#include "exception/conn_fail_exception.h"
-#include "exception/sqlexecute_exception.h"
 #include <cstring>
 #include <string>
 #include <vector>
 #include <iostream>
+#include "pg_connection.h"
+#include "exception/conn_fail_exception.h"
+#include "exception/sqlexecute_exception.h"
+#include "exception/conn_info_nullpointer_exception.h"
 
 pg_connection::pg_connection(const pg_connection &obj) {
     if (obj.conn_info == NULL || !strlen(obj.conn_info)){

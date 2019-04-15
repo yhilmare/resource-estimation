@@ -1,14 +1,15 @@
 //
 // Created by Administrator on 2019/4/11.
 //
-#include "../lib/pg_lib/pg_connection.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
-#include "../lib/pg_lib/pg_resultset.h"
-#include <vector>
-#include "../global_define.h"
 #include <random>
 #include <cstring>
+#include <vector>
+#include "../global_define.h"
+#include "../lib/pg_lib/pg_resultset.h"
 #include "./container/transaction_obj.h"
+#include "../lib/pg_lib/pg_connection.h"
+#include "../lib/pg_lib/pg_prepared_statement.h"
+#include "../lib/tools/global_tools.h"
 
 #define pick_dist_info(ol_dist_info,ol_supply_w_id) \
 switch(ol_supply_w_id) { \
@@ -34,7 +35,7 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
               << (void *)&t << ", function [neword]@"
               << (void *)neword << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = t + "@neword";
+    std::string tran_name = parseInt((int)t) + "@neword";
     extern std::default_random_engine e;
     int w_id = w_id_arg;
     int d_id = d_id_arg;

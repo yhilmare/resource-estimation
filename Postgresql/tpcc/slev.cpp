@@ -1,14 +1,15 @@
 //
 // Created by Administrator on 2019/4/12.
 //
-#include "../lib/pg_lib/pg_connection.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
-#include "../lib/pg_lib/pg_resultset.h"
-#include "../global_define.h"
 #include <vector>
 #include <cstring>
 #include <random>
+#include "../global_define.h"
+#include "../lib/pg_lib/pg_resultset.h"
+#include "../lib/pg_lib/pg_connection.h"
 #include "./container/transaction_obj.h"
+#include "../lib/pg_lib/pg_prepared_statement.h"
+#include "../lib/tools/global_tools.h"
 
 int slev(int w_id_arg, int d_id_arg,	int level_arg,
         pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj) {
@@ -18,7 +19,7 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
               << (void *)&t << ", function [slev]@"
               << (void *)slev << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = t + "@slev";
+    std::string tran_name = parseInt((int)t) + "@slev";
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int level = level_arg;

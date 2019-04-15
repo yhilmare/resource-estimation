@@ -5,9 +5,9 @@
 #include "driver.h"
 #include <time.h>
 #include <iostream>
+#include <random>
 #include "data_load.h"
 #include "../tpcc/sequence.h"
-#include <random>
 #include "../global_define.h"
 
 int num_node = 0;

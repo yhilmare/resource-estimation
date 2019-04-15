@@ -5,9 +5,9 @@
 #ifndef POSTGRESQL_PG_PREPARED_STATEMENT_H
 #define POSTGRESQL_PG_PREPARED_STATEMENT_H
 
-#include "pg_statement.h"
-#include <libpq-fe.h>
 #include <vector>
+#include <libpq-fe.h>
+#include "pg_statement.h"
 #include "pg_resultset.h"
 #include "../tools/date.h"
 
