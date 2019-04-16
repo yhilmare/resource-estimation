@@ -278,9 +278,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         pthread_mutex_lock(&obj->mutex);
         for(int idx = 0; idx < tran_obj.size(); idx ++){
             transaction_item item = tran_obj[idx];
-            obj->out << item.tran_name << " "
-                     << item.mode << " " << item.table
-                     << " " << item.row << " "
+            obj->out << item.tran_name << ","
+                     << item.mode << "," << item.table
+                     << "," << item.row << ","
                      << item.t << std::endl;
         }
         pthread_mutex_unlock(&obj->mutex);
