@@ -137,6 +137,7 @@ CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/pg_lib/pg_prepared_state
 CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../lib/tools/global_tools.h
 CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../tpcc/./container/transaction_obj.h
 CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj: ../tpcc/delivery.cpp
 
@@ -164,6 +165,7 @@ CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/pg_lib/pg_prepared_statem
 CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../lib/tools/global_tools.h
 CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../tpcc/./container/transaction_obj.h
 CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj: ../tpcc/ordstat.cpp
 
@@ -177,6 +179,7 @@ CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/pg_lib/pg_prepared_statem
 CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../lib/tools/global_tools.h
 CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../tpcc/./container/transaction_obj.h
 CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj: ../tpcc/payment.cpp
 
@@ -193,6 +196,7 @@ CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/pg_lib/pg_prepared_statement
 CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/pg_lib/pg_resultset.h
 CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/pg_lib/pg_statement.h
 CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/tools/date.h
+CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../lib/tools/global_tools.h
 CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../tpcc/./container/transaction_obj.h
 CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj: ../tpcc/slev.cpp
 
