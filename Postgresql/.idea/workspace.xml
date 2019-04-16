@@ -12,26 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fca637b-a884-4004-a7df-e209a083d2f6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../model/unit/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../model/unit/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/delivery.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/neword.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/ordstat.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/payment.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/tpcc/slev.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Postgresql.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Postgresql.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Postgresql.dir/main.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpcc/delivery.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tpcc/delivery.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpcc/neword.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tpcc/neword.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpcc/ordstat.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tpcc/ordstat.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpcc/payment.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tpcc/payment.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpcc/slev.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tpcc/slev.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../model/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../model/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../model/lib/dbscan.py" beforeDir="false" afterPath="$PROJECT_DIR$/../model/lib/dbscan.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -108,18 +91,18 @@
     <session id="-1867806032">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="28" />
+          <entry key="project.closed" value="29" />
           <entry key="project.open.time.0" value="5" />
           <entry key="project.open.time.3" value="10" />
           <entry key="project.open.time.4" value="4" />
-          <entry key="project.open.time.5" value="8" />
+          <entry key="project.open.time.5" value="9" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="28" />
+          <entry key="project.opened" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cpp" value="180" />
+          <entry key="cpp" value="182" />
           <entry key="h" value="140" />
           <entry key="properties" value="18" />
           <entry key="txt" value="10" />
@@ -128,13 +111,13 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CMakeLists.txt" value="10" />
-          <entry key="ObjectiveC" value="320" />
+          <entry key="ObjectiveC" value="322" />
           <entry key="PLAIN_TEXT" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="51164" />
+          <entry key="cpp" value="51468" />
           <entry key="h" value="5542" />
           <entry key="properties" value="148" />
           <entry key="txt" value="146" />
@@ -144,7 +127,7 @@
         <counts>
           <entry key="CMakeLists.txt" value="146" />
           <entry key="Doxygen file" value="1" />
-          <entry key="ObjectiveC" value="56705" />
+          <entry key="ObjectiveC" value="57009" />
           <entry key="PLAIN_TEXT" value="148" />
         </counts>
       </usages-collector>
@@ -155,8 +138,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
+            <state relative-caret-position="170">
+              <caret line="69" column="53" selection-start-line="69" selection-start-column="53" selection-end-line="69" selection-end-column="53" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -164,10 +147,19 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/load/driver.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-420">
+            <state relative-caret-position="2820">
               <caret line="141" column="23" selection-start-line="141" selection-start-column="23" selection-end-line="141" selection-end-column="23" />
               <folding>
                 <element signature="e#48#67#0" expanded="true" />
@@ -179,8 +171,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpcc/neword.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="285" column="14" lean-forward="true" selection-start-line="285" selection-start-column="14" selection-end-line="285" selection-end-column="14" />
+            <state relative-caret-position="5700">
+              <caret line="285" column="14" selection-start-line="285" selection-start-column="14" selection-end-line="285" selection-end-column="14" />
               <folding>
                 <element signature="e#48#65#0" expanded="true" />
               </folding>
@@ -191,7 +183,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpcc/delivery.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="3440">
               <caret line="172" column="42" selection-start-line="172" selection-start-column="42" selection-end-line="172" selection-end-column="42" />
               <folding>
                 <element signature="e#48#65#0" expanded="true" />
@@ -203,7 +195,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpcc/ordstat.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="2980">
               <caret line="149" column="42" selection-start-line="149" selection-start-column="42" selection-end-line="149" selection-end-column="42" />
               <folding>
                 <element signature="e#48#65#0" expanded="true" />
@@ -215,7 +207,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpcc/payment.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="6140">
               <caret line="307" column="42" selection-start-line="307" selection-start-column="42" selection-end-line="307" selection-end-column="42" />
               <folding>
                 <element signature="e#48#65#0" expanded="true" />
@@ -224,10 +216,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpcc/slev.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="789">
+            <state relative-caret-position="1750">
               <caret line="99" column="1" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
               <folding>
                 <element signature="e#48#65#0" expanded="true" />
@@ -239,7 +231,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/global_define.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1815">
+            <state relative-caret-position="420">
               <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
               <folding>
                 <element signature="e#522#540#0" expanded="true" />
@@ -312,7 +304,6 @@
         <option value="$PROJECT_DIR$/load/data_load.cpp" />
         <option value="$PROJECT_DIR$/lib/tools/global_tools.cpp" />
         <option value="$PROJECT_DIR$/lib/pg_lib/pg_connection.cpp" />
-        <option value="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" />
         <option value="$PROJECT_DIR$/lib/pg_lib/pg_resultset.cpp" />
         <option value="$PROJECT_DIR$/lib/pg_lib/pg_statement.cpp" />
         <option value="$PROJECT_DIR$/lib/pg_lib/pg_resultset.h" />
@@ -326,8 +317,9 @@
         <option value="$PROJECT_DIR$/tpcc/delivery.cpp" />
         <option value="$PROJECT_DIR$/tpcc/ordstat.cpp" />
         <option value="$PROJECT_DIR$/tpcc/payment.cpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/tpcc/slev.cpp" />
+        <option value="$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
   </component>
@@ -363,6 +355,12 @@
               <item name="Postgresql" type="b2602c69:ProjectViewProjectNode" />
               <item name="Postgresql" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Postgresql" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Postgresql" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="pg_lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Postgresql" type="b2602c69:ProjectViewProjectNode" />
@@ -484,11 +482,12 @@
       <workItem from="1555165968888" duration="16000" />
       <workItem from="1555217347264" duration="9169000" />
       <workItem from="1555294009609" duration="33175000" />
+      <workItem from="1555407339929" duration="935000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="304141000" />
+    <option name="totallyTimeSpent" value="305076000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -503,12 +502,12 @@
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16257995" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1641791" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.24428274" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4137214" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991684" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -665,9 +664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-          <folding>
-            <element signature="e#123#143#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -675,9 +671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="4" column="9" lean-forward="true" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-          <folding>
-            <element signature="e#40#72#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -685,9 +678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-176">
           <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-          <folding>
-            <element signature="e#111#130#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -695,13 +685,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3076">
           <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4096">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -723,9 +706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-96">
           <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-          <folding>
-            <element signature="e#118#135#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -733,9 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-456">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#48#67#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -743,9 +720,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-          <folding>
-            <element signature="e#118#135#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -763,9 +737,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-          <folding>
-            <element signature="e#118#135#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -775,16 +746,6 @@
           <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
           <folding>
             <element signature="e#102#121#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/tools/date.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2676">
-          <caret line="4" column="9" lean-forward="true" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-          <folding>
-            <element signature="e#49#66#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -847,7 +808,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/load/driver.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-420">
+        <state relative-caret-position="2820">
           <caret line="141" column="23" selection-start-line="141" selection-start-column="23" selection-end-line="141" selection-end-column="23" />
           <folding>
             <element signature="e#48#67#0" expanded="true" />
@@ -855,40 +816,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/global_define.h">
+    <entry file="file://$PROJECT_DIR$/tpcc/neword.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1815">
-          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-          <folding>
-            <element signature="e#522#540#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tpcc/delivery.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="172" column="42" selection-start-line="172" selection-start-column="42" selection-end-line="172" selection-end-column="42" />
+        <state relative-caret-position="5700">
+          <caret line="285" column="14" selection-start-line="285" selection-start-column="14" selection-end-line="285" selection-end-column="14" />
           <folding>
             <element signature="e#48#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tpcc/neword.cpp">
+    <entry file="file://$PROJECT_DIR$/tpcc/delivery.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="285" column="14" lean-forward="true" selection-start-line="285" selection-start-column="14" selection-end-line="285" selection-end-column="14" />
+        <state relative-caret-position="3440">
+          <caret line="172" column="42" selection-start-line="172" selection-start-column="42" selection-end-line="172" selection-end-column="42" />
           <folding>
             <element signature="e#48#65#0" expanded="true" />
           </folding>
@@ -897,7 +838,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tpcc/ordstat.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
+        <state relative-caret-position="2980">
           <caret line="149" column="42" selection-start-line="149" selection-start-column="42" selection-end-line="149" selection-end-column="42" />
           <folding>
             <element signature="e#48#65#0" expanded="true" />
@@ -907,7 +848,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tpcc/payment.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
+        <state relative-caret-position="6140">
           <caret line="307" column="42" selection-start-line="307" selection-start-column="42" selection-end-line="307" selection-end-column="42" />
           <folding>
             <element signature="e#48#65#0" expanded="true" />
@@ -915,13 +856,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/global_define.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+          <folding>
+            <element signature="e#522#540#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tpcc/slev.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="789">
+        <state relative-caret-position="1750">
           <caret line="99" column="1" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
           <folding>
             <element signature="e#48#65#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/tools/date.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="4" column="9" lean-forward="true" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding>
+            <element signature="e#49#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="69" column="53" selection-start-line="69" selection-start-column="53" selection-end-line="69" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pg_lib/pg_prepared_statement.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
         </state>
       </provider>
     </entry>

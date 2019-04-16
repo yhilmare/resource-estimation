@@ -11,7 +11,7 @@
 #include "exception/sqlexecute_exception.h"
 
 
-std::default_random_engine e;
+std::default_random_engine e(time(NULL));
 
 pg_prepared_statement::pg_prepared_statement(PGconn *conn,
         std::string &sql, const parameter_type types[]): pg_statement(conn) {

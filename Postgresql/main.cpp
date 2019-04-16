@@ -61,15 +61,13 @@ void *thread_main(void *);
 
 int main(int argn, char *argv[]) {
     using namespace std;
-
     char buffer[1000];
     getcwd(buffer, 1000);
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     int thread_num = 10;
     PG::Date date;
-    GETUSER
-    string file_name = "F:/resource_estimation/origindlog_" + parseInt(date.get_million_seconds()) + ".csv";
+    string file_name = "F:/resource_estimation/originlog_" + parseInt(date.get_million_seconds()) + ".csv";
     thread_arg arg(config, thread_num, file_name);
 //    thread_main((void *)&arg);
     for (int i = 0; i < thread_num; i ++){
