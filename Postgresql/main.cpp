@@ -65,7 +65,7 @@ int main(int argn, char *argv[]) {
     getcwd(buffer, 1000);
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
-    int thread_num = 6;
+    int thread_num = 5;
     PG::Date date;
     string file_name = "F:/resource_estimation/originlog_" + parseInt(date.get_million_seconds()) + ".csv";
     thread_arg arg(config, thread_num, file_name);

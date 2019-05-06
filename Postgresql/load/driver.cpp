@@ -52,7 +52,7 @@ int do_slev (pg_connection &con, file_obj *obj,
 
 int driver(pg_connection &con,
         std::vector<pg_prepared_statement> &val, int thread_num, file_obj *obj){
-    int total_time = (EXECUTE_TIME * 1000) / thread_num;
+    int total_time = (EXECUTE_TIME * 1000);
     clock_t start = clock();
     int count = 0;
     while((clock() - start) <= total_time){
