@@ -5,6 +5,8 @@ Created By ILMARE
 
 import csv
 import re
+import os
+import numpy as np
 
 table_name = ["customer", "district", "history", "item", "new_orders", "order_line", "orders", "stock", "warehouse"]
 
@@ -24,15 +26,26 @@ def checkLine(line):
         return False
     return True
 
-
-if __name__ == "__main__":
-    file_path = r"F:\resource_estimation\data\originlog_1557110567.csv"
-    output_path = r"F:\resource_estimation\data\data_1557110567.csv"
-    try:
-        fp = open(file_path, "r")
+def generate_train_data(list_path):
+    test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", list_path)
+    assert test != None, Exception("path is invaild")
+    if list_path[-1] is not "\\" and list_path[-1] is not "/":
+        list_path = "{0}/".format(list_path)
+    items = os.listdir(list_path)
+    train = "{0}train.csv".format(list_path)
+    test = "{0}test.csv".format(list_path)
+    fp1 = open(train, "w", newline="\n")
+    writer = csv.writer(fp1)
+    fp2 = open(test, "w", newline="\n")
+    writer1 = csv.writer(fp2)
+    for item in items:
+        filePath = "{0}{1}".format(list_path, item)
+        print("parsing file {0}".format(filePath))
+        result = re.search("\w+[0-9]+\.csv", filePath)
+        if result is None:
+            continue
+        fp = open(filePath, "r")
         reader = csv.reader(fp)
-        fp1 = open(output_path, "w", newline="\n")
-        writer = csv.writer(fp1)
         row = None
         for line in reader:
             if not checkLine(line):
@@ -42,14 +55,21 @@ if __name__ == "__main__":
                         list.append(item[0])
                         list.append(item[1])
                     list.append(end - begin)
-                    writer.writerow(list)
+                    if np.random.randint(0, 10) <= 6:
+                        writer.writerow(list)
+                    else:
+                        writer1.writerow(list)
                 row = {}
                 begin = int(line[-1])
                 for table in table_name:
                     row[table] = [0, 0]
             row[line[2]][int(line[1])] += 1
             end = int(line[-1])
-    except Exception as e:
-        print(e)
-    finally:
         fp.close()
+    fp1.close()
+    fp2.close()
+
+
+
+if __name__ == "__main__":
+    generate_train_data(r"F:/resource_estimation/data")
