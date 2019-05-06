@@ -45,6 +45,7 @@ void regex_test(){
 }
 
 int num_ware = 10;
+void *thread_main(void *);
 
 void load_data(){
     generate_item();
@@ -57,7 +58,6 @@ void load_data(){
 //    load_warehouse(map, num_ware);
 }
 
-void *thread_main(void *);
 
 int main(int argn, char *argv[]) {
     using namespace std;
@@ -65,9 +65,10 @@ int main(int argn, char *argv[]) {
     getcwd(buffer, 1000);
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
-    int thread_num = 5;
     PG::Date date;
-    string file_name = "F:/resource_estimation/originlog_" + parseInt(date.get_million_seconds()) + ".csv";
+    string file_name = config["DATA_FILE"] + "originlog_" + parseInt(date.get_million_seconds()) + ".csv";
+
+    int thread_num = 5;
     thread_arg arg(config, thread_num, file_name);
 
     for (int i = 0; i < thread_num - 1; i ++){
