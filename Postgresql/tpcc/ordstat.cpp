@@ -13,14 +13,14 @@
 
 int ordstat(int w_id_arg, int d_id_arg, int byname,
         int c_id_arg, char c_last_arg[], pg_connection &con,
-            std::vector<pg_prepared_statement> &val, file_obj *obj){
+            std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id){
 
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [ordstat]@"
               << (void *)ordstat << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = parseInt((int)t) + "@ordstat";
+    std::string tran_name = parseInt((int)t) + "@ordstat_" + parseInt(t_id);
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int c_id = c_id_arg;

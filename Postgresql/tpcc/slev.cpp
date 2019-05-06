@@ -12,14 +12,14 @@
 #include "../lib/tools/global_tools.h"
 
 int slev(int w_id_arg, int d_id_arg,	int level_arg,
-        pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj) {
+        pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id) {
 
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [slev]@"
               << (void *)slev << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = parseInt((int)t) + "@slev";
+    std::string tran_name = parseInt((int)t) + "@slev_" + parseInt(t_id);
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int level = level_arg;

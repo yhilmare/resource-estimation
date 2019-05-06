@@ -69,12 +69,13 @@ int main(int argn, char *argv[]) {
     PG::Date date;
     string file_name = "F:/resource_estimation/originlog_" + parseInt(date.get_million_seconds()) + ".csv";
     thread_arg arg(config, thread_num, file_name);
-//    thread_main((void *)&arg);
-    for (int i = 0; i < thread_num; i ++){
+
+    for (int i = 0; i < thread_num - 1; i ++){
         pthread_t t1;
         pthread_create(&t1, NULL, thread_main, (void *) &arg);
-        pthread_join(t1, NULL);
+//        pthread_join(t1, NULL);
     }
+    thread_main((void *)&arg);
     return 0;
 }
 

@@ -28,14 +28,14 @@ default: strncpy(ol_dist_info, s_dist_10, 25); break; \
 int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         int o_ol_cnt_arg, int o_all_local_arg,
         int itemid[], int supware[], int qty[], pg_connection &con,
-        std::vector<pg_prepared_statement> &val, file_obj *obj) {
+        std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id) {
 
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [neword]@"
               << (void *)neword << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = parseInt((int)t) + "@neword";
+    std::string tran_name = parseInt((int)t) + "@neword_" + parseInt(t_id);
     extern std::default_random_engine e;
     int w_id = w_id_arg;
     int d_id = d_id_arg;

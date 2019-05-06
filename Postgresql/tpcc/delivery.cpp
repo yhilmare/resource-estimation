@@ -18,14 +18,14 @@
 //}
 
 int delivery(int w_id_arg, int o_carrier_id_arg,
-        pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj) {
+        pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id) {
 
     transaction_obj tran_obj;
     pthread_t t = pthread_self();
     std::clog << " --> Thread: [" << t << "]@"
               << (void *)&t << ", function [delivery]@"
               << (void *)delivery << std::endl;
-    std::string tran_name = parseInt((int)t) + "@delivery";
+    std::string tran_name = parseInt((int)t) + "@delivery_" + parseInt(t_id);
     int w_id = w_id_arg;
     int o_carrier_id = o_carrier_id_arg;
     int d_id;
