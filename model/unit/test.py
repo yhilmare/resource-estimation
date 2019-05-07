@@ -29,7 +29,7 @@ def plot_data():
     finally:
         fp.close()
 
-if __name__ == "__main__":
+def pca_plot():
     try:
         fp = open(r"F:\resource_estimation\data\train.csv", "r")
         reader = csv.reader(fp)
@@ -41,7 +41,6 @@ if __name__ == "__main__":
         y = np.array(y, dtype=np.float32)
         pca = PCA(n_components=3)
         new_y = pca.fit_transform(y)
-        print(new_y.shape)
         fig = plt.figure("test")
         ax = Axes3D(fig)
         ax.plot(new_y[:, 0], new_y[:, 1], new_y[:, 2], '.')
@@ -51,3 +50,6 @@ if __name__ == "__main__":
         print(e)
     finally:
         fp.close()
+
+if __name__ == "__main__":
+    plot_data()

@@ -16,15 +16,17 @@ class lr_model:
         self._lr = learning_rate
         self._iterator_num = iterator_num
         self._model_path = model_path
-        mnist = input_data.read_data_sets(r"F:\tensorflow\MNIST_DATA", one_hot=True)
-        self._data = mnist.train
+        # mnist = input_data.read_data_sets(r"F:\tensorflow\MNIST_DATA", one_hot=True)
+        obj = tran_data(file_path)
+        obj.pca_samples(3)
+        self._data = obj
         weight = tf.Variable(name="weight",
-                             initial_value=tf.truncated_normal(shape=[784, 10], dtype=tf.float32, stddev=0.1))
+                             initial_value=tf.random_normal(shape=[3, 10], dtype=tf.float32, stddev=0.1))
         bias = tf.Variable(name="bias",
-                           initial_value=tf.truncated_normal(shape=[10], dtype=tf.float32, stddev=0.1))
-        self._x = tf.placeholder(shape=[None, 784], dtype=tf.float32)
+                           initial_value=tf.ones(shape=[10], dtype=tf.float32))
+        self._x = tf.placeholder(shape=[None, 3], dtype=tf.float32)
         self._y = tf.placeholder(shape=[None, 10], dtype=tf.float32)
-        self._pre = tf.nn.softmax(tf.matmul(self._x, weight) + bias)
+        self._pre = tf.nn.softmax(tf.nn.sigmoid(tf.matmul(self._x, weight)) + bias)
         self._loss = -tf.reduce_mean(tf.reduce_sum(self._y * tf.log(self._pre), reduction_indices=[1]))
         self._accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self._pre, 1), tf.argmax(self._y, 1)), dtype=np.float32))
         # self._loss = 0.5 * tf.reduce_sum(tf.abs(tf.subtract(self._y, self._pre)))
@@ -59,7 +61,7 @@ class lr_model:
                         bx.plot(np.arange(0, i + 1), _loss_list, linewidth=0.6, color="b")
                         plt.pause(0.1)
             # tf.train.Saver().save(sess, "{0}model".format(self._model_path), global_step=self._iterator_num)
-            print("accuracy:", sess.run(self._accuracy, feed_dict={self._x: self._data.images, self._y: self._data.labels}))
+            print("accuracy:", sess.run(self._accuracy, feed_dict={self._x: self._data.train, self._y: self._data.labels}))
             if analyse:
                 plt.show()
     def test(self):
@@ -68,9 +70,9 @@ class lr_model:
         print("accuracy:", sess.run(self._accuracy, feed_dict={self._x: self._mnist.test.images, self._y: self._mnist.test.labels}))
 
 if __name__ == "__main__":
-    model = lr_model(batch_size=100,
-                     learning_rate=0.5,
-                     iterator_num=10000,
+    model = lr_model(batch_size=256,
+                     learning_rate=0.05,
+                     iterator_num=30000,
                      file_path=r"F:/resource_estimation/data/train.csv",
                      model_path=r'F:/tensorflow/softmax_model/')
     model.train(True)

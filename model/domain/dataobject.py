@@ -6,6 +6,7 @@ Created By ILMARE
 import csv
 import re
 import numpy as np
+from sklearn.decomposition import PCA
 
 def generate_label(label):
     tmp_label = np.log(int(label))
@@ -40,8 +41,11 @@ class tran_data:
     def train(self):
         return self._train
     @property
-    def label(self):
+    def labels(self):
         return self._label
+    def pca_samples(self, n_components):
+        pca = PCA(n_components=n_components)
+        self._train = pca.fit_transform(self._train)
     def next_batch(self, num):
         high = len(self._train) - num
         idx = np.random.randint(0, high)
@@ -49,5 +53,7 @@ class tran_data:
 
 if __name__ == "__main__":
     obj = tran_data(filePath = r"F:\resource_estimation\data\train.csv")
-    train, label = obj.next_batch(3)
-    print(generate_label(14.5))
+    train, label = obj.next_batch(10)
+    obj.pca_samples(10)
+    train, label = obj.next_batch(10)
+    print(train.shape)
