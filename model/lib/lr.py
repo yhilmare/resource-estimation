@@ -11,15 +11,14 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 class lr_model:
     def __init__(self, batch_size, learning_rate,
-                 iterator_num, file_path, model_path):
+                 iterator_num, data_obj, model_path):
         self._batch_size = batch_size
         self._lr = learning_rate
         self._iterator_num = iterator_num
         self._model_path = model_path
         # mnist = input_data.read_data_sets(r"F:\tensorflow\MNIST_DATA", one_hot=True)
-        obj = tran_data(file_path)
-        obj.pca_samples(3)
-        self._data = obj
+        self._data = data_obj
+        self._data.pca_samples(3)
         self.define_network()
     def define_network(self):
         self._x = tf.placeholder(shape=[None, 3], dtype=tf.float32)
@@ -66,7 +65,8 @@ class lr_model:
                     self._x: train,
                     self._y: label
                 }
-                _, _loss, _accuracy = sess.run([self._optimizer, self._loss, self._accuracy], feed_dict=feedt_dict)
+                _, _loss, _accuracy = sess.run([self._optimizer, self._loss, self._accuracy],
+                                               feed_dict=feedt_dict)
                 if analyse:
                     _loss_list.append(_loss)
                     _accuracy_list.append(_accuracy)
@@ -90,12 +90,16 @@ class lr_model:
         print("accuracy:", self._sess.run(self._accuracy,
                                           feed_dict={self._x: self._data.train.samples,
                                                      self._y: self._data.train.labels}))
+    def preidct(self, sample):
+        return self._sess.run(self._pre, feed_dict={self._x: sample})
 
 if __name__ == "__main__":
+    obj = tran_data(r"F:/resource_estimation/data/lr/")
     model = lr_model(batch_size=256,
                      learning_rate=0.05,
-                     iterator_num=30000,
-                     file_path=r"F:/resource_estimation/data/lr/",
+                     iterator_num=30000, data_obj=obj,
                      model_path=r'F:/resource_estimation/model/lr/')
-    model.load()
-    model.test()
+    model.train(True)
+    # model.load()
+    # res = model.preidct(obj.test.samples)
+    # print(res.shape)

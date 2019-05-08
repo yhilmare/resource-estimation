@@ -18,7 +18,7 @@ def generate_label(label):
     elif tmp_label > 10:
         result[9] = 1
         return result
-    idx = int(tmp_label - 2)
+    idx = int(tmp_label - 1)
     result[idx] = 1
     return result
 
@@ -39,34 +39,48 @@ class data_obj:
 
 
 class tran_data:
-    def __init__(self, filePath):
+    def __init__(self, filePath, one_hot=True):
         self._filePath = filePath
+        self._one_hot = one_hot
         test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", filePath)
         assert test != None, Exception("the path is invaild")
         if filePath[-1] != '\\' and filePath[-1] != "/":
-            filePath += "/"
-        train_path = "{0}train.csv".format(filePath)
+            self._filePath += "/"
+        assert os.path.exists(self._filePath), Exception("the path is not exist")
+        self.load_train()
+        self.load_test()
+        self.init_samples()
+    def load_train(self):
+        train_path = "{0}train.csv".format(self._filePath)
         fp = open(train_path, "r")
         reader = csv.reader(fp)
         _train = []
         _label = []
         for line in reader:
             _train.append(line[0: -1])
-            _label.append(generate_label(line[-1]))
+            if self._one_hot:
+                _label.append(generate_label(line[-1]))
+            else:
+                _label.append(np.log(int(line[-1])))
         self._train = np.array(_train, dtype=np.float32)
         self._train_label = np.array(_label, dtype=np.float32)
         fp.close()
-        test_path = "{0}test.csv".format(filePath)
+    def load_test(self):
+        test_path = "{0}test.csv".format(self._filePath)
         fp = open(test_path, "r")
         reader = csv.reader(fp)
         _test = []
         _label = []
         for line in reader:
             _test.append(line[0: -1])
-            _label.append(generate_label(line[-1]))
+            if self._one_hot:
+                _label.append(generate_label(line[-1]))
+            else:
+                _label.append(np.log(int(line[-1])))
         self._test = np.array(_test, dtype=np.float32)
         self._test_label = np.array(_label, dtype=np.float32)
         fp.close()
+    def init_samples(self):
         self._train_sample = data_obj(self._train, self._train_label)
         self._test_sample = data_obj(self._test, self._test_label)
     @property
@@ -79,8 +93,7 @@ class tran_data:
         pca = PCA(n_components=n_components)
         self._train = pca.fit_transform(self._train)
         self._test = pca.fit_transform(self._test)
-        self._train_sample = data_obj(self._train, self._train_label)
-        self._test_sample = data_obj(self._test, self._test_label)
+        self.init_samples()
 
 if __name__ == "__main__":
     obj = tran_data(filePath = r"F:/resource_estimation/data/lr/")
