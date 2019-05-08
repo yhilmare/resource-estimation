@@ -8,6 +8,7 @@ from domain.dataobject import tran_data
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
+import copy
 
 class lr_evaluation:
     def __init__(self, model, data_obj):
@@ -40,12 +41,15 @@ class lr_evaluation:
         label2 = self.__predict()
         fig = plt.figure()
         ax = fig.add_subplot(311)
-        ax.plot(np.arange(0, len(label1)), label1)
+        ax.plot(np.arange(0, len(label1)), label1, '.', label="real execution time")
+        ax.legend()
         bx = fig.add_subplot(312)
-        bx.plot(np.arange(0, len(label2)), label2, color="darkorange")
+        bx.plot(np.arange(0, len(label2)), label2, '.', color="darkorange", label="predictive execution time")
+        bx.legend()
         cx = fig.add_subplot(313)
-        cx.plot(np.arange(0, len(label1)), label1, label="asdas")
-        cx.plot(np.arange(0, len(label2)), label2, color="darkorange")
+        cx.plot(np.arange(0, len(label1)), label1, '.', label="real execution time")
+        cx.plot(np.arange(0, len(label2)), label2, '.', color="darkorange", label="predictive execution time")
+        cx.legend()
         plt.show()
     def statistics_info(self):
         accuracy = np.mean(np.equal(np.argmax(self._labels, 1),
@@ -71,7 +75,7 @@ class lr_evaluation:
 
 
 if __name__ == "__main__":
-    obj = tran_data(r"F:/resource_estimation/data/lr/")
+    obj = tran_data(r"F:/resource_estimation/data/lr/", False)
     model = lr_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=30000, data_obj=obj,dest_dim=3,
