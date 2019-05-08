@@ -6,29 +6,76 @@ Created By ILMARE
 from lib.lr import lr_model
 from domain.dataobject import tran_data
 import matplotlib.pyplot as plt
-import os
+import matplotlib as mpl
 import numpy as np
+
+class lr_evaluation:
+    def __init__(self, model, data_obj):
+        self._model = model
+        if data_obj.one_hot:
+            self._data_obj_digtial = tran_data(data_obj.file_path, one_hot=False)
+            self._data_obj_one_hot = data_obj
+        else:
+            self._data_obj_digtial = data_obj
+            self._data_obj_one_hot = tran_data(data_obj.file_path, one_hot=True)
+        dest_dim = self._model.dest_dim;
+        self._data_obj_digtial.pca_samples(dest_dim)
+        self._data_obj_one_hot.pca_samples(dest_dim)
+        self._model.load()
+        self._labels = self._model.predict(self._data_obj_digtial.test.samples)
+        mpl.rcParams["xtick.labelsize"] = 8
+        mpl.rcParams["ytick.labelsize"] = 8
+    def __predict(self):
+        return_mat = list();
+        for item in np.argmax(self._labels, 1):
+            if item == 0:
+                return_mat.append(np.random.normal(1.5, 0.5))
+            elif item == 9:
+                return_mat.append(np.random.normal(10.5, 0.5))
+            else:
+                return_mat.append(np.random.normal(item + 1 + 0.5, 0.5))
+        return np.array(return_mat, dtype=np.float32)
+    def plot(self):
+        label1 = self._data_obj_digtial.test.labels
+        label2 = self.__predict()
+        fig = plt.figure()
+        ax = fig.add_subplot(311)
+        ax.plot(np.arange(0, len(label1)), label1)
+        bx = fig.add_subplot(312)
+        bx.plot(np.arange(0, len(label2)), label2, color="darkorange")
+        cx = fig.add_subplot(313)
+        cx.plot(np.arange(0, len(label1)), label1, label="asdas")
+        cx.plot(np.arange(0, len(label2)), label2, color="darkorange")
+        plt.show()
+    def statistics_info(self):
+        accuracy = np.mean(np.equal(np.argmax(self._labels, 1),
+                                    np.argmax(self._data_obj_one_hot.test.labels, 1)))
+        real_label = np.power(np.e, self._data_obj_digtial.test.labels).flatten()
+        predict_label = np.power(np.e, self.__predict())
+        err_ratio = sorted(np.abs(predict_label - real_label) / real_label)
+        length = len(err_ratio)
+        info_dict = dict()
+        for idx, num in enumerate(err_ratio):
+            if num > 0.1 and info_dict.get(0.1) is None:
+                info_dict[0.1] = (idx + 1) / length
+            if num > 0.2 and info_dict.get(0.2) is None:
+                info_dict[0.2] = (idx + 1) / length
+            if num > 0.3 and info_dict.get(0.3) is None:
+                info_dict[0.3] = (idx + 1) / length
+            if num > 0.35 and info_dict.get(0.35) is None:
+                info_dict[0.35] = (idx + 1) / length
+        return "Label accuracy: {0:.3f}\nDigtial accuracy: {2}->{1:.3f}% | {4}->{3:.3f}% | {6}->{5:.3f}% | {8}->{7:.3f}%".format(
+            accuracy, info_dict[0.1] * 100, 0.1, info_dict[0.2] * 100, 0.2, info_dict[0.3] * 100, 0.3, info_dict[0.35] * 100, 0.35)
+    def __str__(self):
+        return self.statistics_info()
+
 
 if __name__ == "__main__":
     obj = tran_data(r"F:/resource_estimation/data/lr/")
     model = lr_model(batch_size=256,
                      learning_rate=0.05,
-                     iterator_num=30000, data_obj=obj,
+                     iterator_num=30000, data_obj=obj,dest_dim=3,
                      model_path=r'F:/resource_estimation/model/lr/')
-    model.load()
-    labels = model.preidct(obj.test.samples)
-    y = []
-    for item in np.argmax(labels, 1):
-        if item == 0:
-            y.append(np.random.normal(1, 1))
-        elif item == 9:
-            y.append(np.random.normal(11, 1))
-        else:
-            y.append(np.random.normal(item + 1 + 0.5, 0.5))
-    obj1 = tran_data(r"F:/resource_estimation/data/lr/", one_hot=False)
-    y1 = obj1.test.labels
-    fig = plt.figure("test")
-    ax = fig.add_subplot(111)
-    ax.plot(np.arange(0, len(y1)), y1, '.')
-    ax.plot(np.arange(0, len(y)), y, '.')
-    plt.show()
+    test_obj = lr_evaluation(model, obj)
+    print(test_obj)
+    test_obj.plot()

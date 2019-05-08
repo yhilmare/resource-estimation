@@ -61,7 +61,7 @@ class tran_data:
             if self._one_hot:
                 _label.append(generate_label(line[-1]))
             else:
-                _label.append(np.log(int(line[-1])))
+                _label.append([np.log(int(line[-1]))])
         self._train = np.array(_train, dtype=np.float32)
         self._train_label = np.array(_label, dtype=np.float32)
         fp.close()
@@ -76,7 +76,7 @@ class tran_data:
             if self._one_hot:
                 _label.append(generate_label(line[-1]))
             else:
-                _label.append(np.log(int(line[-1])))
+                _label.append([np.log(int(line[-1]))])
         self._test = np.array(_test, dtype=np.float32)
         self._test_label = np.array(_label, dtype=np.float32)
         fp.close()
@@ -89,6 +89,12 @@ class tran_data:
     @property
     def test(self):
         return self._test_sample
+    @property
+    def file_path(self):
+        return self._filePath
+    @property
+    def one_hot(self):
+        return self._one_hot
     def pca_samples(self, n_components):
         pca = PCA(n_components=n_components)
         self._train = pca.fit_transform(self._train)

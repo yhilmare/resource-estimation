@@ -7,25 +7,25 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 from domain.dataobject import tran_data
-from tensorflow.examples.tutorials.mnist import input_data
 
 class lr_model:
     def __init__(self, batch_size, learning_rate,
-                 iterator_num, data_obj, model_path):
+                 iterator_num, data_obj, dest_dim, model_path):
         self._batch_size = batch_size
         self._lr = learning_rate
         self._iterator_num = iterator_num
         self._model_path = model_path
+        self._dest_dim = dest_dim
         # mnist = input_data.read_data_sets(r"F:\tensorflow\MNIST_DATA", one_hot=True)
         self._data = data_obj
-        self._data.pca_samples(3)
+        self._data.pca_samples(dest_dim)
         self.define_network()
     def define_network(self):
-        self._x = tf.placeholder(shape=[None, 3], dtype=tf.float32)
+        self._x = tf.placeholder(shape=[None, self._dest_dim], dtype=tf.float32)
         self._y = tf.placeholder(shape=[None, 10], dtype=tf.float32)
         with tf.variable_scope("level0"):
             weight = tf.Variable(name="weight",
-                                 initial_value=tf.random_normal(shape=[3, 32], dtype=tf.float32, stddev=0.1))
+                                 initial_value=tf.random_normal(shape=[self._dest_dim, 32], dtype=tf.float32, stddev=0.1))
             bias = tf.Variable(name="bias",
                                initial_value=tf.ones(shape=[32], dtype=tf.float32))
             level_1 = tf.nn.sigmoid(tf.matmul(self._x, weight) + bias)
@@ -47,6 +47,9 @@ class lr_model:
         # self._loss = 0.5 * tf.reduce_sum(tf.abs(tf.subtract(self._y, self._pre)))
         # self._accuracy = tf.reduce_mean(tf.reduce_sum(tf.abs(self._pre - self._y) / self._y, reduction_indices=[1]))
         self._optimizer = tf.train.GradientDescentOptimizer(self._lr).minimize(self._loss)
+    @property
+    def dest_dim(self):
+        return self._dest_dim
     def train(self, analyse=False):
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
@@ -90,16 +93,16 @@ class lr_model:
         print("accuracy:", self._sess.run(self._accuracy,
                                           feed_dict={self._x: self._data.train.samples,
                                                      self._y: self._data.train.labels}))
-    def preidct(self, sample):
+    def predict(self, sample):
         return self._sess.run(self._pre, feed_dict={self._x: sample})
 
 if __name__ == "__main__":
     obj = tran_data(r"F:/resource_estimation/data/lr/")
     model = lr_model(batch_size=256,
                      learning_rate=0.05,
-                     iterator_num=30000, data_obj=obj,
+                     iterator_num=100000, data_obj=obj, dest_dim=3,
                      model_path=r'F:/resource_estimation/model/lr/')
-    model.train(True)
+    model.train()
     # model.load()
     # res = model.preidct(obj.test.samples)
     # print(res.shape)
