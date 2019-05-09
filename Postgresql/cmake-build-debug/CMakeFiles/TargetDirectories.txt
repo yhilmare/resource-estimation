@@ -1,3 +1,0 @@
-F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/Postgresql.dir
-F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/repos/Resource_estimation/Postgresql/cmake-build-debug/CMakeFiles/rebuild_cache.dir
