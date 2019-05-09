@@ -2,7 +2,6 @@
 #include <vector>
 #include <random>
 #include <time.h>
-#include <windows.h>
 #include <cstring>
 #include <direct.h>
 #include <iostream>
