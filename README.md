@@ -31,11 +31,11 @@ Scanning dependencies of target load
 
 ![](https://github.com/yhswjtuILMARE/Resource_estimation/blob/master/pic/lr/loss_accuracy_for_predictin_time.png)
 
-可以看到，若直接对执行时间进行回归预测效果是不好的，损失和准确率都一直在一个水平上震荡，没有表现出收敛的趋势，这可能是由于模型太过简单造成的。为了解决这个问题，我们可以考虑更粗粒度的预测，也就是说将事务执行时间的自然底数对数进行区间划分，模型只预测事务执行时间自然底数对数可能落入的区间，这样就把一个回归问题转化成了分类问题。在这里，考虑到模型的泛化能力和事务执行时间的散布，选取了十个区间。以下是非并发条件下执行时间区间的预测的准确率和损失：
+若直接对执行时间进行回归预测效果是不好的，损失和准确率都一直在一个水平上震荡，没有表现出收敛的趋势，这可能是由于模型太过简单造成的。为了解决这个问题，我们可以考虑更粗粒度的预测，也就是说将事务执行时间的自然底数对数进行区间划分，模型只预测事务执行时间自然底数对数可能落入的区间，这样就把一个回归问题转化成了分类问题。在这里，考虑到模型的泛化能力和事务执行时间的散布，选取了十个区间。以下是非并发条件下执行时间区间的预测的准确率和损失：
 
 ![](https://github.com/yhswjtuILMARE/Resource_estimation/blob/master/pic/lr/loss_accuracy_without_concurrent.png)
 
-可以看到，模型收敛是非常好的，最终准确率达到0.88左右。接下来，使用测试集测试模型并且输出预测的事务执行时间。预测值和测试集的实际值对比如下：
+模型收敛是非常好的，最终准确率达到0.88左右。接下来，使用测试集测试模型并且输出预测的事务执行时间。预测值和测试集的实际值对比如下：
 
 ![](https://github.com/yhswjtuILMARE/Resource_estimation/blob/master/pic/lr/prediction_for_testset.png)
 
@@ -53,4 +53,4 @@ Digtial accuracy: 0.1->12.989% | 0.2->25.822% | 0.3->37.402% | 0.35->43.140%
 
 ![](https://github.com/yhswjtuILMARE/Resource_estimation/blob/master/pic/lr/loss_accuracy_for%20concurrent.png)
 
-可以看到，并发条件下模型表现就差很多，非常不稳定。这也说明了事务的执行时间不仅仅与事务本身的性质相关，在并发条件下事务与事务之间的耦合关系也是一个重大因素。
+并发条件下模型表现要差很多，非常不稳定。这也说明了事务的执行时间不仅仅与事务本身的性质相关，在并发条件下事务与事务之间的耦合关系也是一个重大因素。
