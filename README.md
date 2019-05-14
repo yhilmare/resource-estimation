@@ -39,7 +39,7 @@ Scanning dependencies of target load
 
 ![](https://github.com/yhswjtuILMARE/Resource_estimation/blob/master/pic/lr/prediction_for_testset.png)
 
-为了更清楚地观察模型的们预测能力，我们将执行时间排序，预测值与实际值的对比如下：
+为了更清楚地观察模型的预测能力，我们将执行时间排序，预测值与实际值的对比如下：
 
 ![](https://github.com/yhswjtuILMARE/Resource_estimation/blob/master/pic/lr/prediction_aganist_real.png)
 
