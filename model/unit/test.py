@@ -51,5 +51,9 @@ def pca_plot():
     finally:
         fp.close()
 
+import base64
+
 if __name__ == "__main__":
-    plot_data()
+    fp = open(r"f:/112.png", "rb")
+    print(base64.b64encode(fp.read()))
+    fp.close()
