@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA
 
 def plot_data():
     try:
-        fp = open(r"F:\resource_estimation\data\train.csv", "r")
+        fp = open(r"F:\resource_estimation\data\lr\train.csv", "r")
         reader = csv.reader(fp)
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
@@ -31,7 +31,7 @@ def plot_data():
 
 def pca_plot():
     try:
-        fp = open(r"F:\resource_estimation\data\train.csv", "r")
+        fp = open(r"F:\resource_estimation\data\lr\train.csv", "r")
         reader = csv.reader(fp)
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
@@ -51,9 +51,5 @@ def pca_plot():
     finally:
         fp.close()
 
-import base64
-
 if __name__ == "__main__":
-    fp = open(r"f:/113.png", "rb")
-    print(base64.b64encode(fp.read()))
-    fp.close()
+    plot_data()
