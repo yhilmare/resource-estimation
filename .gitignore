@@ -5,3 +5,7 @@
 # for jupyter notebook
 
 */.ipynb_checkpoints/
+
+# for cmake_debug
+
+*/*/cmake-build-debug/
