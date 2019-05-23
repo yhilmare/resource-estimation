@@ -1,0 +1,7 @@
+# for .idea
+
+*/.idea/
+
+# for jupyter notebook
+
+*/.ipynb_checkpoints/
