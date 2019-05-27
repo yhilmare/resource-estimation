@@ -7,6 +7,7 @@ import csv
 import re
 import os
 import numpy as np
+from tool import sortlib
 
 table_name = ["customer", "district", "history", "item", "new_orders", "order_line", "orders", "stock", "warehouse"]
 
@@ -26,6 +27,9 @@ def checkLine(line):
         return False
     return True
 
+'''
+针对非并发条件下事务运行log的原始数据处理
+'''
 def generate_train_data(list_path):
     test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", list_path)
     assert test != None, Exception("path is invaild")
@@ -70,6 +74,52 @@ def generate_train_data(list_path):
     fp2.close()
 
 
-
 if __name__ == "__main__":
-    generate_train_data(r"F:/resource_estimation/data")
+    list_path = r"F:/resource_estimation/data/rnn"
+    test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", list_path)
+    assert test != None, Exception("path is invaild")
+    if list_path[-1] is not "\\" and list_path[-1] is not "/":
+        list_path = "{0}/".format(list_path)
+    items = os.listdir(list_path)
+    for item in items:
+        filePath = "{0}{1}".format(list_path, item)
+        result = re.search("\w+[0-9]+\.csv", filePath)
+        if result is None or item.startswith("dest_origin"):
+            continue
+        result = re.search("[0-9]+", item)
+        if result is None:
+            continue
+        start_time = int(result.group()) * 1000
+        print("parsing file: ", filePath)
+        fp = open(filePath, "r")
+        reader = csv.reader(fp)
+        tmp_lst = list()
+        for line in reader:
+            line[-1] = int(line[-1]) + start_time
+            tmp_lst.append(line)
+        tmp_lst = sorted(tmp_lst, key=lambda item: item[-1])
+        fp.close()
+        fp = open("{0}dest_{1}".format(list_path, item), "w", newline="\n")
+        writer = csv.writer(fp)
+        for line in tmp_lst:
+            writer.writerow(line)
+        fp.close()
+    items = os.listdir(list_path)
+    reader_lst = []
+    fps_lst = []
+    for item in items:
+        filePath = "{0}{1}".format(list_path, item)
+        result = re.search("\w+[0-9]+\.csv", filePath)
+        if result is None or not item.startswith("dest_origin"):
+            continue
+        fp = open(filePath, "r")
+        reader = csv.reader(fp)
+        reader_lst.append(reader)
+        fps_lst.append(fp)
+    reader = sortlib.mergeSort_1(fps_lst, reader_lst, list_path, 0, len(reader_lst) - 1)
+    for idx, fp in enumerate(fps_lst):
+        fp.close()
+        print("filename", fp.name)
+        if idx != len(fps_lst) - 1:
+            os.remove(fp.name)
+    # generate_train_data(r"F:/resource_estimation/data")
