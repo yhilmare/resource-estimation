@@ -102,7 +102,7 @@ class bp_data:
         self.init_samples()
 
 if __name__ == "__main__":
-    obj = tran_data(filePath = r"F:/resource_estimation/data/bp/")
+    obj = bp_data(filePath = r"F:/resource_estimation/data/bp/")
     train, label = obj.test.next_batch(10)
     obj.pca_samples(10)
     train, label = obj.train.next_batch(10)

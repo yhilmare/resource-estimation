@@ -7,7 +7,7 @@ import csv
 import re
 import os
 import numpy as np
-from tool import sortlib
+from utils import sortutils
 
 table_name = ["customer", "district", "history", "item", "new_orders", "order_line", "orders", "stock", "warehouse"]
 
@@ -105,7 +105,7 @@ def mergeOriginLog(list_path):
             writer.writerow(line)
         f_list.append(fp.name)
         fp.close()
-    return sortlib.mergeSort(list_path, f_list, key=lambda item: int(item[-1]))
+    return sortutils.mergeSort(list_path, f_list, key=lambda item: int(item[-1]))
 
 if __name__ == "__main__":
     order_path = mergeOriginLog(r"F:/resource_estimation/data/rnn/")

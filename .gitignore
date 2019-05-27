@@ -9,3 +9,7 @@
 # for cmake_debug
 
 */cmake-build-debug/
+
+# for pyc
+
+/model/*/__pycache__/
