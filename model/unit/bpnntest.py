@@ -3,14 +3,13 @@ Created By ILMARE
 @Date:2019-5-8
 '''
 
-from lib.lr import lr_model
-from domain.dataobject import tran_data
+from lib.bpnn import bp_model
+from domain.bpobject import bp_data
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
-import copy
 
-class lr_evaluation:
+class bp_evaluation:
     def __init__(self, model, data_obj):
         self._model = model
         if data_obj.one_hot:
@@ -75,11 +74,11 @@ class lr_evaluation:
 
 
 if __name__ == "__main__":
-    obj = tran_data(r"F:/resource_estimation/data/lr/", False)
-    model = lr_model(batch_size=256,
+    obj = bp_data(r"F:/resource_estimation/data/bp/", False)
+    model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=30000, data_obj=obj,dest_dim=3,
-                     model_path=r'F:/resource_estimation/model/lr/')
-    test_obj = lr_evaluation(model, obj)
+                     model_path=r'F:/resource_estimation/model/bp/')
+    test_obj = bp_evaluation(model, obj)
     print(test_obj)
     test_obj.plot()

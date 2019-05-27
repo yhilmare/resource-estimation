@@ -38,7 +38,7 @@ class data_obj:
         return self._data[idx: idx + num], self._labels[idx: idx + num]
 
 
-class tran_data:
+class bp_data:
     def __init__(self, filePath, one_hot=True):
         self._filePath = filePath
         self._one_hot = one_hot
@@ -102,7 +102,7 @@ class tran_data:
         self.init_samples()
 
 if __name__ == "__main__":
-    obj = tran_data(filePath = r"F:/resource_estimation/data/lr/")
+    obj = tran_data(filePath = r"F:/resource_estimation/data/bp/")
     train, label = obj.test.next_batch(10)
     obj.pca_samples(10)
     train, label = obj.train.next_batch(10)

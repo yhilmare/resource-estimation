@@ -2,7 +2,7 @@
 created by ilmare
 @Date 2019-4-16
 """
-from domain.dataobject import tran_data
+from domain.bpobject import bp_data
 from sklearn.cluster import DBSCAN
 
 class DBSCAN_model:
@@ -16,7 +16,7 @@ class DBSCAN_model:
         return self._model.fit_predict(self._data_obj.train)
 
 if __name__ == "__main__":
-    obj = tran_data(r"F:\resource_estimation\data\train.csv")
+    obj = bp_data(r"F:\resource_estimation\data\train.csv")
     model = DBSCAN_model(0.3, 20, obj)
     model.clustering()
     labels = model.labels

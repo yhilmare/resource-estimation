@@ -6,9 +6,9 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
-from domain.dataobject import tran_data
+from domain.bpobject import bp_data
 
-class lr_model:
+class bp_model:
     def __init__(self, batch_size, learning_rate,
                  iterator_num, data_obj, dest_dim, model_path):
         self._batch_size = batch_size
@@ -97,11 +97,11 @@ class lr_model:
         return self._sess.run(self._pre, feed_dict={self._x: sample})
 
 if __name__ == "__main__":
-    obj = tran_data(r"F:/resource_estimation/data/lr/")
-    model = lr_model(batch_size=256,
+    obj = bp_data(r"F:/resource_estimation/data/bp/")
+    model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, dest_dim=3,
-                     model_path=r'F:/resource_estimation/model/lr/')
+                     model_path=r'F:/resource_estimation/model/bp/')
     model.train()
     # model.load()
     # res = model.preidct(obj.test.samples)
