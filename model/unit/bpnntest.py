@@ -13,11 +13,11 @@ class bp_evaluation:
     def __init__(self, model, data_obj):
         self._model = model
         if data_obj.one_hot:
-            self._data_obj_digtial = tran_data(data_obj.file_path, one_hot=False)
+            self._data_obj_digtial = bp_data(data_obj.file_path, one_hot=False)
             self._data_obj_one_hot = data_obj
         else:
             self._data_obj_digtial = data_obj
-            self._data_obj_one_hot = tran_data(data_obj.file_path, one_hot=True)
+            self._data_obj_one_hot = bp_data(data_obj.file_path, one_hot=True)
         dest_dim = self._model.dest_dim;
         self._data_obj_digtial.pca_samples(dest_dim)
         self._data_obj_one_hot.pca_samples(dest_dim)
@@ -74,11 +74,11 @@ class bp_evaluation:
 
 
 if __name__ == "__main__":
-    obj = bp_data(r"F:/resource_estimation/data/bp/", False)
+    obj = bp_data(r"F:/resource_estimation/data/bp/")
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=30000, data_obj=obj,dest_dim=3,
                      model_path=r'F:/resource_estimation/model/bp/')
     test_obj = bp_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot()
+    # test_obj.plot()

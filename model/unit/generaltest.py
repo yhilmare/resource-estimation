@@ -11,13 +11,15 @@ from sklearn.decomposition import PCA
 
 def plot_data():
     try:
-        fp = open(r"F:\resource_estimation\data\lr\train.csv", "r")
+        fp = open(r"F:\resource_estimation\data\rnn\train.csv", "r")
         reader = csv.reader(fp)
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
         y = []
-        for line in reader:
-            y.append(np.log(int(line[-1])))
+        for idx, line in enumerate(reader):
+            y.append(int(line[-1]))
+            if idx >= 20000:
+                break
         x = np.arange(0, len(y))
         fig = plt.figure("test")
         ax = fig.add_subplot(111)
