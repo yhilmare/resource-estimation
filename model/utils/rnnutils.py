@@ -24,7 +24,7 @@ def mergeOriginLog(list_path):
         if result is None or item.startswith("dest_origin"):
             continue
         result = re.search("[0-9]+", item)
-        start_time = int(result.group()) * 1000
+        start_time = int(result.group())
         print("ordering file: ", filePath)
         fp = open(filePath, "r")
         reader = csv.reader(fp)
@@ -71,7 +71,7 @@ def generate_samples(pre_path, file_name):
 
 
 if __name__ == "__main__":
-    pre_path = r"F:/resource_estimation/data/rnn/"
+    pre_path = r"F:/resource_estimation/data/rnn1/"
     order_path = mergeOriginLog(pre_path)
     generate_samples(pre_path, order_path)
 
