@@ -33,7 +33,7 @@ def plot_data(file_path, max_points=500000):
 
 def pca_plot():
     try:
-        fp = open(r"F:\resource_estimation\data\lr\train.csv", "r")
+        fp = open(r"F:\resource_estimation\data\bp\train.csv", "r")
         reader = csv.reader(fp)
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
@@ -54,4 +54,5 @@ def pca_plot():
         fp.close()
 
 if __name__ == "__main__":
-    plot_data(r"F:\resource_estimation\data\rnn\train.csv")
+    pca_plot()
+    # plot_data(r"F:\resource_estimation\data\rnn\train.csv")
