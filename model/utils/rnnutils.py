@@ -72,23 +72,44 @@ def generate_temp_samples(pre_path, file_name):
 '''
 产生正式的训练数据和正式的测试数据
 '''
+
 def generate_samples(pre_path):
     test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", pre_path)
     assert test != None, Exception("path is invaild")
     if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
         pre_path = "{0}/".format(pre_path)
-    train_tmp_sample = "{0}{1}".format(pre_path, "train_pre.csv")
-    test_tmp_sample = "{0}{1}".format(pre_path, "test_pre.csv")
-    train_path = "{0}{1}".format(pre_path, "train.csv")
-    test_path = "{0}{1}".format(pre_path, "test.csv")
-    print(train_path)
-    print(test_path)
+    def sub_parse(file_path, dest_path):
+        fp = open(file_path, "r")
+        src_reader = csv.reader(fp)
+        fp1 = open(dest_path, "w", newline="\n")
+        dest_reader = csv.writer(fp1)
+        table_name = ["customer", "district", "history", "item", "new_orders", "order_line", "orders", "stock",
+                      "warehouse"]
+        print("parsing file: ", file_path)
+        for line in src_reader:
+            execution_time = int(line[-1])
+            thread_id = line[0][0: line[0].index("@")]
+            row = {}
+            for name in table_name:
+                row[name] = [0, 0]
+            row[line[2]][int(line[1])] += int(line[3])
+            row_list = [thread_id]
+            for num1, num2 in row.values():
+                row_list.append(num1)
+                row_list.append(num2)
+            row_list.append(execution_time)
+            dest_reader.writerow(row_list)
+        print("Done: ", file_path)
+        fp.close()
+        fp1.close()
+    sub_parse("{0}{1}".format(pre_path, "train_pre.csv"), "{0}{1}".format(pre_path, "train.csv"))
+    sub_parse("{0}{1}".format(pre_path, "test_pre.csv"), "{0}{1}".format(pre_path, "test.csv"))
 
 
 if __name__ == "__main__":
     pre_path = r"F:/resource_estimation/data/rnn/"
-    # order_path = mergeOriginLog(pre_path)
-    # generate_temp_samples(pre_path, order_path)
+    order_path = mergeOriginLog(pre_path)
+    generate_temp_samples(pre_path, order_path)
     generate_samples(pre_path)
 
 

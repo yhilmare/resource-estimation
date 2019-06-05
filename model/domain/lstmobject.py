@@ -3,80 +3,81 @@ Created By ILMARE
 @Date 2018-5-28
 '''
 
-import collections
 import numpy as np
+import re
+import csv
+from sklearn.decomposition import PCA
+
+class data_obj:
+    def __init__(self, samples, labels, tran_size):
+        self._samples = samples
+        self._labels = labels
+        self._tran_size = tran_size
+        line_count = self._samples.shape[0]
+        self._samples = self._samples[0: line_count - line_count % tran_size]
+        self._labels = self._labels[0: line_count - line_count % tran_size]
+        dim_one = self._samples.shape[0]
+        self._samples = np.reshape(self._samples, newshape=(
+            dim_one // tran_size, tran_size, self._samples.shape[1]))
+        self._labels = np.reshape(self._labels, newshape=(
+            dim_one // tran_size, tran_size, self._labels.shape[1]))
+    @property
+    def samples(self):
+        return self._samples
+    @property
+    def labels(self):
+        return self._labels
+    def next_batch(self, batch_size):
+        total_batch = self._samples.shape[0]
+        idxs = np.random.choice(range(total_batch), batch_size, replace=False)
+        return self._samples[idxs], self._labels[idxs]
 
 class lstm_data:
-    '''
-    该对象用于构造语料库，参数解释：
-    file_path:语料库所在位置
-    num_seq:一个batch中所包含的句子数
-    num_step:一个句子中包含的词的数目
-    max_size:统计语料库中出现频度前max_size的字或词
-    '''
-    def __init__(self, file_path, num_seq=10, num_step=10, max_size=3500):
-        self._file_path = file_path
-        with open(self._file_path, "r", encoding="utf_8") as fp:
-            self._buffer = fp.read()
-        self._count = collections.Counter(self._buffer).most_common(max_size)
-        self._word_to_int = dict()
-        for word, _ in self._count:
-            self._word_to_int[word] = len(self._word_to_int)
-        self._int_to_word = dict(zip(self._word_to_int.values(), self._word_to_int.keys()))
-        self._batch_size = num_seq * num_step
-        num_batch = len(self._buffer) // self._batch_size
-        self._buffer = self._buffer[: num_batch * self._batch_size]
-        self._num_seq = num_seq
-        self._num_step = num_step
-    @property
-    def num_seq(self):
-        return self._num_seq
-    @property
-    def num_step(self):
-        return self._num_step
-    @property
-    def file_path(self):
-        return self._file_path
-    @property
-    def word_num(self):
-        return len(self._int_to_word) + 1
-    @property
-    def batch_size(self):
-        return self._batch_size
-    @property
-    def words(self):
-        return self._buffer
-    def sentence_to_int(self, sentence):
-        return_mat = []
-        for word in sentence:
-            return_mat.append(self.word_to_int(word))
-        return np.array(return_mat)
-    def int_to_sentence(self, row):
-        return_mat = []
-        for index in row:
-            return_mat.append(self.int_to_word(index))
-        return "".join(return_mat)
-    def word_to_int(self, word):
-        return self._word_to_int.get(word, len(self._int_to_word))
-    def int_to_word(self, index):
-        return self._int_to_word.get(index, "<unk>")
-    def text_to_attr(self):
-        return_mat = []
-        for _word in self._buffer:
-            return_mat.append(self.word_to_int(_word))
-        return np.array(return_mat)
-    def attr_to_text(self, attr):
-        return_mat = []
-        for _attr in attr:
-            return_mat.append(self.int_to_word(_attr))
-        return return_mat
-    def generate_batch(self):
-        attrs = self.text_to_attr()
-        attrs = np.reshape(attrs, [self.num_seq, -1])
-        while True:
-            np.random.shuffle(attrs)
-            for index in range(0, attrs.shape[1], self.num_step):
-                x = attrs[:, index: index + self.num_step]
-                y = np.zeros_like(x)
-                y[:, :-1], y[:, -1] = x[:, 1:], x[:, 0]
-                yield x, y
+    def __init__(self, pre_path, transaction_size):
+        test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", pre_path)
+        assert test != None, Exception("path is invaild")
+        if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
+            pre_path = "{0}/".format(pre_path)
+        self._train_path = "{0}{1}".format(pre_path, "train.csv")
+        self._test_path = "{0}{1}".format(pre_path, "test.csv")
+        self._tran_size = transaction_size
+        def parse_data(path):
+            samples = []
+            labels = []
+            fp = open(path, "r")
+            reader = csv.reader(fp)
+            for line in reader:
+                samples.append(line[0: -1])
+                labels.append([line[-1]])
+            fp.close()
+            return np.array(samples, dtype=np.float32), np.array(labels, dtype=np.float32)
+        self._train, self._train_labels = parse_data(self._train_path)
+        self._test, self._test_labels = parse_data(self._test_path)
+        self.init_samples()
+    def init_samples(self):
+        self._train_samples = data_obj(self._train, self._train_labels, self._tran_size)
+        self._test_samples = data_obj(self._test, self._test_labels, self._tran_size)
+    class descriptor:
+        def __init__(self, get):
+            self.__get = get
+        def __get__(self, instance, owner):
+            return self.__get(instance)
+    def get_train(self):
+        return self._train_samples
+    train = descriptor(get_train)
+    def get_test(self):
+        return self._test_samples
+    test = descriptor(get_test)
+    def pca_samples(self, n_components):
+        pca = PCA(n_components=n_components)
+        self._train = pca.fit_transform(self._train)
+        self._test = pca.fit_transform(self._test)
+        self.init_samples()
+
+
+if __name__ == "__main__":
+    obj = lstm_data(r"F:/resource_estimation/data/rnn", 28)
+    obj.pca_samples(8)
+    samples, labels = obj.train.next_batch(100)
+    print(samples.shape)
+    print(labels.shape)
