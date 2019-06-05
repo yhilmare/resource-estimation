@@ -43,17 +43,17 @@ def mergeOriginLog(list_path):
     return sortutils.mergeSort(list_path, f_list, key=lambda item: int(item[-1]))
 
 '''
-得出rnn模型下的训练数据以及测试数据
+得出rnn模型下的训练数据（临时）以及测试数据（临时）
 '''
-def generate_samples(pre_path, file_name):
+def generate_temp_samples(pre_path, file_name):
     test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", pre_path)
     assert test != None, Exception("path is invaild")
     if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
         pre_path = "{0}/".format(pre_path)
     fp = open(file_name, "r")
     reader = csv.reader(fp)
-    train_fp = open(r"{0}{1}".format(pre_path, "train.csv"), "w", newline="\n")
-    test_fp = open(r"{0}{1}".format(pre_path, "test.csv"), "w", newline="\n")
+    train_fp = open(r"{0}{1}".format(pre_path, "train_pre.csv"), "w", newline="\n")
+    test_fp = open(r"{0}{1}".format(pre_path, "test_pre.csv"), "w", newline="\n")
     train_writer = csv.writer(train_fp)
     test_writer = csv.writer(test_fp)
     last = 0
@@ -69,10 +69,26 @@ def generate_samples(pre_path, file_name):
     test_fp.close()
     fp.close()
 
+'''
+产生正式的训练数据和正式的测试数据
+'''
+def generate_samples(pre_path):
+    test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", pre_path)
+    assert test != None, Exception("path is invaild")
+    if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
+        pre_path = "{0}/".format(pre_path)
+    train_tmp_sample = "{0}{1}".format(pre_path, "train_pre.csv")
+    test_tmp_sample = "{0}{1}".format(pre_path, "test_pre.csv")
+    train_path = "{0}{1}".format(pre_path, "train.csv")
+    test_path = "{0}{1}".format(pre_path, "test.csv")
+    print(train_path)
+    print(test_path)
+
 
 if __name__ == "__main__":
-    pre_path = r"F:/resource_estimation/data/rnn1/"
-    order_path = mergeOriginLog(pre_path)
-    generate_samples(pre_path, order_path)
+    pre_path = r"F:/resource_estimation/data/rnn/"
+    # order_path = mergeOriginLog(pre_path)
+    # generate_temp_samples(pre_path, order_path)
+    generate_samples(pre_path)
 
 
