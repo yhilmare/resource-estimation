@@ -34,12 +34,14 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         pg_prepared_statement st = val[32];
         st.set_int(0, d_id);
         st.set_int(1, w_id);
+        clock_t start = clock();
         pg_resultset res = st.execute_query();
+        clock_t execute_t = clock() - start;
         while(res.has_next()){
             d_next_o_id = res.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "district",
-                res.get_tuples_count(), clock() - obj->start, tran_name));
+                res.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st]@"
@@ -55,12 +57,14 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         st1.set_int(1, d_id);
         st1.set_int(2, d_next_o_id);
         st1.set_int(3, d_next_o_id);
+        start = clock();
         pg_resultset res1 = st1.execute_query();
+        execute_t = clock() - start;
         while(res1.has_next()){
             ol_i_id = res1.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                res1.get_tuples_count(), clock() - obj->start, tran_name));
+                res1.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st1]@"
@@ -74,9 +78,11 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         st2.set_int(0, w_id);
         st2.set_int(1, ol_i_id);
         st2.set_int(2, level);
+        start = clock();
         pg_resultset res2 = st2.execute_query();
+        execute_t = clock() - start;
         tran_obj.add_item(transaction_item(SHARED_LOCK, "stock",
-                res2.get_tuples_count(), clock() - obj->start, tran_name));
+                res2.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st2]@"
@@ -87,7 +93,7 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
             transaction_item item = tran_obj[idx];
             obj->out << item.tran_name << ","
                      << item.mode << "," << item.table
-                     << "," << item.row << ","
+                     << "," << item.row << "," << item.execute_t << ","
                      << item.t << std::endl;
         }
         pthread_mutex_unlock(&obj->mutex);

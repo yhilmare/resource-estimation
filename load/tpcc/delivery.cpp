@@ -46,12 +46,14 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             pg_prepared_statement st = val[25];
             st.set_int(0, d_id);
             st.set_int(1, w_id);
+            clock_t start = clock();
             pg_resultset res = st.execute_query();
+            clock_t execute_t = clock() - start;
             while(res.has_next()){
                 no_o_id = res.get_int(0);
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "new_orders",
-                    res.get_tuples_count(), clock() - obj->start, tran_name));
+                    res.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st]@"
@@ -67,9 +69,11 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st1.set_int(0, no_o_id);
             st1.set_int(1, d_id);
             st1.set_int(2, w_id);
+            start = clock();
             int row_count = st1.execute_update();
+            execute_t = clock() - start;
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "new_orders",
-                    row_count, clock() - obj->start, tran_name));
+                    row_count, clock() - obj->start, tran_name, execute_t));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st1]@"
@@ -82,12 +86,14 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st2.set_int(0, no_o_id);
             st2.set_int(1, d_id);
             st2.set_int(2, w_id);
+            start = clock();
             pg_resultset res1 = st2.execute_query();
+            execute_t = clock() - start;
             while(res1.has_next()){
                 c_id = res1.get_int(0);
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "orders",
-                    res1.get_tuples_count(), clock() - obj->start, tran_name));
+                    res1.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st2]@"
@@ -101,9 +107,11 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st3.set_int(1, no_o_id);
             st3.set_int(2, d_id);
             st3.set_int(3, w_id);
+            start = clock();
             row_count = st3.execute_update();
+            execute_t = clock() - start;
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "orders",
-                    row_count, clock() - obj->start, tran_name));
+                    row_count, clock() - obj->start, tran_name, execute_t));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st3]@"
@@ -118,9 +126,11 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st4.set_int(1, no_o_id);
             st4.set_int(2, d_id);
             st4.set_int(3, w_id);
+            start = clock();
             row_count = st4.execute_update();
+            execute_t = clock() - start;
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "order_line",
-                    row_count, clock() - obj->start, tran_name));
+                    row_count, clock() - obj->start, tran_name, execute_t));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st4]@"
@@ -133,12 +143,14 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st5.set_int(0, no_o_id);
             st5.set_int(1, d_id);
             st5.set_int(2, w_id);
+            start = clock();
             pg_resultset res2 = st5.execute_query();
+            execute_t = clock() - start;
             while(res2.has_next()){
                 ol_total = res2.get_float(0);
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                    res2.get_tuples_count(), clock() - obj->start, tran_name));
+                    res2.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st5]@"
@@ -153,9 +165,11 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st6.set_int(1, c_id);
             st6.set_int(2, d_id);
             st6.set_int(3, w_id);
+            start = clock();
             row_count = st6.execute_update();
+            execute_t = clock() - start;
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "customer",
-                    row_count, clock() - obj->start, tran_name));
+                    row_count, clock() - obj->start, tran_name, execute_t));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st6]@"
@@ -167,7 +181,7 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             transaction_item item = tran_obj[idx];
             obj->out << item.tran_name << ","
                      << item.mode << "," << item.table
-                     << "," << item.row << ","
+                     << "," << item.row << "," << item.execute_t << ","
                      << item.t << std::endl;
         }
         pthread_mutex_unlock(&obj->mutex);

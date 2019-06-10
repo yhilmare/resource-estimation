@@ -9,6 +9,8 @@ import time
 from domain.lstmobject import lstm_data
 import numpy as np
 import re
+from matplotlib import pyplot as plt
+import matplotlib as mpl
 
 def pick_top_n(preds, vocab_size, top_n=5):
     p = np.squeeze(preds)
@@ -68,28 +70,46 @@ class lstm_model:
         self._accuracy = tf.reduce_mean(
             tf.cast(tf.equal(tf.argmax(self._prediction, 1), tf.argmax(y_one_hot, 1)), dtype=np.float32))
     def define_gradients(self):
+        # self._optimizer = tf.train.AdamOptimizer(self._lr).minimize(self._loss)
         vars = tf.trainable_variables()
         grads, _ = tf.clip_by_global_norm(tf.gradients(self._loss, vars), 3)
         optimizer = tf.train.AdamOptimizer(self._lr)
         self._optimizer = optimizer.apply_gradients(zip(grads, vars))
     def train(self):
+        fig = plt.figure("cross-entropy")
+        mpl.rcParams['xtick.labelsize'] = 8
+        mpl.rcParams['ytick.labelsize'] = 8
+        ax = fig.add_subplot(211)
+        ax.grid(True)
+        bx = fig.add_subplot(212)
+        bx.grid(True)
         with tf.Session() as sess:
-            return_mat = []
+            loss_lst = []
+            acc_lst = []
             sess.run(tf.global_variables_initializer())
             state = sess.run(self._init_state)
             start = time.clock()
-            for step in range(self._max_step):
+            for step in range(1, self._max_step):
                 train, labels = self._data_obj.train.next_batch(self._batch_size)
                 feed = {self._inputs: train, self._y: labels, self._init_state:state}
                 loss, _, state, acc = sess.run([self._loss, self._optimizer,
                                            self._final_state, self._accuracy], feed_dict=feed)
-                return_mat.append(loss)
+                loss_lst.append(loss)
+                acc_lst.append(acc)
                 if step % 10 == 0:
                     end = time.clock()
                     interval = end - start
-                    print("迭代次数：{0:d}/{2:d}，当前损失：{1:.3f}，准确率：{5:.3f}，迭代速度：{3:.3f} 秒/十次，约需要{4:.3f}秒".format(
+                    print("Iter: {0:d}/{2:d}, Loss: {1:.3f}, Accuracy: {5:.3f}, Iter_speed: {3:.3f} sec/10 items, Remaining time: {4:.3f} sec".format(
                         step, loss, self._max_step, interval, ((self._max_step - step) / 10) * interval, acc))
+                    if step > 10:
+                        ax.plot(np.arange(step - 11, step), loss_lst[step - 11: step], color="r")
+                        bx.plot(np.arange(step - 11, step), acc_lst[step - 11: step], color="b")
+                    else:
+                        ax.plot(np.arange(step - 10, step), loss_lst[step - 10: step], color="r")
+                        bx.plot(np.arange(step - 10, step), acc_lst[step - 10: step], color="b")
+                    plt.pause(0.1)
                     start = time.clock()
+            plt.show()
             tf.train.Saver().save(sess, "{0}model".format(self._save_path), global_step=step)
     def load_model(self):
         sess = tf.Session()

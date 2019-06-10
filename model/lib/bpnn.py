@@ -62,7 +62,7 @@ class bp_model:
         _accuracy_list = []
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
-            for i in range(self._iterator_num):
+            for i in range(1, self._iterator_num):
                 train, label = self._data.train.next_batch(self._batch_size)
                 feedt_dict = {
                     self._x: train,
@@ -73,11 +73,15 @@ class bp_model:
                 if analyse:
                     _loss_list.append(_loss)
                     _accuracy_list.append(_accuracy)
-                if i % 1000 == 0 and i != 0:
+                if i % 1000 == 0:
                     print("iter:", i, ", loss:", _loss, ", accuracy:", _accuracy)
                     if analyse:
-                        ax.plot(np.arange(0, i + 1), _accuracy_list, linewidth=0.6, color="r")
-                        bx.plot(np.arange(0, i + 1), _loss_list, linewidth=0.6, color="b")
+                        if i > 1000:
+                            ax.plot(np.arange(i - 1001, i), _accuracy_list[i - 1001: i], color="r")
+                            bx.plot(np.arange(i - 1001, i), _loss_list[i - 1001: i], color="b")
+                        else:
+                            ax.plot(np.arange(i - 1000, i), _accuracy_list[i - 1000: i], color="r")
+                            bx.plot(np.arange(i - 1000, i), _loss_list[i - 1000: i], color="b")
                         plt.pause(0.1)
             tf.train.Saver().save(sess, "{0}model".format(self._model_path), global_step=self._iterator_num)
             print("accuracy:", sess.run(self._accuracy,
@@ -102,7 +106,7 @@ if __name__ == "__main__":
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, dest_dim=3,
                      model_path=r'F:/resource_estimation/model/bp/')
-    model.train()
+    model.train(True)
     # model.load()
     # res = model.preidct(obj.test.samples)
     # print(res.shape)

@@ -20,10 +20,11 @@ struct transaction_item{
     std::string table;
     int row;
     clock_t t;
+    clock_t execute_t;
     transaction_item *pNext;
     transaction_item(lock_type type, std::string table_name,
-            int line, clock_t time, std::string name): mode(type),
-            table(table_name), row(line), t(time), tran_name(name){
+            int line, clock_t time, std::string name, clock_t t1): mode(type),
+            table(table_name), row(line), t(time), tran_name(name), execute_t(t1){
         pNext = NULL;
     }
     transaction_item(){
