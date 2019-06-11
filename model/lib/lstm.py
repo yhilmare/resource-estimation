@@ -12,13 +12,6 @@ import re
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 
-def pick_top_n(preds, vocab_size, top_n=5):
-    p = np.squeeze(preds)
-    p[np.argsort(p)[:-top_n]] = 0
-    p = p / np.sum(p)
-    c = np.random.choice(vocab_size, 1, p=p)[0]
-    return c
-
 class lstm_model:
     def __init__(self, hidden_size, num_layer, data_obj, keep_prob,
                  l_rate, max_step, save_path, batch_size, sampling=False):
