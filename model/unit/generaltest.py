@@ -54,5 +54,5 @@ def pca_plot():
         fp.close()
 
 if __name__ == "__main__":
-    pca_plot()
-    # plot_data(r"F:\resource_estimation\data\rnn\train.csv")
+    # pca_plot()
+    plot_data(r"F:\resource_estimation\data\rnn\train.csv")
