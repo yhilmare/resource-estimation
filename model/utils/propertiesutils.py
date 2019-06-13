@@ -72,9 +72,9 @@ class configreader:
     def __str__(self):
         return "[configreader at 0x%d]" % (id(self))
 
+# configfile = r"F:\repos\Resource_estimation\model\conf\setting.conf"
 
-
-configfile = r"F:\repos\Resource_estimation\model\conf\setting.conf"
+configfile = r"/Users/yh_swjtu/Desktop/repos/Resource_estimation/model/conf/setting_mac.conf"
 
 if __name__ == "__main__":
     reader = configreader(configfile)
