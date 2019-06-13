@@ -8,10 +8,16 @@ import numpy as np
 import csv
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 from sklearn.decomposition import PCA
+import re
+from utils import propertiesutils as pu
 
 def plot_data(file_path, max_points=500000):
     try:
-        fp = open(file_path, "r")
+        test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", file_path)
+        assert test != None, Exception("path is invaild")
+        if file_path[-1] is not "\\" and file_path[-1] is not "/":
+            file_path = "{0}/".format(file_path)
+        fp = open("{0}train.csv".format(file_path), "r")
         reader = csv.reader(fp)
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
@@ -31,9 +37,13 @@ def plot_data(file_path, max_points=500000):
     finally:
         fp.close()
 
-def pca_plot():
+def pca_plot(filepath):
     try:
-        fp = open(r"F:\resource_estimation\data\bp\train.csv", "r")
+        test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", filepath)
+        assert test != None, Exception("path is invaild")
+        if filepath[-1] is not "\\" and filepath[-1] is not "/":
+            filepath = "{0}/".format(filepath)
+        fp = open(r"{0}train.csv".format(filepath), "r")
         reader = csv.reader(fp)
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
@@ -54,5 +64,7 @@ def pca_plot():
         fp.close()
 
 if __name__ == "__main__":
-    # pca_plot()
-    plot_data(r"F:\resource_estimation\data\rnn\train.csv")
+    reader = pu.configreader(pu.configfile)
+    file_path = reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA]
+    # pca_plot(file_path)
+    plot_data(file_path)

@@ -6,7 +6,7 @@ Created By ILMARE
 import csv
 import re
 import os
-from utils import sortutils, lineutils
+from utils import sortutils, propertiesutils as pu
 
 '''
 针对多个并发事务执行log根据其执行时间先后归并排序
@@ -86,7 +86,8 @@ def generate_samples(pre_path, file_name):
 
 
 if __name__ == "__main__":
-    pre_path = r"F:/resource_estimation/data/rnn/"
+    reader = pu.configreader(pu.configfile)
+    pre_path = reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA]
     order_path = mergeOriginLog(pre_path)
     generate_samples(pre_path, order_path)
 

@@ -11,6 +11,7 @@ import numpy as np
 import re
 from matplotlib import pyplot as plt
 import matplotlib as mpl
+from utils import propertiesutils as pu
 
 class lstm_model:
     def __init__(self, hidden_size, num_layer, data_obj, keep_prob,
@@ -110,8 +111,9 @@ class lstm_model:
         self._sess = sess
 
 if __name__ == "__main__":
-    model_path = r"F:/resource_estimation/model/rnn/"
-    obj = lstm_data(r"F:/resource_estimation/data/rnn", 25, 20, True)
+    reader = pu.configreader(pu.configfile)
+    model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
+    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25, 20, True)
     obj.pca_samples(8)
     model = lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
                        keep_prob=0.8, l_rate=0.005, max_step=5000,

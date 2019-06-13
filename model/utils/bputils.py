@@ -8,6 +8,7 @@ import re
 import os
 import numpy as np
 from utils import lineutils
+from utils import propertiesutils as pu
 
 '''
 针对非并发条件下事务运行log的原始数据处理
@@ -57,4 +58,5 @@ def generate_train_data(list_path):
     fp2.close()
 
 if __name__ == "__main__":
-    generate_train_data(r"F:/resource_estimation/data")
+    reader = pu.configreader(pu.configfile)
+    generate_train_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])

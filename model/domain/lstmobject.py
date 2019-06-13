@@ -7,6 +7,7 @@ import numpy as np
 import re
 import csv
 from sklearn.decomposition import PCA
+from utils import propertiesutils as pu
 
 def generate_label(label, dim):
     tmp_label = int(label)
@@ -101,7 +102,8 @@ class lstm_data:
         self.init_samples()
 
 if __name__ == "__main__":
-    obj = lstm_data(r"F:/resource_estimation/data/rnn", 25, 20, False)
+    reader = pu.configreader(pu.configfile)
+    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25, 20, False)
     labels = obj.test.labels
     total = labels.shape[0] * labels.shape[1]
     count = 0;

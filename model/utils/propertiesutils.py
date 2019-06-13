@@ -74,7 +74,7 @@ class configreader:
 
 
 
-configfile = r"/Users/yh_swjtu/Desktop/repos/Resource_estimation/model/conf/setting.conf"
+configfile = r"F:\repos\Resource_estimation\model\conf\setting.conf"
 
 if __name__ == "__main__":
     reader = configreader(configfile)

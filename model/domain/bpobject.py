@@ -8,6 +8,7 @@ import re
 import numpy as np
 from sklearn.decomposition import PCA
 import os
+from utils import propertiesutils as pu
 
 def generate_label(label):
     tmp_label = np.log(int(label))
@@ -102,7 +103,8 @@ class bp_data:
         self.init_samples()
 
 if __name__ == "__main__":
-    obj = bp_data(filePath = r"F:/resource_estimation/data/bp/")
+    reader = pu.configreader(pu.configfile)
+    obj = bp_data(filePath=reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])
     train, label = obj.test.next_batch(10)
     obj.pca_samples(10)
     train, label = obj.train.next_batch(10)

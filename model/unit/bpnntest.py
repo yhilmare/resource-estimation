@@ -8,6 +8,7 @@ from domain.bpobject import bp_data
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
+from utils import propertiesutils as pu
 
 class bp_evaluation:
     def __init__(self, model, data_obj):
@@ -72,13 +73,13 @@ class bp_evaluation:
     def __str__(self):
         return self.statistics_info()
 
-
 if __name__ == "__main__":
-    obj = bp_data(r"F:/resource_estimation/data/bp/")
+    reader = pu.configreader(pu.configfile)
+    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=30000, data_obj=obj,dest_dim=3,
-                     model_path=r'F:/resource_estimation/model/bp/')
+                     model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
     test_obj = bp_evaluation(model, obj)
     print(test_obj)
     # test_obj.plot()

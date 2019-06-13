@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 from domain.bpobject import bp_data
+from utils import propertiesutils as pu
+import re
 
 class bp_model:
     def __init__(self, batch_size, learning_rate,
@@ -14,6 +16,10 @@ class bp_model:
         self._batch_size = batch_size
         self._lr = learning_rate
         self._iterator_num = iterator_num
+        test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", model_path)
+        assert test != None, Exception("path is invaild")
+        if model_path[-1] is not "\\" and model_path[-1] is not "/":
+            model_path = "{0}/".format(model_path)
         self._model_path = model_path
         self._dest_dim = dest_dim
         # mnist = input_data.read_data_sets(r"F:\tensorflow\MNIST_DATA", one_hot=True)
@@ -101,12 +107,13 @@ class bp_model:
         return self._sess.run(self._pre, feed_dict={self._x: sample})
 
 if __name__ == "__main__":
-    obj = bp_data(r"F:/resource_estimation/data/bp/")
+    reader = pu.configreader(pu.configfile)
+    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, dest_dim=3,
-                     model_path=r'F:/resource_estimation/model/bp/')
-    model.train(True)
-    # model.load()
-    # res = model.preidct(obj.test.samples)
-    # print(res.shape)
+                     model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
+    # model.train(True)
+    model.load()
+    res = model.predict(obj.test.samples)
+    print(res.shape)
