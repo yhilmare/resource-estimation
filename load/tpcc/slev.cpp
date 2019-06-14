@@ -15,9 +15,9 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id) {
 
     pthread_t t = pthread_self();
-    std::clog << " --> Thread: [" << t << "]@"
-              << (void *)&t << ", function [slev]@"
-              << (void *)slev << std::endl;
+//    std::clog << " --> Thread: [" << t << "]@"
+//              << (void *)&t << ", function [slev]@"
+//              << (void *)slev << std::endl;
     transaction_obj tran_obj;
     std::string tran_name = parseInt((int)t) + "@slev_" + parseInt(t_id);
     int w_id = w_id_arg;
@@ -41,7 +41,7 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
             d_next_o_id = res.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "district",
-                res.get_tuples_count(), end - obj->start, tran_name, end - start));
+                res.get_tuples_count(), start - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st]@"
@@ -64,7 +64,7 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
             ol_i_id = res1.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                res1.get_tuples_count(), end - obj->start, tran_name, end - start));
+                res1.get_tuples_count(), start - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st1]@"
@@ -82,7 +82,7 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         pg_resultset res2 = st2.execute_query();
         end = clock();
         tran_obj.add_item(transaction_item(SHARED_LOCK, "stock",
-                res2.get_tuples_count(), end - obj->start, tran_name, end - start));
+                res2.get_tuples_count(), start - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st2]@"

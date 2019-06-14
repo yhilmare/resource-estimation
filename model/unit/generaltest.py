@@ -22,10 +22,14 @@ def plot_data(file_path, max_points=500000):
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
         y = []
+        count = 0
         for idx, line in enumerate(reader):
-            y.append(int(line[-1]))
+            if int(line[-1]) == 0:
+                count += 1
+            y.append(np.log(int(line[-1])) if int(line[-1]) != 0 else 0)
             if idx >= max_points:
                 break
+        print(count / len(y))
         x = np.arange(0, len(y))
         fig = plt.figure("test")
         ax = fig.add_subplot(111)
@@ -65,6 +69,6 @@ def pca_plot(filepath):
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
-    file_path = reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA]
+    file_path = reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA]
     # pca_plot(file_path)
     plot_data(file_path)

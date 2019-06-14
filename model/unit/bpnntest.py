@@ -18,42 +18,54 @@ class bp_evaluation:
             self._data_obj_one_hot = data_obj
         else:
             self._data_obj_digtial = data_obj
-            self._data_obj_one_hot = bp_data(data_obj.file_path, one_hot=True)
+            self._data_obj_one_hot = None
         dest_dim = self._model.dest_dim;
         self._data_obj_digtial.pca_samples(dest_dim)
-        self._data_obj_one_hot.pca_samples(dest_dim)
+        if data_obj.one_hot:
+            self._data_obj_one_hot.pca_samples(dest_dim)
         self._model.load()
         self._labels = self._model.predict(self._data_obj_digtial.test.samples)
         mpl.rcParams["xtick.labelsize"] = 8
         mpl.rcParams["ytick.labelsize"] = 8
     def __predict(self):
-        return_mat = list();
-        for item in np.argmax(self._labels, 1):
-            if item == 0:
-                return_mat.append(np.random.normal(1.5, 0.5))
-            elif item == 9:
-                return_mat.append(np.random.normal(10.5, 0.5))
-            else:
-                return_mat.append(np.random.normal(item + 1 + 0.5, 0.5))
-        return np.array(return_mat, dtype=np.float32)
-    def plot(self):
-        label1 = self._data_obj_digtial.test.labels
-        label2 = self.__predict()
+        if self._data_obj_one_hot is None:
+            return self._labels.flatten()
+        else:
+            return_mat = list();
+            min = self._data_obj_one_hot.min
+            max = self._data_obj_one_hot.max
+            dest_dim = self._data_obj_one_hot.dest_dim
+            step = (max - min) / dest_dim
+            for item in np.argmax(self._labels, 1):
+                low = min + item * step
+                high = low + step
+                return_mat.append(np.random.normal((low + high) / 2.0, (high - low) / 2.0))
+            return np.array(return_mat, dtype=np.float32)
+    def plot(self, sort=False):
+        if sort:
+            label1 = sorted(self._data_obj_digtial.test.labels.flatten())
+            label2 = sorted(self.__predict())
+        else:
+            label1 = self._data_obj_digtial.test.labels.flatten()
+            label2 = self.__predict()
         fig = plt.figure()
         ax = fig.add_subplot(311)
-        ax.plot(np.arange(0, len(label1)), label1, '.', label="real execution time")
+        ax.plot(np.arange(0, len(label1)), label1, '.' if not sort else "-", label="real execution time")
         ax.legend()
         bx = fig.add_subplot(312)
-        bx.plot(np.arange(0, len(label2)), label2, '.', color="darkorange", label="predictive execution time")
+        bx.plot(np.arange(0, len(label2)), label2, '.' if not sort else "-", color="darkorange", label="predictive execution time")
         bx.legend()
         cx = fig.add_subplot(313)
-        cx.plot(np.arange(0, len(label1)), label1, '.', label="real execution time")
-        cx.plot(np.arange(0, len(label2)), label2, '.', color="darkorange", label="predictive execution time")
+        cx.plot(np.arange(0, len(label1)), label1, '.' if not sort else "-", label="real execution time")
+        cx.plot(np.arange(0, len(label2)), label2, '.' if not sort else "-", color="darkorange", label="predictive execution time")
         cx.legend()
         plt.show()
     def statistics_info(self):
-        accuracy = np.mean(np.equal(np.argmax(self._labels, 1),
-                                    np.argmax(self._data_obj_one_hot.test.labels, 1)))
+        if self._data_obj_one_hot is None:
+            accuracy = -1
+        else:
+            accuracy = np.mean(np.equal(np.argmax(self._labels, 1),
+                                        np.argmax(self._data_obj_one_hot.test.labels, 1)))
         real_label = np.power(np.e, self._data_obj_digtial.test.labels).flatten()
         predict_label = np.power(np.e, self.__predict())
         err_ratio = sorted(np.abs(predict_label - real_label) / real_label)
@@ -75,12 +87,12 @@ class bp_evaluation:
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
-    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])
+    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA],
+                  one_hot=True, min=0, max=9, dest_dim=180)
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
-                     iterator_num=30000, data_obj=obj,dest_dim=3,
+                     iterator_num=100000, data_obj=obj, pca_dim=8,
                      model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
     test_obj = bp_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot()
-    # test_obj.plot()
+    test_obj.plot(True)

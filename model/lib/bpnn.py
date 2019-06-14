@@ -12,7 +12,7 @@ import re
 
 class bp_model:
     def __init__(self, batch_size, learning_rate,
-                 iterator_num, data_obj, dest_dim, model_path):
+                 iterator_num, data_obj, pca_dim, model_path):
         self._batch_size = batch_size
         self._lr = learning_rate
         self._iterator_num = iterator_num
@@ -21,33 +21,39 @@ class bp_model:
         if model_path[-1] is not "\\" and model_path[-1] is not "/":
             model_path = "{0}/".format(model_path)
         self._model_path = model_path
-        self._dest_dim = dest_dim
-        # mnist = input_data.read_data_sets(r"F:\tensorflow\MNIST_DATA", one_hot=True)
+        self._dest_dim = pca_dim
         self._data = data_obj
-        self._data.pca_samples(dest_dim)
+        self._data.pca_samples(pca_dim)
         self.define_network()
     def define_network(self):
         self._x = tf.placeholder(shape=[None, self._dest_dim], dtype=tf.float32)
-        self._y = tf.placeholder(shape=[None, 10], dtype=tf.float32)
+        self._y = tf.placeholder(shape=[None, self._data.dest_dim], dtype=tf.float32)
         with tf.variable_scope("level0"):
             weight = tf.Variable(name="weight",
-                                 initial_value=tf.random_normal(shape=[self._dest_dim, 32], dtype=tf.float32, stddev=0.1))
+                                 initial_value=tf.random_normal(shape=[self._dest_dim, 128], dtype=tf.float32, stddev=0.1))
             bias = tf.Variable(name="bias",
-                               initial_value=tf.ones(shape=[32], dtype=tf.float32))
+                               initial_value=tf.ones(shape=[128], dtype=tf.float32))
             level_1 = tf.nn.sigmoid(tf.matmul(self._x, weight) + bias)
         with tf.variable_scope("level1"):
             weight1 = tf.Variable(name="weight1",
-                                 initial_value=tf.random_normal(shape=[32, 64], dtype=tf.float32, stddev=0.1))
+                                 initial_value=tf.random_normal(shape=[128, 256], dtype=tf.float32, stddev=0.1))
             bias1 = tf.Variable(name="bias1",
-                               initial_value=tf.ones(shape=[64], dtype=tf.float32))
+                               initial_value=tf.ones(shape=[256], dtype=tf.float32))
 
             level_2 = tf.nn.sigmoid(tf.matmul(level_1, weight1) + bias1)
-        with tf.variable_scope("level2"):
-            weight2 = tf.Variable(name="weight2",
-                                  initial_value=tf.random_normal(shape=[64, 10], dtype=tf.float32, stddev=0.1))
-            bias2 = tf.Variable(name="bias2",
-                                initial_value=tf.ones(shape=[10], dtype=tf.float32))
-            self._pre = tf.nn.softmax(tf.matmul(level_2, weight2) + bias2)
+        # with tf.variable_scope("level2"):
+        #     weight2 = tf.Variable(name="weight2",
+        #                          initial_value=tf.random_normal(shape=[256, 128], dtype=tf.float32, stddev=0.1))
+        #     bias2 = tf.Variable(name="bias2",
+        #                        initial_value=tf.ones(shape=[128], dtype=tf.float32))
+        #
+        #     level_3 = tf.nn.sigmoid(tf.matmul(level_2, weight2) + bias2)
+        with tf.variable_scope("level3"):
+            weight3 = tf.Variable(name="weight3",
+                                  initial_value=tf.random_normal(shape=[256, self._data.dest_dim], dtype=tf.float32, stddev=0.1))
+            bias3 = tf.Variable(name="bias3",
+                                initial_value=tf.ones(shape=[self._data.dest_dim], dtype=tf.float32))
+            self._pre = tf.nn.softmax(tf.matmul(level_2, weight3) + bias3)
         self._loss = -tf.reduce_mean(tf.reduce_sum(self._y * tf.log(self._pre), reduction_indices=[1]))
         self._accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self._pre, 1), tf.argmax(self._y, 1)), dtype=np.float32))
         # self._loss = 0.5 * tf.reduce_sum(tf.abs(tf.subtract(self._y, self._pre)))
@@ -108,10 +114,11 @@ class bp_model:
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
-    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])
+    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA],
+                  one_hot=True, min=0, max=9, dest_dim=180)
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
-                     iterator_num=100000, data_obj=obj, dest_dim=3,
+                     iterator_num=100000, data_obj=obj, pca_dim=8,
                      model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
     model.train(True)
     # model.load()

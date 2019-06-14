@@ -58,7 +58,6 @@ void load_data(){
 //    load_warehouse(map, num_ware);
 }
 
-
 int main(int argn, char *argv[]) {
     using namespace std;
 
@@ -89,7 +88,8 @@ int main(int argn, char *argv[]) {
 //    for (int i = 0; i < thread_num - 1; i ++){
 //        pthread_t t1;
 //        pthread_create(&t1, NULL, thread_main, (void *) &arg);
-////        pthread_join(t1, NULL);
+////        pthread_jo
+/// in(t1, NULL);
 //    }
     thread_main((void *)&arg);
     return 0;

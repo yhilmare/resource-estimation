@@ -16,9 +16,9 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id){
 
     pthread_t t = pthread_self();
-    std::clog << " --> Thread: [" << t << "]@"
-              << (void *)&t << ", function [ordstat]@"
-              << (void *)ordstat << std::endl;
+//    std::clog << " --> Thread: [" << t << "]@"
+//              << (void *)&t << ", function [ordstat]@"
+//              << (void *)ordstat << std::endl;
     transaction_obj tran_obj;
     std::string tran_name = parseInt((int)t) + "@ordstat_" + parseInt(t_id);
     int w_id = w_id_arg;
@@ -48,7 +48,7 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             pg_resultset res = st.execute_query();
             clock_t end = clock();
             tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                    res.get_tuples_count(), end - obj->start, tran_name, end - start));
+                    res.get_tuples_count(), start - obj->start, tran_name, end - start));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                      << ", pg_prepared_statement [st]@"
@@ -71,7 +71,7 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
                 strcpy(c_last, res1.get_value(3));
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                    res1.get_tuples_count(), end - obj->start, tran_name, end - start));
+                    res1.get_tuples_count(), start - obj->start, tran_name, end - start));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                      << ", pg_prepared_statement [st1]@"
@@ -95,7 +95,7 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
                 strcpy(c_last, res2.get_value(3));
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                    res2.get_tuples_count(), end - obj->start, tran_name, end - start));
+                    res2.get_tuples_count(), start - obj->start, tran_name, end - start));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                      << ", pg_prepared_statement [st2]@"
@@ -122,7 +122,7 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             strcpy(o_entry_d, res3.get_value(1));
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "orders",
-                res3.get_tuples_count(), end - obj->start, tran_name, end - start));
+                res3.get_tuples_count(), start - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                  << ", pg_prepared_statement [st3]@"
@@ -143,7 +143,7 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             strcpy(ol_delivery_d, res4.get_value(4));
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                res4.get_tuples_count(), end - obj->start, tran_name, end - start));
+                res4.get_tuples_count(), start - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                  << ", pg_prepared_statement [st4]@"

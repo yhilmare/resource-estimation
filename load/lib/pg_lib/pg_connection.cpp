@@ -115,7 +115,7 @@ void pg_connection::set_auto_commit(bool flag) {
         case PGRES_FATAL_ERROR:
             throw sqlexecute_exception(type);
         default:
-            std::clog << "TRANSACTION BEGIN" << std::endl;
+//            std::clog << "TRANSACTION BEGIN" << std::endl;
             break;
     }
 }
@@ -154,7 +154,7 @@ void pg_connection::commit() {
             case PGRES_FATAL_ERROR:
                 throw sqlexecute_exception(type);
             default:
-                std::clog << "TRANSACTION COMMIT" << std::endl;
+//                std::clog << "TRANSACTION COMMIT" << std::endl;
                 break;
         }
     }

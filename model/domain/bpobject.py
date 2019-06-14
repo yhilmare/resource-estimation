@@ -10,21 +10,13 @@ from sklearn.decomposition import PCA
 import os
 from utils import propertiesutils as pu
 
-def generate_label(label):
-    # if int(label) == 0:
-    #     tmp_label = 0
-    # else:
-    tmp_label = np.log(int(label))
-    result = [0 for _ in range(10)]
-    if tmp_label < 2:
-        result[0] = 1
-        return result
-    elif tmp_label > 10:
-        result[9] = 1
-        return result
-    idx = int(tmp_label - 1)
-    result[idx] = 1
-    return result
+def generate_label(digtal_label, min, max, dest_dim):
+    step = (max - min) / dest_dim
+    dest_lst = [0 for _ in range(dest_dim)]
+    idx = int((digtal_label - min) // step)
+    assert idx >= 0 and idx < dest_dim, Exception("wrong digtal")
+    dest_lst[idx] = 1
+    return dest_lst
 
 class data_obj:
     def __init__(self, data, labels):
@@ -43,9 +35,12 @@ class data_obj:
 
 
 class bp_data:
-    def __init__(self, filePath, one_hot=True):
+    def __init__(self, filePath, one_hot, min=-1,max=-1,dest_dim=-1):
         self._filePath = filePath
         self._one_hot = one_hot
+        self._dest_dim = dest_dim
+        self._min = min
+        self._max = max
         test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", filePath)
         assert test != None, Exception("the path is invaild")
         if filePath[-1] != '\\' and filePath[-1] != "/":
@@ -63,10 +58,11 @@ class bp_data:
         for line in reader:
             _train.append(line[0: -1])
             if self._one_hot:
-                _label.append(generate_label(line[-1]))
+                assert self._dest_dim != -1, Exception("dest_dim can not be -1")
+                _label.append(generate_label(np.log(int(line[-1])) if int(line[-1]) != 0 else 0,
+                                             self._min, self._max, self._dest_dim))
             else:
-                _label.append([np.log(int(line[-1]))])
-                # _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else int(line[-1])])
+                _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else 0])
         self._train = np.array(_train, dtype=np.float32)
         self._train_label = np.array(_label, dtype=np.float32)
         fp.close()
@@ -79,16 +75,34 @@ class bp_data:
         for line in reader:
             _test.append(line[0: -1])
             if self._one_hot:
-                _label.append(generate_label(line[-1]))
+                assert self._dest_dim != -1, Exception("dest_dim can not be -1")
+                _label.append(generate_label(np.log(int(line[-1])) if int(line[-1]) != 0 else 0,
+                                             self._min, self._max, self._dest_dim))
             else:
-                _label.append([np.log(int(line[-1]))])
-                # _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else int(line[-1])])
+                _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else 0])
         self._test = np.array(_test, dtype=np.float32)
         self._test_label = np.array(_label, dtype=np.float32)
         fp.close()
     def init_samples(self):
         self._train_sample = data_obj(self._train, self._train_label)
         self._test_sample = data_obj(self._test, self._test_label)
+    class bp_data_descriptor:
+        def __init__(self, getter):
+            self.__getter = getter
+        def __get__(self, instance, owner):
+            return self.__getter(instance)
+    def __min_getter(self):
+        return self._min
+    min = bp_data_descriptor(__min_getter)
+    def __max_getter(self):
+        return self._max
+    max = bp_data_descriptor(__max_getter)
+    def __dest_dim_getter(self):
+        return self._dest_dim
+    dest_dim = bp_data_descriptor(__dest_dim_getter)
+    @property
+    def dest_dim(self):
+        return self._dest_dim
     @property
     def train(self):
         return self._train_sample
@@ -109,10 +123,10 @@ class bp_data:
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
-    obj = bp_data(filePath=reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])
+    obj = bp_data(filePath=reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA], one_hot=True, min=0, max=9, dest_dim=180)
     train, label = obj.test.next_batch(10)
     obj.pca_samples(10)
-    train, label = obj.train.next_batch(10)
-    print(train.shape)
+    train, label = obj.train.next_batch(100)
+    print(label.shape)
     print(obj.test.samples.shape)
     print(obj.train.samples.shape)
