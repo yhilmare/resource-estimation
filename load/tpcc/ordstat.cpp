@@ -46,9 +46,9 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             st.set_value(2, c_last);
             clock_t start = clock();
             pg_resultset res = st.execute_query();
-            clock_t execute_t = clock() - start;
+            clock_t end = clock();
             tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                    res.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                    res.get_tuples_count(), end - obj->start, tran_name, end - start));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                      << ", pg_prepared_statement [st]@"
@@ -64,14 +64,14 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             st1.set_value(2, c_last);
             start = clock();
             pg_resultset res1 = st1.execute_query();
-            execute_t = clock() - start;
+            end = clock();
             while(res1.has_next()){
                 strcpy(c_first, res1.get_value(1));
                 strcpy(c_middle, res1.get_value(2));
                 strcpy(c_last, res1.get_value(3));
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                    res1.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                    res1.get_tuples_count(), end - obj->start, tran_name, end - start));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                      << ", pg_prepared_statement [st1]@"
@@ -88,14 +88,14 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
             st2.set_int(2, c_id);
             clock_t start = clock();
             pg_resultset res2 = st2.execute_query();
-            clock_t execute_t = clock() - start;
+            clock_t end = clock();
             while(res2.has_next()){
                 strcpy(c_first, res2.get_value(1));
                 strcpy(c_middle, res2.get_value(2));
                 strcpy(c_last, res2.get_value(3));
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                    res2.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                    res2.get_tuples_count(), end - obj->start, tran_name, end - start));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                      << ", pg_prepared_statement [st2]@"
@@ -116,13 +116,13 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
         st3.set_int(5, c_id);
         clock_t start = clock();
         pg_resultset res3 = st3.execute_query();
-        clock_t execute_t = clock() - start;
+        clock_t end = clock();
         while(res3.has_next()){
             o_id = res3.get_int(0);
             strcpy(o_entry_d, res3.get_value(1));
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "orders",
-                res3.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res3.get_tuples_count(), end - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                  << ", pg_prepared_statement [st3]@"
@@ -138,12 +138,12 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
         st4.set_int(2, o_id);
         start = clock();
         pg_resultset res4 = st4.execute_query();
-        execute_t = clock() - start;
+        end = clock();
         while(res4.has_next()){
             strcpy(ol_delivery_d, res4.get_value(4));
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                res4.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res4.get_tuples_count(), end - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [ordstat]@" << (void *)ordstat
 //                  << ", pg_prepared_statement [st4]@"

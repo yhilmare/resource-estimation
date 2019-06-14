@@ -36,12 +36,12 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         st.set_int(1, w_id);
         clock_t start = clock();
         pg_resultset res = st.execute_query();
-        clock_t execute_t = clock() - start;
+        clock_t end = clock();
         while(res.has_next()){
             d_next_o_id = res.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "district",
-                res.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res.get_tuples_count(), end - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st]@"
@@ -59,12 +59,12 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         st1.set_int(3, d_next_o_id);
         start = clock();
         pg_resultset res1 = st1.execute_query();
-        execute_t = clock() - start;
+        end = clock();
         while(res1.has_next()){
             ol_i_id = res1.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                res1.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res1.get_tuples_count(), end - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st1]@"
@@ -80,9 +80,9 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
         st2.set_int(2, level);
         start = clock();
         pg_resultset res2 = st2.execute_query();
-        execute_t = clock() - start;
+        end = clock();
         tran_obj.add_item(transaction_item(SHARED_LOCK, "stock",
-                res2.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res2.get_tuples_count(), end - obj->start, tran_name, end - start));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st2]@"

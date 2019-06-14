@@ -113,7 +113,7 @@ if __name__ == "__main__":
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, dest_dim=3,
                      model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
-    # model.train(True)
-    model.load()
-    res = model.predict(obj.test.samples)
-    print(res.shape)
+    model.train(True)
+    # model.load()
+    # res = model.predict(obj.test.samples)
+    # print(res.shape)

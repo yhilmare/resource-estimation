@@ -11,6 +11,9 @@ import os
 from utils import propertiesutils as pu
 
 def generate_label(label):
+    # if int(label) == 0:
+    #     tmp_label = 0
+    # else:
     tmp_label = np.log(int(label))
     result = [0 for _ in range(10)]
     if tmp_label < 2:
@@ -63,6 +66,7 @@ class bp_data:
                 _label.append(generate_label(line[-1]))
             else:
                 _label.append([np.log(int(line[-1]))])
+                # _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else int(line[-1])])
         self._train = np.array(_train, dtype=np.float32)
         self._train_label = np.array(_label, dtype=np.float32)
         fp.close()
@@ -78,6 +82,7 @@ class bp_data:
                 _label.append(generate_label(line[-1]))
             else:
                 _label.append([np.log(int(line[-1]))])
+                # _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else int(line[-1])])
         self._test = np.array(_test, dtype=np.float32)
         self._test_label = np.array(_label, dtype=np.float32)
         fp.close()

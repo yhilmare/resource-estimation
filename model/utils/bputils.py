@@ -35,24 +35,27 @@ def generate_train_data(list_path):
         fp = open(filePath, "r")
         reader = csv.reader(fp)
         row = None
+        execute_t = 0
         for line in reader:
             if not lineutils.checkLine(line):
                 if row is not None:
-                    list = []
-                    for items in row.values():
-                        list.append(items[0])
-                        list.append(items[1])
-                    list.append(end - begin)
+                    lists = []
+                    for row_items in row.values():
+                        lists.append(row_items[0])
+                        lists.append(row_items[1])
+                    lists.append(execute_t)
                     if np.random.randint(0, 10) <= 6:
-                        writer.writerow(list)
+                        writer.writerow(lists)
                     else:
-                        writer1.writerow(list)
+                        writer1.writerow(lists)
                 row = {}
-                begin = int(line[-1])
+                execute_t = 0
+                # begin = int(line[-1])
                 for table in table_name:
                     row[table] = [0, 0]
             row[line[2]][int(line[1])] += 1
-            end = int(line[-1])
+            execute_t += int(line[-2])
+            # end = int(line[-1])
         fp.close()
     fp1.close()
     fp2.close()

@@ -86,11 +86,11 @@ int main(int argn, char *argv[]) {
     int thread_num = 5;
     thread_arg arg(config, thread_num, file_name);
 
-    for (int i = 0; i < thread_num - 1; i ++){
-        pthread_t t1;
-        pthread_create(&t1, NULL, thread_main, (void *) &arg);
-//        pthread_join(t1, NULL);
-    }
+//    for (int i = 0; i < thread_num - 1; i ++){
+//        pthread_t t1;
+//        pthread_create(&t1, NULL, thread_main, (void *) &arg);
+////        pthread_join(t1, NULL);
+//    }
     thread_main((void *)&arg);
     return 0;
 }

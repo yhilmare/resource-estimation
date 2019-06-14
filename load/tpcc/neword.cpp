@@ -97,7 +97,7 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st.set_int(2, c_id);
         clock_t start = clock();
         pg_resultset res = st.execute_query();
-        clock_t execute_t = clock() - start;
+        clock_t end = clock();
         while(res.has_next()){
             c_discount = res.get_float(0);
             strcpy(c_last, res.get_value(1));
@@ -105,9 +105,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             w_tax = res.get_float(3);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                res.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res.get_tuples_count(), end - obj->start, tran_name, end - start));
         tran_obj.add_item(transaction_item(SHARED_LOCK, "warehouse",
-                res.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res.get_tuples_count(), end - obj->start, tran_name, end - start));
         /*
          * "SELECT d_next_o_id, d_tax FROM district WHERE d_id = $1 AND d_w_id = $2 FOR UPDATE",
          * const parameter_type type1[] = {int_type, int_type};
@@ -117,13 +117,13 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st1.set_int(1, w_id);
         start = clock();
         pg_resultset res1 = st1.execute_query();
-        execute_t = clock() - start;
+        end = clock();
         while(res1.has_next()){
             d_next_o_id = res1.get_int(0);
             d_tax = res1.get_float(1);
         }
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "district",
-                res1.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                res1.get_tuples_count(), end - obj->start, tran_name, end - start));
         /*
          * const parameter_type type2[] = {int_type, int_type, int_type};
          * "UPDATE district SET d_next_o_id = $1 + 1 WHERE d_id = $2 AND d_w_id = $3",
@@ -134,10 +134,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st2.set_int(2, w_id);
         start = clock();
         int row_count = st2.execute_update();
-        execute_t = clock() - start;
+        end = clock();
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "district",
-                row_count, clock() - obj->start, tran_name, execute_t));
-
+                row_count, end - obj->start, tran_name, end - start));
         o_id = d_next_o_id;
         /*
          * "INSERT INTO orders (o_id, o_d_id, o_w_id, o_c_id, o_entry_d, o_ol_cnt, o_all_local) VALUES($1, $2, $3, $4, $5, $6, $7)",
@@ -154,9 +153,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st3.set_int(6, o_all_local);
         start = clock();
         row_count = st3.execute_update();
-        execute_t = clock() - start;
+        end = clock();
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "orders",
-                row_count, clock() - obj->start, tran_name, execute_t));
+                row_count, end - obj->start, tran_name, end - start));
         /*
          * const parameter_type type4[] = {int_type, int_type, int_type};
          * "INSERT INTO new_orders (no_o_id, no_d_id, no_w_id) VALUES ($1,$2,$3)",
@@ -167,9 +166,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st4.set_int(2, w_id);
         start = clock();
         row_count = st4.execute_update();
-        execute_t = clock() - start;
+        end = clock();
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "new_orders",
-                row_count, clock() - obj->start, tran_name, execute_t));
+                row_count, end - obj->start, tran_name, end - start));
         for (i = 0; i < o_ol_cnt; i++) {
             ol_num_seq[i] = i;
         }
@@ -201,14 +200,14 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st5.set_int(0, ol_i_id);
             start = clock();
             pg_resultset res2 = st5.execute_query();
-            execute_t = clock() - start;
+            end = clock();
             while(res2.has_next()){
                 i_price = res2.get_float(0);
                 strcpy(i_name, res2.get_value(1));
                 strcpy(i_data, res2.get_value(2));
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "item",
-                    res2.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                    res2.get_tuples_count(), end - obj->start, tran_name, end - start));
             price[ol_num_seq[ol_number - 1]] = i_price;
             strncpy(iname[ol_num_seq[ol_number - 1]], i_name, 25);
             /*
@@ -222,7 +221,7 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st6.set_int(1, ol_supply_w_id);
             start = clock();
             pg_resultset res3 = st6.execute_query();
-            execute_t = clock() - start;
+            end = clock();
             while(res3.has_next()){
                 s_quantity = res3.get_int(0);
                 strcpy(s_data, res3.get_value(1));
@@ -238,7 +237,7 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
                 strcpy(s_dist_10, res3.get_value(11));
             }
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "stock",
-                    res3.get_tuples_count(), clock() - obj->start, tran_name, execute_t));
+                    res3.get_tuples_count(), end - obj->start, tran_name, end - start));
             pick_dist_info(ol_dist_info, d_id);
             stock[ol_num_seq[ol_number - 1]] = s_quantity;
 
@@ -264,9 +263,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st7.set_int(2, ol_supply_w_id);
             start = clock();
             row_count = st7.execute_update();
-            execute_t = clock() - start;
+            end = clock();
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "stock",
-                    row_count, clock() - obj->start, tran_name, execute_t));
+                    row_count, end - obj->start, tran_name, end - start));
 
             ol_amount = ol_quantity * i_price * (1 + w_tax + d_tax) * (1 - c_discount);
             amt[ol_num_seq[ol_number - 1]] = ol_amount;
@@ -288,9 +287,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st8.set_value(8, ol_dist_info);
             start = clock();
             row_count = st8.execute_update();
-            execute_t = clock() - start;
+            end = clock();
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "order_line",
-                    row_count, clock() - obj->start, tran_name, execute_t));
+                    row_count, end - obj->start, tran_name, end - start));
         }
         con.commit();
         pthread_mutex_lock(&obj->mutex);
