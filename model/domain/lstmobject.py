@@ -103,11 +103,12 @@ class lstm_data:
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
-    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25, 20, False)
+    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25, 20, True)
     labels = obj.test.labels
-    total = labels.shape[0] * labels.shape[1]
-    count = 0;
-    for num in labels.flatten():
-        if num == 0:
-            count += 1
-    print(count / total)
+    print(obj.test.labels.shape)
+    # total = labels.shape[0] * labels.shape[1]
+    # count = 0;
+    # for num in labels.flatten():
+    #     if num == 0:
+    #         count += 1
+    # print(count / total)
