@@ -43,7 +43,7 @@ class lstm_model:
             cell = rnn.DropoutWrapper(cell, output_keep_prob=self._keep_prob)
             return cell
         self._inputs = tf.placeholder(dtype=tf.float32,
-                                      shape=[self._batch_size, self._tran_size, self._data_obj.sample_dim])
+                                      shape=[None, self._tran_size, self._data_obj.sample_dim])
         mul_cell = rnn.MultiRNNCell([build_cell() for _ in range(self._num_layer)],
                                     state_is_tuple=True)
         self._init_state = mul_cell.zero_state(self._batch_size, dtype=tf.float32)
@@ -57,7 +57,7 @@ class lstm_model:
                                     dtype=tf.float32), dtype=tf.float32)
         self._prediction = tf.nn.softmax(tf.matmul(outputs, W) + bais)
     def define_loss(self):
-        self._y = tf.placeholder(dtype=tf.float32, shape=[self._batch_size, self._tran_size, self._data_obj.label_dim])
+        self._y = tf.placeholder(dtype=tf.float32, shape=[None, self._tran_size, self._data_obj.label_dim])
         y_one_hot = tf.reshape(self._y, self._prediction.shape)
         self._loss = -tf.reduce_mean(tf.reduce_sum(y_one_hot * tf.log(self._prediction),
                                                    reduction_indices=[1]))
@@ -70,6 +70,7 @@ class lstm_model:
         optimizer = tf.train.AdamOptimizer(self._lr)
         self._optimizer = optimizer.apply_gradients(zip(grads, vars))
     def train(self):
+        assert self._tran_size != 1 and self._batch_size != -1, Exception("Sample need to be False")
         fig = plt.figure("cross-entropy")
         mpl.rcParams['xtick.labelsize'] = 8
         mpl.rcParams['ytick.labelsize'] = 8
@@ -90,17 +91,17 @@ class lstm_model:
                                            self._final_state, self._accuracy], feed_dict=feed)
                 loss_lst.append(loss)
                 acc_lst.append(acc)
-                if step % 10 == 0:
+                if step % 100 == 0:
                     end = time.clock()
                     interval = end - start
                     print("Iter: {0:d}/{2:d}, Loss: {1:.3f}, Accuracy: {5:.3f}, Iter_speed: {3:.3f} sec/10 items, Remaining time: {4:.3f} sec".format(
-                        step, loss, self._max_step, interval, ((self._max_step - step) / 10) * interval, acc))
-                    if step > 10:
-                        ax.plot(np.arange(step - 11, step), loss_lst[step - 11: step], color="r")
-                        bx.plot(np.arange(step - 11, step), acc_lst[step - 11: step], color="b")
+                        step, loss, self._max_step, interval, ((self._max_step - step) / 100) * interval, acc))
+                    if step > 100:
+                        ax.plot(np.arange(step - 101, step), loss_lst[step - 101: step], color="r")
+                        bx.plot(np.arange(step - 101, step), acc_lst[step - 101: step], color="b")
                     else:
-                        ax.plot(np.arange(step - 10, step), loss_lst[step - 10: step], color="r")
-                        bx.plot(np.arange(step - 10, step), acc_lst[step - 10: step], color="b")
+                        ax.plot(np.arange(step - 100, step), loss_lst[step - 100: step], color="r")
+                        bx.plot(np.arange(step - 100, step), acc_lst[step - 100: step], color="b")
                     plt.pause(0.1)
                     start = time.clock()
             plt.show()
@@ -109,13 +110,30 @@ class lstm_model:
         sess = tf.Session()
         tf.train.Saver().restore(sess, tf.train.latest_checkpoint(self._save_path))
         self._sess = sess
+    def test(self):
+        state = self._sess.run(self._init_state)
+        print("Accuracy:", self._sess.run(self._accuracy, feed_dict={
+            self._inputs: self._data_obj.test.samples, self._y: self._data_obj.test.labels,
+            self._init_state: state}))
+    def predict(self, sample):
+        assert self._batch_size == 1 and self._tran_size == 1, Exception("Sample need to be True")
+        state = self._sess.run(self._init_state)
+        return self._sess.run(self._prediction, feed_dict={
+            self._inputs: sample, self._init_state: state})
+
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
-    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25, 20, True)
+    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 1,
+                    True, min=0, max=11, label_dim=180)
     obj.pca_samples(8)
     model = lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
                        keep_prob=0.8, l_rate=0.005, max_step=5000,
-                       save_path=model_path, batch_size=256)
-    model.train()
+                       save_path=model_path, batch_size=256, sampling=True)
+    # model.train()
+    model.load_model()
+    sample, label = obj.test.next_batch(1)
+    print(np.argmax(label))
+    print(np.argmax(model.predict(sample)))
+

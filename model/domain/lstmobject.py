@@ -9,14 +9,13 @@ import csv
 from sklearn.decomposition import PCA
 from utils import propertiesutils as pu
 
-def generate_label(label, dim):
-    tmp_label = int(label)
-    result = [0 for _ in range(dim)]
-    if tmp_label <= dim - 2:
-        result[tmp_label] = 1
-    else:
-        result[len(result) - 1] = 1
-    return result
+def generate_label(digtal_label, min, max, dest_dim):
+    step = (max - min) / dest_dim
+    dest_lst = [0 for _ in range(dest_dim)]
+    idx = int((digtal_label - min) // step)
+    assert idx >= 0 and idx < dest_dim, Exception("wrong digtal")
+    dest_lst[idx] = 1
+    return dest_lst
 
 class data_obj:
     def __init__(self, samples, labels, tran_size):
@@ -43,7 +42,8 @@ class data_obj:
         return self._samples[idxs], self._labels[idxs]
 
 class lstm_data:
-    def __init__(self, pre_path, transaction_size, label_dim, one_hot=False):
+    def __init__(self, pre_path, transaction_size,
+                 one_hot=False, min=-1, max=-1, label_dim=-1):
         test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", pre_path)
         assert test != None, Exception("path is invaild")
         if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
@@ -51,8 +51,12 @@ class lstm_data:
         self._train_path = "{0}{1}".format(pre_path, "train.csv")
         self._test_path = "{0}{1}".format(pre_path, "test.csv")
         self._tran_size = transaction_size
-        self._one_hot = one_hot
+        if one_hot:
+            assert min != -1 and max != -1 and label_dim != -1, Exception("dest_dim can not be -1")
+        self._min = min
+        self._max = max
         self._label_dim = label_dim
+        self._one_hot = one_hot
         def parse_data(path):
             samples = []
             labels = []
@@ -61,10 +65,11 @@ class lstm_data:
             for line in reader:
                 samples.append(line[0: -1])
                 if self._one_hot:
-                    labels.append(generate_label(line[-1], self._label_dim))
+                    labels.append(generate_label(np.log(int(line[-1])) if int(line[-1]) is not 0 else 0,
+                                                 self._min, self._max, self._label_dim))
                 else:
                     self._label_dim = 1
-                    labels.append([line[-1]])
+                    labels.append([np.log(int(line[-1])) if int(line[-1]) is not 0 else 0])
             fp.close()
             return np.array(samples, dtype=np.float32), np.array(labels, dtype=np.float32)
         self._train, self._train_labels = parse_data(self._train_path)
@@ -79,6 +84,15 @@ class lstm_data:
             self.__get = get
         def __get__(self, instance, owner):
             return self.__get(instance)
+    def __min_getter(self):
+        return self._min
+    min = descriptor(__min_getter)
+    def __max_getter(self):
+        return self._max
+    max = descriptor(__max_getter)
+    def __dest_dim_getter(self):
+        return self._label_dim
+    label_dim = descriptor(__dest_dim_getter)
     def __get_train(self):
         return self._train_samples
     train = descriptor(__get_train)
@@ -91,9 +105,6 @@ class lstm_data:
     @property
     def sample_dim(self):
         return self._dim
-    @property
-    def label_dim(self):
-        return self._label_dim
     def pca_samples(self, n_components):
         pca = PCA(n_components=n_components)
         self._train = pca.fit_transform(self._train)
@@ -103,12 +114,14 @@ class lstm_data:
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
-    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25, 20, True)
+    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
+                    False, min=0, max=20, label_dim=180)
     labels = obj.test.labels
     print(obj.test.labels.shape)
-    # total = labels.shape[0] * labels.shape[1]
-    # count = 0;
-    # for num in labels.flatten():
-    #     if num == 0:
-    #         count += 1
-    # print(count / total)
+    print(obj.train.samples.shape)
+    total = labels.shape[0] * labels.shape[1]
+    count = 0;
+    for num in labels.flatten():
+        if num == 0:
+            count += 1
+    print(count / total)

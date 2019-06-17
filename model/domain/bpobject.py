@@ -101,9 +101,6 @@ class bp_data:
         return self._dest_dim
     dest_dim = bp_data_descriptor(__dest_dim_getter)
     @property
-    def dest_dim(self):
-        return self._dest_dim
-    @property
     def train(self):
         return self._train_sample
     @property

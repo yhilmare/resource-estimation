@@ -107,8 +107,8 @@ class bp_model:
         tf.train.Saver().restore(self._sess, tf.train.latest_checkpoint(self._model_path))
     def test(self):
         print("accuracy:", self._sess.run(self._accuracy,
-                                          feed_dict={self._x: self._data.train.samples,
-                                                     self._y: self._data.train.labels}))
+                                          feed_dict={self._x: self._data.test.samples,
+                                                     self._y: self._data.test.labels}))
     def predict(self, sample):
         return self._sess.run(self._pre, feed_dict={self._x: sample})
 
@@ -122,5 +122,6 @@ if __name__ == "__main__":
                      model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
     model.train(True)
     # model.load()
+    # model.test()
     # res = model.predict(obj.test.samples)
     # print(res.shape)
