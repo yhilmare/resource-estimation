@@ -127,7 +127,6 @@ if __name__ == "__main__":
     model = lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
                        keep_prob=0.8, l_rate=0.005, max_step=5000,
                        save_path=model_path, batch_size=obj.test.samples.shape[0])
-    # model.train()
     model.load_model()
     pre, acc = model.test()
     print(pre.shape)

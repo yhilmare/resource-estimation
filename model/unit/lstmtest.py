@@ -119,4 +119,4 @@ if __name__ == "__main__":
                             save_path=model_path, batch_size=obj.test.samples.shape[0])
     test_obj = lstm_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot(True)
+    test_obj.plot()

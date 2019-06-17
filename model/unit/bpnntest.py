@@ -95,4 +95,4 @@ if __name__ == "__main__":
                      model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
     test_obj = bp_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot(True)
+    test_obj.plot()
