@@ -48,6 +48,7 @@ class lstm_data:
         assert test != None, Exception("path is invaild")
         if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
             pre_path = "{0}/".format(pre_path)
+        self._pre_path = pre_path
         self._train_path = "{0}{1}".format(pre_path, "train.csv")
         self._test_path = "{0}{1}".format(pre_path, "test.csv")
         self._tran_size = transaction_size
@@ -79,6 +80,12 @@ class lstm_data:
     def init_samples(self):
         self._train_samples = data_obj(self._train, self._train_labels, self._tran_size)
         self._test_samples = data_obj(self._test, self._test_labels, self._tran_size)
+    @property
+    def file_path(self):
+        return self._pre_path
+    @property
+    def one_hot(self):
+        return self._one_hot
     class descriptor:
         def __init__(self, get):
             self.__get = get

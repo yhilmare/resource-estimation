@@ -112,28 +112,23 @@ class lstm_model:
         self._sess = sess
     def test(self):
         state = self._sess.run(self._init_state)
-        print("Accuracy:", self._sess.run(self._accuracy, feed_dict={
-            self._inputs: self._data_obj.test.samples, self._y: self._data_obj.test.labels,
-            self._init_state: state}))
-    def predict(self, sample):
-        assert self._batch_size == 1 and self._tran_size == 1, Exception("Sample need to be True")
-        state = self._sess.run(self._init_state)
-        return self._sess.run(self._prediction, feed_dict={
-            self._inputs: sample, self._init_state: state})
+        acc, pre = self._sess.run([self._accuracy, self._prediction], feed_dict={self._inputs: self._data_obj.test.samples,
+                                                        self._y: self._data_obj.test.labels,
+                                                        self._init_state: state})
+        return pre, acc
 
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
-    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 1,
+    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
                     True, min=0, max=11, label_dim=180)
     obj.pca_samples(8)
     model = lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
                        keep_prob=0.8, l_rate=0.005, max_step=5000,
-                       save_path=model_path, batch_size=256, sampling=True)
+                       save_path=model_path, batch_size=obj.test.samples.shape[0])
     # model.train()
     model.load_model()
-    sample, label = obj.test.next_batch(1)
-    print(np.argmax(label))
-    print(np.argmax(model.predict(sample)))
+    pre, acc = model.test()
+    print(pre.shape)
 
