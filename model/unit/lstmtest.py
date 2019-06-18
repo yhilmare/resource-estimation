@@ -6,9 +6,11 @@ Created By ILMARE
 from lib import lstm
 from domain.lstmobject import lstm_data
 from utils import propertiesutils as pu
+from utils import lineutils
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 import numpy as np
+import csv
 
 class lstm_evaluation:
     def __init__(self, model, data_obj):
@@ -42,8 +44,8 @@ class lstm_evaluation:
             label1 = sorted(self._data_obj_digtial.test.labels.flatten())
             label2 = sorted(self.__predict())
         else:
-            label1 = self._data_obj_digtial.test.labels.flatten()
             label2 = self.__predict()
+            label1 = self._data_obj_digtial.test.labels.flatten()
         fig = plt.figure()
         ax = fig.add_subplot(311)
         ax.plot(np.arange(0, len(label1)), label1, '.' if not sort else "-", label="real execution time")
@@ -119,4 +121,4 @@ if __name__ == "__main__":
                             save_path=model_path, batch_size=obj.test.samples.shape[0])
     test_obj = lstm_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot()
+    test_obj.plot(True)
