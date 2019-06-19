@@ -6,11 +6,9 @@ Created By ILMARE
 from lib import lstm
 from domain.lstmobject import lstm_data
 from utils import propertiesutils as pu
-from utils import lineutils
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 import numpy as np
-import csv
 
 class lstm_evaluation:
     def __init__(self, model, data_obj):
