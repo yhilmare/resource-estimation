@@ -92,8 +92,6 @@ def train_model():
                        keep_prob=0.8, l_rate=0.005, max_step=5000,
                        save_path=model_path, batch_size=256)
     model.train()
-    model.load_model()
-    model.test()
 
 def test_model():
     reader = pu.configreader(pu.configfile)
@@ -105,7 +103,7 @@ def test_model():
                        keep_prob=0.8, l_rate=0.005, max_step=5000,
                        save_path=model_path, batch_size=obj.test.samples.shape[0])
     model.load_model()
-    pre = model.test()
+    pre, _ = model.test()
     print(pre.shape)
 
 if __name__ == "__main__":
@@ -119,4 +117,4 @@ if __name__ == "__main__":
                             save_path=model_path, batch_size=obj.test.samples.shape[0])
     test_obj = lstm_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot(True)
+    test_obj.plot()
