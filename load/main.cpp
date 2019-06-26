@@ -82,7 +82,7 @@ int main(int argn, char *argv[]) {
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
 
-    int thread_num = 40;
+    int thread_num = 10;
     thread_arg arg(config, thread_num, file_name);
 
     for (int i = 0; i < thread_num - 1; i ++){
