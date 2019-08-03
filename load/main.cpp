@@ -21,28 +21,28 @@
 #include "lib/pg_lib/pg_prepared_statement.h"
 #include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
 
-void regex_test(){
-    using namespace std;
-    regex pattern = regex(R"pattern(\w+(@)\w+\.com)pattern");
-    string msg = "yh_swjtu@163.com是我一个人1193830957@qq.com";
-    smatch match;
-    cout << regex_match(msg, match, pattern) << endl;
-    smatch search;
-    cout << regex_search(msg, search, pattern) << endl;
-    cout << search.str() << endl;
-    cout << "=============================" << endl;
-    sregex_iterator iter(msg.begin(), msg.end(), pattern);
-    sregex_iterator end;
-    for(; iter != end; iter ++){
-        cout << iter->str() << endl;
-    }
-    cout << "=====================" << endl;
-    sregex_token_iterator token_iter = sregex_token_iterator(msg.begin(), msg.end(), pattern);
-    sregex_token_iterator token_end;
-    for(; token_iter != token_end; token_iter ++){
-        cout << token_iter->str() << " - " << *token_iter << endl;
-    }
-}
+//void regex_test(){
+//    using namespace std;
+//    regex pattern = regex(R"pattern(\w+(@)\w+\.com)pattern");
+//    string msg = "yh_swjtu@163.com是我一个人1193830957@qq.com";
+//    smatch match;
+//    cout << regex_match(msg, match, pattern) << endl;
+//    smatch search;
+//    cout << regex_search(msg, search, pattern) << endl;
+//    cout << search.str() << endl;
+//    cout << "=============================" << endl;
+//    sregex_iterator iter(msg.begin(), msg.end(), pattern);
+//    sregex_iterator end;
+//    for(; iter != end; iter ++){
+//        cout << iter->str() << endl;
+//    }
+//    cout << "=====================" << endl;
+//    sregex_token_iterator token_iter = sregex_token_iterator(msg.begin(), msg.end(), pattern);
+//    sregex_token_iterator token_end;
+//    for(; token_iter != token_end; token_iter ++){
+//        cout << token_iter->str() << " - " << *token_iter << endl;
+//    }
+//}
 
 int num_ware = 10;
 void *thread_main(void *);
