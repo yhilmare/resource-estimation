@@ -92,7 +92,6 @@ int main(int argn, char *argv[]) {
     thread_main((void *)&arg);
     return 0;
 }
-
 void *thread_main(void *param){
     using namespace std;
 
