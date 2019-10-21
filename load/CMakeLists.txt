@@ -4,9 +4,9 @@ project(load)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(PGSQL_INCLUDE "C:/pgsql/simple_include")
+set(PGSQL_INCLUDE "/usr/include/postgresql")
 
-set(PGSQL_LIB "C:/pgsql/lib/")
+set(PGSQL_LIB "/usr/lib/postgresql/9.5/lib")
 
 include_directories(${PGSQL_INCLUDE})
 
@@ -29,4 +29,4 @@ add_executable(load main.cpp
         tpcc/payment.cpp tpcc/ordstat.cpp tpcc/delivery.cpp tpcc/slev.cpp
         tpcc/container/transaction_obj.cpp tpcc/container/transaction_obj.h)
 
-target_link_libraries(load libpq.dll)
+target_link_libraries(load pq)

@@ -2,6 +2,7 @@
 #include <vector>
 #include <random>
 #include <time.h>
+#include <unistd.h>
 #include <cstring>
 #include <iostream>
 #include <exception>
@@ -58,6 +59,8 @@ void load_data(){
 
 int main(int argn, char *argv[]) {
     using namespace std;
+    load_data();
+
 //    SYSTEMTIME st;
 //    GetLocalTime(&st);
 //
@@ -75,6 +78,7 @@ int main(int argn, char *argv[]) {
 //    string final = parseInt(time_stamp) + tmp;
 //    char buffer[1000];
 //    getcwd(buffer, 1000);
+//    cout << buffer << endl;
 //    unordered_map<string, string> config =
 //            parse_properties_file(string(buffer) + "/config/pg_config.properties");
 //    string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";

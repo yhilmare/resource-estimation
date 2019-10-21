@@ -7,7 +7,7 @@
 #include <cstring>
 #include <random>
 #include <fstream>
-#include <direct.h>
+#include <unistd.h>
 #include <unordered_map>
 #include "../global_define.h"
 #include "../lib/tools/global_tools.h"
@@ -1105,7 +1105,6 @@ void generate_stock(int w_id, int max_num){
                 s_data[pos + 6] = 'a';
                 s_data[pos + 7] = 'l';
             }
-
             stock << s_i_id << "|" << s_w_id << "|" << s_quantity << "|"
                   << s_dist_01 << "|" << s_dist_02 << "|" << s_dist_03 << "|"
                   << s_dist_04 << "|" << s_dist_05 << "|" << s_dist_06
