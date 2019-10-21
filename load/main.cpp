@@ -3,9 +3,7 @@
 #include <random>
 #include <time.h>
 #include <cstring>
-#include <direct.h>
 #include <iostream>
-#include <windows.h>
 #include <exception>
 #include <pthread.h>
 #include "load/driver.h"
@@ -60,36 +58,36 @@ void load_data(){
 
 int main(int argn, char *argv[]) {
     using namespace std;
-    SYSTEMTIME st;
-    GetLocalTime(&st);
-
-    time_t time_stamp = time(NULL);
-    string tmp;
-    if (st.wMilliseconds < 100){
-        if (st.wMilliseconds < 10){
-            tmp = "00" + parseInt(st.wMilliseconds);
-        }else{
-            tmp = "0" + parseInt(st.wMilliseconds);
-        }
-    }else{
-        tmp = parseInt(st.wMilliseconds);
-    }
-    string final = parseInt(time_stamp) + tmp;
-    char buffer[1000];
-    getcwd(buffer, 1000);
-    unordered_map<string, string> config =
-            parse_properties_file(string(buffer) + "/config/pg_config.properties");
-    string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
-
-    int thread_num = 10;
-    thread_arg arg(config, thread_num, file_name);
-
-    for (int i = 0; i < thread_num - 1; i ++){
-        pthread_t t1;
-        pthread_create(&t1, NULL, thread_main, (void *) &arg);
-//        pthread_join(t1, NULL);
-    }
-    thread_main((void *)&arg);
+//    SYSTEMTIME st;
+//    GetLocalTime(&st);
+//
+//    time_t time_stamp = time(NULL);
+//    string tmp;
+//    if (st.wMilliseconds < 100){
+//        if (st.wMilliseconds < 10){
+//            tmp = "00" + parseInt(st.wMilliseconds);
+//        }else{
+//            tmp = "0" + parseInt(st.wMilliseconds);
+//        }
+//    }else{
+//        tmp = parseInt(st.wMilliseconds);
+//    }
+//    string final = parseInt(time_stamp) + tmp;
+//    char buffer[1000];
+//    getcwd(buffer, 1000);
+//    unordered_map<string, string> config =
+//            parse_properties_file(string(buffer) + "/config/pg_config.properties");
+//    string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
+//
+//    int thread_num = 10;
+//    thread_arg arg(config, thread_num, file_name);
+//
+//    for (int i = 0; i < thread_num - 1; i ++){
+//        pthread_t t1;
+//        pthread_create(&t1, NULL, thread_main, (void *) &arg);
+////        pthread_join(t1, NULL);
+//    }
+//    thread_main((void *)&arg);
     return 0;
 }
 void *thread_main(void *param){
