@@ -41,19 +41,18 @@ class bp_model:
                                initial_value=tf.ones(shape=[256], dtype=tf.float32))
 
             level_2 = tf.nn.sigmoid(tf.matmul(level_1, weight1) + bias1)
-        # with tf.variable_scope("level2"):
-        #     weight2 = tf.Variable(name="weight2",
-        #                          initial_value=tf.random_normal(shape=[256, 128], dtype=tf.float32, stddev=0.1))
-        #     bias2 = tf.Variable(name="bias2",
-        #                        initial_value=tf.ones(shape=[128], dtype=tf.float32))
-        #
-        #     level_3 = tf.nn.sigmoid(tf.matmul(level_2, weight2) + bias2)
+        with tf.variable_scope("level2"):
+            weight2 = tf.Variable(name="weight2",
+                                 initial_value=tf.random_normal(shape=[256, 128], dtype=tf.float32, stddev=0.1))
+            bias2 = tf.Variable(name="bias2",
+                               initial_value=tf.ones(shape=[128], dtype=tf.float32))
+            level_3 = tf.nn.sigmoid(tf.matmul(level_2, weight2) + bias2)
         with tf.variable_scope("level3"):
             weight3 = tf.Variable(name="weight3",
-                                  initial_value=tf.random_normal(shape=[256, self._data.dest_dim], dtype=tf.float32, stddev=0.1))
+                                  initial_value=tf.random_normal(shape=[128, self._data.dest_dim], dtype=tf.float32, stddev=0.1))
             bias3 = tf.Variable(name="bias3",
                                 initial_value=tf.ones(shape=[self._data.dest_dim], dtype=tf.float32))
-            self._pre = tf.nn.softmax(tf.matmul(level_2, weight3) + bias3)
+            self._pre = tf.nn.softmax(tf.matmul(level_3, weight3) + bias3)
         self._loss = -tf.reduce_mean(tf.reduce_sum(self._y * tf.log(self._pre), reduction_indices=[1]))
         self._accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self._pre, 1), tf.argmax(self._y, 1)), dtype=np.float32))
         # self._loss = 0.5 * tf.reduce_sum(tf.abs(tf.subtract(self._y, self._pre)))
@@ -115,7 +114,7 @@ class bp_model:
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA],
-                  one_hot=True, min=0, max=9, dest_dim=180)
+                  one_hot=True, min=3, max=13, dest_dim=100)
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, pca_dim=8,

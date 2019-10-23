@@ -68,6 +68,7 @@ class bp_evaluation:
                                         np.argmax(self._data_obj_one_hot.test.labels, 1)))
         real_label = np.power(np.e, self._data_obj_digtial.test.labels).flatten()
         predict_label = np.power(np.e, self.__predict())
+        squared_error_ratio = np.mean(np.power((real_label - predict_label), 2))
         err_ratio = sorted(np.abs(predict_label - real_label) / real_label)
         length = len(err_ratio)
         info_dict = dict()
@@ -80,19 +81,19 @@ class bp_evaluation:
                 info_dict[0.3] = (idx + 1) / length
             if num > 0.35 and info_dict.get(0.35) is None:
                 info_dict[0.35] = (idx + 1) / length
-        return "Label accuracy: {0:.3f}\nDigtial accuracy: {2}->{1:.3f}% | {4}->{3:.3f}% | {6}->{5:.3f}% | {8}->{7:.3f}%".format(
-            accuracy, info_dict[0.1] * 100, 0.1, info_dict[0.2] * 100, 0.2, info_dict[0.3] * 100, 0.3, info_dict[0.35] * 100, 0.35)
+        return "Label accuracy: {0:.3f}, Mean Squared Error: {9:.3f}\nDigtial accuracy: {2}->{1:.3f}% | {4}->{3:.3f}% | {6}->{5:.3f}% | {8}->{7:.3f}%".format(
+            accuracy, info_dict[0.1] * 100, 0.1, info_dict[0.2] * 100, 0.2, info_dict[0.3] * 100, 0.3, info_dict[0.35] * 100, 0.35, squared_error_ratio)
     def __str__(self):
         return self.statistics_info()
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA],
-                  one_hot=True, min=0, max=9, dest_dim=180)
+                  one_hot=True, min=3, max=13, dest_dim=100)
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, pca_dim=8,
                      model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
     test_obj = bp_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot()
+    test_obj.plot(True)

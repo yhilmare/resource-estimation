@@ -59,13 +59,23 @@ void load_data(){
 
 int main(int argn, char *argv[]) {
     using namespace std;
-    load_data();
 
-//    SYSTEMTIME st;
-//    GetLocalTime(&st);
-//
-//    time_t time_stamp = time(NULL);
-//    string tmp;
+//    clock_t start = clock();
+//    timespec t1, t2;
+//    clock_gettime(CLOCK_MONOTONIC, &t1);
+//    int i = 0;
+//    while((++ i) < 10000){
+//        cout << i << endl;
+//    }
+//    clock_gettime(CLOCK_MONOTONIC, &t2);
+//    long deltaT = t2.tv_nsec - t1.tv_nsec;
+//    cout << deltaT << endl;
+//    cout << clock() - start << endl;
+
+    clock_t start = clock();
+    time_t time_stamp = time(NULL);
+    string tmp = parseInt(start);
+
 //    if (st.wMilliseconds < 100){
 //        if (st.wMilliseconds < 10){
 //            tmp = "00" + parseInt(st.wMilliseconds);
@@ -75,23 +85,22 @@ int main(int argn, char *argv[]) {
 //    }else{
 //        tmp = parseInt(st.wMilliseconds);
 //    }
-//    string final = parseInt(time_stamp) + tmp;
-//    char buffer[1000];
-//    getcwd(buffer, 1000);
-//    cout << buffer << endl;
-//    unordered_map<string, string> config =
-//            parse_properties_file(string(buffer) + "/config/pg_config.properties");
-//    string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
-//
-//    int thread_num = 10;
-//    thread_arg arg(config, thread_num, file_name);
-//
+
+    string final = parseInt(time_stamp) + tmp;
+    char buffer[1000];
+    getcwd(buffer, 1000);
+    unordered_map<string, string> config =
+            parse_properties_file(string(buffer) + "/config/pg_config.properties");
+    string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
+    int thread_num = 10;
+    thread_arg arg(config, thread_num, file_name);
+
 //    for (int i = 0; i < thread_num - 1; i ++){
 //        pthread_t t1;
 //        pthread_create(&t1, NULL, thread_main, (void *) &arg);
 ////        pthread_join(t1, NULL);
 //    }
-//    thread_main((void *)&arg);
+    thread_main((void *)&arg);
     return 0;
 }
 void *thread_main(void *param){

@@ -29,4 +29,4 @@ add_executable(load main.cpp
         tpcc/payment.cpp tpcc/ordstat.cpp tpcc/delivery.cpp tpcc/slev.cpp
         tpcc/container/transaction_obj.cpp tpcc/container/transaction_obj.h)
 
-target_link_libraries(load pq)
+target_link_libraries(load pq pthread)
