@@ -2,6 +2,7 @@
 #include <vector>
 #include <random>
 #include <time.h>
+#include <sys/time.h>
 #include <unistd.h>
 #include <cstring>
 #include <iostream>
@@ -60,33 +61,14 @@ void load_data(){
 int main(int argn, char *argv[]) {
     using namespace std;
 
-//    clock_t start = clock();
-//    timespec t1, t2;
-//    clock_gettime(CLOCK_MONOTONIC, &t1);
-//    int i = 0;
-//    while((++ i) < 10000){
-//        cout << i << endl;
-//    }
-//    clock_gettime(CLOCK_MONOTONIC, &t2);
-//    long deltaT = t2.tv_nsec - t1.tv_nsec;
-//    cout << deltaT << endl;
-//    cout << clock() - start << endl;
+    timeval tv;
+    gettimeofday(&tv, NULL);
+    string time = parseInt(tv.tv_usec);
+    for(int i = 0; i < 6 - time.length(); i ++){
+        time = "0" + time;
+    }
+    string final = parseInt(tv.tv_sec) + time;
 
-    clock_t start = clock();
-    time_t time_stamp = time(NULL);
-    string tmp = parseInt(start);
-
-//    if (st.wMilliseconds < 100){
-//        if (st.wMilliseconds < 10){
-//            tmp = "00" + parseInt(st.wMilliseconds);
-//        }else{
-//            tmp = "0" + parseInt(st.wMilliseconds);
-//        }
-//    }else{
-//        tmp = parseInt(st.wMilliseconds);
-//    }
-
-    string final = parseInt(time_stamp) + tmp;
     char buffer[1000];
     getcwd(buffer, 1000);
     unordered_map<string, string> config =

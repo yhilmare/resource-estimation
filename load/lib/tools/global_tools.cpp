@@ -9,7 +9,7 @@
 #include <iterator>
 #include "exceptions/file_exception.h"
 
-const std::string parseInt(int num){
+const std::string parseInt(long num){
     using namespace std;
     vector<int> val;
     while(true){

@@ -35,7 +35,7 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
 //              << (void *)&t << ", function [neword]@"
 //              << (void *)neword << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = parseInt((int)t) + "@neword_" + parseInt(t_id);
+    std::string tran_name = parseInt((long)t) + "@neword_" + parseInt(t_id);
     extern std::default_random_engine e;
     int w_id = w_id_arg;
     int d_id = d_id_arg;

@@ -64,11 +64,11 @@ class lstm_model:
         self._accuracy = tf.reduce_mean(
             tf.cast(tf.equal(tf.argmax(self._prediction, 1), tf.argmax(y_one_hot, 1)), dtype=np.float32))
     def define_gradients(self):
-        # self._optimizer = tf.train.AdamOptimizer(self._lr).minimize(self._loss)
-        vars = tf.trainable_variables()
-        grads, _ = tf.clip_by_global_norm(tf.gradients(self._loss, vars), 3)
-        optimizer = tf.train.AdamOptimizer(self._lr)
-        self._optimizer = optimizer.apply_gradients(zip(grads, vars))
+        self._optimizer = tf.train.AdamOptimizer(self._lr).minimize(self._loss)
+        # vars = tf.trainable_variables()
+        # grads, _ = tf.clip_by_global_norm(tf.gradients(self._loss, vars), 3)
+        # optimizer = tf.train.AdamOptimizer(self._lr)
+        # self._optimizer = optimizer.apply_gradients(zip(grads, vars))
     def train(self):
         assert self._tran_size != 1 and self._batch_size != -1, Exception("Sample need to be False")
         fig = plt.figure("cross-entropy")
@@ -122,12 +122,12 @@ if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
     obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
-                    True, min=0, max=11, label_dim=180)
-    obj.pca_samples(8)
+                    True, min=2, max=6, label_dim=102)
+    obj.pca_samples(11)
     model = lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
-                       keep_prob=0.8, l_rate=0.005, max_step=5000,
-                       save_path=model_path, batch_size=obj.test.samples.shape[0])
-    model.load_model()
-    pre, acc = model.test()
-    print(pre.shape)
+                       keep_prob=0.8, l_rate=0.005, max_step=10000,
+                       save_path=model_path, batch_size=256)
+    model.train()
+    # pre, acc = model.test()
+    # print(pre.shape)
 

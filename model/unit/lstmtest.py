@@ -33,9 +33,14 @@ class lstm_evaluation:
             dest_dim = self._data_obj_one_hot.label_dim
             step = (max - min) / dest_dim
             for item in np.argmax(self._labels, 1):
-                low = min + item * step
-                high = low + step
-                return_mat.append(np.random.normal((low + high) / 2.0, (high - low) / 2.0))
+                if item == 0:
+                    return_mat.append(np.random.normal(min / 2.0, min / 2.0))
+                elif item == dest_dim - 1:
+                    return_mat.append(np.random.normal((max + max + 2.5) / 2.0, (2.5) / 2.0))
+                else:
+                    low = min + item * step
+                    high = low + step
+                    return_mat.append(np.random.normal((low + high) / 2.0, (high - low) / 2.0))
             return np.array(return_mat, dtype=np.float32)
     def plot(self, sort=False):
         if sort:
@@ -110,11 +115,30 @@ if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
     obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
-                    True, min=0, max=11, label_dim=180)
-    obj.pca_samples(8)
+                    True, min=2, max=6, label_dim=102)
+    # dest = np.reshape(obj.test.labels, newshape=[-1, 102])
+    # dest = np.argmax(dest, 1)
+    # result = dict()
+    # for item in dest:
+    #     if result.get(item, -1) == -1:
+    #         result[item] = 1
+    #     else:
+    #         result[item] = result[item] + 1
+    # print(result)
+    # count = 0
+    # for value in result.values():
+    #     count += value
+    # print(count)
+    # count_1 = 0
+    # for key, value in result.items():
+    #     print(key, ": ", value / count)
+    #     result[key] = value / count
+    #     count_1 += (value / count)
+    # print(count_1)
+    obj.pca_samples(11)
     model = lstm.lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
                             keep_prob=0.8, l_rate=0.005, max_step=5000,
                             save_path=model_path, batch_size=obj.test.samples.shape[0])
     test_obj = lstm_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot()
+    test_obj.plot(True)

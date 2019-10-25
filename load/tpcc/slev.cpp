@@ -19,7 +19,7 @@ int slev(int w_id_arg, int d_id_arg,	int level_arg,
 //              << (void *)&t << ", function [slev]@"
 //              << (void *)slev << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = parseInt((int)t) + "@slev_" + parseInt(t_id);
+    std::string tran_name = parseInt((long)t) + "@slev_" + parseInt(t_id);
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int level = level_arg;

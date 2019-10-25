@@ -10,11 +10,17 @@ from sklearn.decomposition import PCA
 from utils import propertiesutils as pu
 
 def generate_label(digtal_label, min, max, dest_dim):
-    step = (max - min) / dest_dim
+    assert dest_dim > 2, Exception("wrong dim")
+    step = (max - min) / (dest_dim - 2)
     dest_lst = [0 for _ in range(dest_dim)]
-    idx = int((digtal_label - min) // step)
-    assert idx >= 0 and idx < dest_dim, Exception("wrong digtal")
-    dest_lst[idx] = 1
+    if digtal_label < min:
+        dest_lst[0] = 1
+    elif digtal_label > max:
+        dest_lst[dest_dim - 1] = 1
+    else:
+        idx = int((digtal_label - min) // step) + 1
+        assert idx >= 0 and idx < dest_dim, Exception("wrong digtal")
+        dest_lst[idx] = 1
     return dest_lst
 
 class data_obj:
@@ -120,15 +126,16 @@ class lstm_data:
         self.init_samples()
 
 if __name__ == "__main__":
-    reader = pu.configreader(pu.configfile)
-    obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
-                    False, min=0, max=20, label_dim=180)
-    labels = obj.test.labels
-    print(obj.test.labels.shape)
-    print(obj.train.samples.shape)
-    total = labels.shape[0] * labels.shape[1]
-    count = 0;
-    for num in labels.flatten():
-        if num == 0:
-            count += 1
-    print(count / total)
+    print(generate_label(2, 1, 10, 12))
+    # reader = pu.configreader(pu.configfile)
+    # obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
+    #                 False, min=0, max=20, label_dim=180)
+    # labels = obj.test.labels
+    # print(obj.test.labels.shape)
+    # print(obj.train.samples.shape)
+    # total = labels.shape[0] * labels.shape[1]
+    # count = 0;
+    # for num in labels.flatten():
+    #     if num == 0:
+    #         count += 1
+    # print(count / total)

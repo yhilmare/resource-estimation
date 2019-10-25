@@ -9,7 +9,7 @@
 #include "date.h"
 #include <unordered_map>
 
-const std::string parseInt(int);
+const std::string parseInt(long);
 
 const std::string get_pg_date_string(const PG::Date &);
 

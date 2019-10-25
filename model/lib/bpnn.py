@@ -114,7 +114,7 @@ class bp_model:
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA],
-                  one_hot=True, min=3, max=13, dest_dim=100)
+                  one_hot=True, min=0, max=9, dest_dim=180)
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, pca_dim=8,

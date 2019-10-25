@@ -25,7 +25,7 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
 //    std::clog << " --> Thread: [" << t << "]@"
 //              << (void *)&t << ", function [delivery]@"
 //              << (void *)delivery << std::endl;
-    std::string tran_name = parseInt((int)t) + "@delivery_" + parseInt(t_id);
+    std::string tran_name = parseInt((long)t) + "@delivery_" + parseInt(t_id);
     int w_id = w_id_arg;
     int o_carrier_id = o_carrier_id_arg;
     int d_id;

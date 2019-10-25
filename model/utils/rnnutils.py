@@ -11,6 +11,9 @@ from utils import sortutils, propertiesutils as pu
 '''
 针对多个并发事务执行log根据其执行时间先后归并排序
 '''
+
+thread_set = set()
+
 def mergeOriginLog(list_path):
     test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", list_path)
     assert test != None, Exception("path is invaild")
@@ -32,6 +35,7 @@ def mergeOriginLog(list_path):
         for line in reader:
             line[-1] = int(line[-1]) + start_time
             tmp_lst.append(line)
+            thread_set.add(line[0][0: line[0].index("@")])
         tmp_lst = sorted(tmp_lst, key=lambda item: item[-1])
         fp.close()
         fp = open("{0}dest_{1}".format(list_path, item), "w", newline="\n")
@@ -57,11 +61,14 @@ def generate_samples(pre_path, file_name):
     test = []
     for idx, line in enumerate(reader):
         row = list(line)
-        if idx <= 1350000:
+        if idx <= 510000:
             train.append(row)
         else:
             test.append(row)
     fp.close()
+    tmp_dict = dict()
+    for idx, thread in enumerate(thread_set):
+        tmp_dict[thread] = idx
     def sub_parse(src_list, dest_path):
         fp1 = open(dest_path, "w", newline="\n")
         dest_reader = csv.writer(fp1)
@@ -70,11 +77,13 @@ def generate_samples(pre_path, file_name):
         for line in src_list:
             execution_time = int(line[-2])
             thread_id = line[0][0: line[0].index("@")]
+            tmp_lst = [0 for _ in range(len(thread_set))]
+            tmp_lst[tmp_dict[thread_id]] = 1
             row = {}
             for name in table_name:
                 row[name] = [0, 0]
             row[line[2]][int(line[1])] += int(line[3])
-            row_list = [thread_id]
+            row_list = [*tmp_lst]
             for num1, num2 in row.values():
                 row_list.append(num1)
                 row_list.append(num2)

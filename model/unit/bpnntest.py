@@ -37,9 +37,14 @@ class bp_evaluation:
             dest_dim = self._data_obj_one_hot.dest_dim
             step = (max - min) / dest_dim
             for item in np.argmax(self._labels, 1):
-                low = min + item * step
-                high = low + step
-                return_mat.append(np.random.normal((low + high) / 2.0, (high - low) / 2.0))
+                if item == 0:
+                    return_mat.append(np.random.normal(min / 2.0, min / 2.0))
+                elif item == dest_dim - 1:
+                    return_mat.append(np.random.normal((max + max + 2.5) / 2.0, (2.5) / 2.0))
+                else:
+                    low = min + item * step
+                    high = low + step
+                    return_mat.append(np.random.normal((low + high) / 2.0, (high - low) / 2.0))
             return np.array(return_mat, dtype=np.float32)
     def plot(self, sort=False):
         if sort:

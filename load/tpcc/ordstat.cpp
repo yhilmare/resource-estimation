@@ -20,7 +20,7 @@ int ordstat(int w_id_arg, int d_id_arg, int byname,
 //              << (void *)&t << ", function [ordstat]@"
 //              << (void *)ordstat << std::endl;
     transaction_obj tran_obj;
-    std::string tran_name = parseInt((int)t) + "@ordstat_" + parseInt(t_id);
+    std::string tran_name = parseInt((long)t) + "@ordstat_" + parseInt(t_id);
     int w_id = w_id_arg;
     int d_id = d_id_arg;
     int c_id = c_id_arg;
