@@ -35,12 +35,15 @@ class lstm_evaluation:
             for item in np.argmax(self._labels, 1):
                 if item == 0:
                     return_mat.append(np.random.normal(min / 2.0, min / 2.0))
+                    # return_mat.append(np.random.uniform(0, min))
                 elif item == dest_dim - 1:
                     return_mat.append(np.random.normal((max + max + 2.5) / 2.0, (2.5) / 2.0))
+                    # return_mat.append(np.random.uniform(max, max + 2.5))
                 else:
                     low = min + item * step
                     high = low + step
                     return_mat.append(np.random.normal((low + high) / 2.0, (high - low) / 2.0))
+                    # return_mat.append(np.random.uniform(low, high))
             return np.array(return_mat, dtype=np.float32)
     def plot(self, sort=False):
         if sort:
@@ -141,4 +144,4 @@ if __name__ == "__main__":
                             save_path=model_path, batch_size=obj.test.samples.shape[0])
     test_obj = lstm_evaluation(model, obj)
     print(test_obj)
-    test_obj.plot(True)
+    test_obj.plot()

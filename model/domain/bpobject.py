@@ -11,11 +11,17 @@ import os
 from utils import propertiesutils as pu
 
 def generate_label(digtal_label, min, max, dest_dim):
-    step = (max - min) / dest_dim
+    assert dest_dim > 2, Exception("wrong dim")
+    step = (max - min) / (dest_dim - 2)
     dest_lst = [0 for _ in range(dest_dim)]
-    idx = int((digtal_label - min) // step)
-    assert idx >= 0 and idx < dest_dim, Exception("wrong digtal")
-    dest_lst[idx] = 1
+    if digtal_label < min:
+        dest_lst[0] = 1
+    elif digtal_label > max:
+        dest_lst[dest_dim - 1] = 1
+    else:
+        idx = int((digtal_label - min) // step) + 1
+        assert idx >= 0 and idx < dest_dim, Exception("wrong digtal")
+        dest_lst[idx] = 1
     return dest_lst
 
 class data_obj:
