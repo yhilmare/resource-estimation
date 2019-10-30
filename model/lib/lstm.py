@@ -128,6 +128,6 @@ if __name__ == "__main__":
                        keep_prob=0.8, l_rate=0.005, max_step=10000,
                        save_path=model_path, batch_size=256)
     model.train()
-    # pre, acc = model.test()
-    # print(pre.shape)
+    pre, acc = model.test()
+    print(pre.shape)
 

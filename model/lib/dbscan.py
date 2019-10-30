@@ -18,7 +18,7 @@ class DBSCAN_model:
 
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
-    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA])
+    obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA], one_hot=False)
     model = DBSCAN_model(0.3, 20, obj)
     model.clustering()
     labels = model.labels

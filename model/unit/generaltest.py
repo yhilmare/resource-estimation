@@ -59,7 +59,8 @@ def pca_plot(filepath):
         new_y = pca.fit_transform(y)
         fig = plt.figure("test")
         ax = Axes3D(fig)
-        ax.plot(new_y[:, 0], new_y[:, 1], new_y[:, 2], '.')
+        # ax = fig.add_subplot(111)
+        ax.plot(new_y[:, 0], new_y[:, 1], new_y[:, 2],'.')
         plt.show()
         print(pca.explained_variance_ratio_)
     except Exception as e:
@@ -70,5 +71,5 @@ def pca_plot(filepath):
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     file_path = reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA]
-    # pca_plot(file_path)
-    plot_data(file_path)
+    pca_plot(file_path)
+    # plot_data(file_path)
