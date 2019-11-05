@@ -20,7 +20,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <string>
-#include "./lib/pg_lib/pg_prepared_statement.h"
+#include <pg_lib/pg_prepared_statement.h>
 
 const parameter_type type0[] = {int_type, int_type, int_type};
 const parameter_type type1[] = {int_type, int_type};

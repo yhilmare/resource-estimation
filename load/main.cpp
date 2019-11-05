@@ -10,16 +10,16 @@
 #include <pthread.h>
 #include "load/driver.h"
 #include "global_define.h"
-#include "lib/tools/date.h"
+#include <tools/date.h>
 #include "load/data_load.h"
 #include "./tpcc/sequence.h"
-#include "lib/tools/global_tools.h"
-#include "lib/pg_lib/pg_statement.h"
-#include "lib/pg_lib/pg_resultset.h"
-#include "lib/pg_lib/pg_connection.h"
+#include <tools/global_tools.h>
+#include <pg_lib/pg_statement.h>
+#include <pg_lib/pg_resultset.h>
+#include <pg_lib/pg_connection.h>
 #include "./tpcc/container/transaction_obj.h"
-#include "lib/pg_lib/pg_prepared_statement.h"
-#include "lib/pg_lib/exception/conn_info_nullpointer_exception.h"
+#include <pg_lib/pg_prepared_statement.h>
+#include <pg_lib/exception/conn_info_nullpointer_exception.h>
 
 //void regex_test(){
 //    using namespace std;
@@ -107,7 +107,7 @@ void *thread_main(void *param){
     seq_init(10, 10, 1, 1, 1);
 
     pg_connection con(user.c_str(), password.c_str(),
-            host.c_str(), database.c_str(), port.c_str());
+                      host.c_str(), database.c_str(), port.c_str());
     vector<pg_prepared_statement> val;
     for (int i = 0; i < sizeof(SQL_STRING) / sizeof(string); i ++){
         string sql = SQL_STRING[i];

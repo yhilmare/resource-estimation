@@ -5,11 +5,11 @@
 #include <cstring>
 #include <vector>
 #include "../global_define.h"
-#include "../lib/pg_lib/pg_resultset.h"
+#include <pg_lib/pg_resultset.h>
 #include "./container/transaction_obj.h"
-#include "../lib/pg_lib/pg_connection.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
-#include "../lib/tools/global_tools.h"
+#include <pg_lib/pg_connection.h>
+#include <pg_lib/pg_prepared_statement.h>
+#include <tools/global_tools.h>
 
 #define pick_dist_info(ol_dist_info,ol_supply_w_id) \
 switch(ol_supply_w_id) { \

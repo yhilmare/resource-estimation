@@ -10,9 +10,9 @@
 #include <unistd.h>
 #include <unordered_map>
 #include "../global_define.h"
-#include "../lib/tools/global_tools.h"
-#include "../lib/pg_lib/pg_connection.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
+#include <tools/global_tools.h>
+#include <pg_lib/pg_connection.h>
+#include <pg_lib/pg_prepared_statement.h>
 
 namespace RANDOM_GEN {
     std::default_random_engine e;

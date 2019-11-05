@@ -5,11 +5,11 @@
 #include <cstring>
 #include <random>
 #include "../global_define.h"
-#include "../lib/pg_lib/pg_resultset.h"
-#include "../lib/pg_lib/pg_connection.h"
+#include <pg_lib/pg_resultset.h>
+#include <pg_lib/pg_connection.h>
 #include "./container/transaction_obj.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
-#include "../lib/tools/global_tools.h"
+#include <pg_lib/pg_prepared_statement.h>
+#include <tools/global_tools.h>
 
 //transaction_item(lock_type type, std::string table_name,
 //        int line, clock_t time): mode(type),

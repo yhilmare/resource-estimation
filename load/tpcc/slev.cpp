@@ -5,11 +5,11 @@
 #include <cstring>
 #include <random>
 #include "../global_define.h"
-#include "../lib/pg_lib/pg_resultset.h"
-#include "../lib/pg_lib/pg_connection.h"
+#include <pg_lib/pg_resultset.h>
+#include <pg_lib/pg_connection.h>
 #include "./container/transaction_obj.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
-#include "../lib/tools/global_tools.h"
+#include <pg_lib/pg_prepared_statement.h>
+#include <tools/global_tools.h>
 
 int slev(int w_id_arg, int d_id_arg,	int level_arg,
         pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id) {

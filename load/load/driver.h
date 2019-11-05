@@ -7,8 +7,8 @@
 
 #include <vector>
 #include "../global_define.h"
-#include "../lib/pg_lib/pg_connection.h"
-#include "../lib/pg_lib/pg_prepared_statement.h"
+#include <pg_lib/pg_connection.h>
+#include <pg_lib/pg_prepared_statement.h>
 
 
 int driver(pg_connection &,
