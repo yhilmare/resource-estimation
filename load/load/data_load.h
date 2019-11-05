@@ -20,12 +20,4 @@ namespace RANDOM_GEN {
     int NURand (unsigned A, unsigned x, unsigned y);
 }
 
-void load_warehouse(std::unordered_map<std::string, std::string> &config, int max_num=1000);
-
-void load_item(std::unordered_map<std::string, std::string> &);
-
-void generate_warehouse(int max_num=1000);
-
-void generate_item();
-
 #endif //POSTGRESQL_DATA_LOAD_H

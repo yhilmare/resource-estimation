@@ -1,25 +1,12 @@
-#include <regex>
-#include <vector>
-#include <random>
-#include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include <cstring>
 #include <iostream>
-#include <exception>
 #include <pthread.h>
 #include "load/driver.h"
 #include "global_define.h"
 #include <tools/date.h>
-#include "load/data_load.h"
 #include "./tpcc/sequence.h"
 #include <tools/global_tools.h>
-#include <pg_lib/pg_statement.h>
-#include <pg_lib/pg_resultset.h>
-#include <pg_lib/pg_connection.h>
-#include "./tpcc/container/transaction_obj.h"
-#include <pg_lib/pg_prepared_statement.h>
-#include <pg_lib/exception/conn_info_nullpointer_exception.h>
 
 //void regex_test(){
 //    using namespace std;
@@ -46,17 +33,6 @@
 
 int num_ware = 10;
 void *thread_main(void *);
-
-void load_data(){
-    generate_item();
-    generate_warehouse(num_ware);
-//    char buffer[1000];
-//    getcwd(buffer, 1000);
-//    unordered_map<string, string>
-//            map = parse_properties_file(string(buffer) + "/config/pg_config.properties");
-//    load_item(map);
-//    load_warehouse(map, num_ware);
-}
 
 int main(int argn, char *argv[]) {
     using namespace std;
