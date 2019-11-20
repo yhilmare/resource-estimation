@@ -42,6 +42,7 @@ void shuffle() {
         seq[rnd + i] = seq[i];
         seq[i] = tmp;
     }
+
 }
 
 void seq_init(int n, int p, int o, int d, int s) {
@@ -58,18 +59,13 @@ void seq_init(int n, int p, int o, int d, int s) {
 
 int seq_get() {
     int retval;
-
     pthread_mutex_lock(&mutex);
-
     if(next_num >= total){
         shuffle();
         next_num = 0;
     }
-
     retval = seq[next_num];
     ++next_num;
-
     pthread_mutex_unlock(&mutex);
-
     return retval;
 }

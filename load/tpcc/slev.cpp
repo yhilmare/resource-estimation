@@ -11,7 +11,7 @@
 #include <pg_lib/pg_prepared_statement.h>
 #include <tools/global_tools.h>
 
-int slev(int w_id_arg, int d_id_arg,	int level_arg,
+int slev(int w_id_arg, int d_id_arg, int level_arg,
         pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id) {
 
     pthread_t t = pthread_self();

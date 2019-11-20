@@ -7,11 +7,12 @@
 #include <tools/date.h>
 #include "./tpcc/sequence.h"
 #include <tools/global_tools.h>
+#include <unordered_map>
 
 //void regex_test(){
 //    using namespace std;
 //    regex pattern = regex(R"pattern(\w+(@)\w+\.com)pattern");
-//    string msg = "yh_swjtu@163.com是我一个人1193830957@qq.com";
+//    string msg = "是我一个人@qq.com";
 //    smatch match;
 //    cout << regex_match(msg, match, pattern) << endl;
 //    smatch search;
@@ -50,24 +51,27 @@ int main(int argn, char *argv[]) {
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
-    int thread_num = 10;
+    int thread_num = 1;
     thread_arg arg(config, thread_num, file_name);
-
-//    for (int i = 0; i < thread_num - 1; i ++){
-//        pthread_t t1;
-//        pthread_create(&t1, NULL, thread_main, (void *) &arg);
-////        pthread_join(t1, NULL);
-//    }
-    thread_main((void *)&arg);
+    pthread_t ts[thread_num];
+    for (int i = 0; i < thread_num; i ++){
+        pthread_t t1;
+        pthread_create(&t1, NULL, thread_main, (void *) &arg);
+        ts[i] = t1;
+    }
+    for(int i = 0; i < thread_num; i ++){
+        pthread_join(ts[i], NULL);
+    }
     return 0;
 }
+
 void *thread_main(void *param){
     using namespace std;
 
     pthread_t t = pthread_self();
-    std::clog << "This is Thread: [" << t << "]@"
-              << (void *)&t << ", function [thread_main]@"
-              << (void *)thread_main << std::endl;
+//    std::clog << "This is Thread: [" << t << "]@"
+//              << (void *)&t << ", function [thread_main]@"
+//              << (void *)thread_main << std::endl;
 
     thread_arg *arg = (thread_arg *)param;
     unordered_map<string, string> config = arg->config;
@@ -80,7 +84,8 @@ void *thread_main(void *param){
     string user = config["PG_USER"];
     string port = config["PG_PORT"];
 
-    seq_init(10, 10, 1, 1, 1);
+    //seq_init(int n, int p, int o, int d, int s)
+    seq_init(1, 25, 15, 1, 15);
 
     pg_connection con(user.c_str(), password.c_str(),
                       host.c_str(), database.c_str(), port.c_str());

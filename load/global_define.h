@@ -10,7 +10,7 @@
 #define CUSTOMER_PER_DISTRICT 548
 #define ORDER_PER_DISTRICT 4200
 
-#define EXECUTE_TIME 3600000
+#define EXECUTE_TIME 20
 
 /* definitions for new order transaction */
 #define MAX_NUM_ITEMS 15

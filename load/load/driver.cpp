@@ -5,6 +5,7 @@
 #include "driver.h"
 #include <time.h>
 #include <iostream>
+#include <sys/time.h>
 #include <random>
 #include "data_load.h"
 #include "../tpcc/sequence.h"
@@ -52,10 +53,15 @@ int do_slev (pg_connection &con, file_obj *obj,
 
 int driver(pg_connection &con,
         std::vector<pg_prepared_statement> &val, int thread_num, file_obj *obj){
-    long total_time = 3600000000;
-    clock_t start = clock();
+    long total_time = EXECUTE_TIME;
+    timeval tv;
+    gettimeofday(&tv, NULL);
+    long start = tv.tv_sec;
     int count = 0;
-    while((clock() - start) <= total_time){
+    timeval tv1;
+    gettimeofday(&tv1, NULL);
+    clock_t tran_start = clock();
+    while((tv1.tv_sec - start) <= total_time){
         switch(seq_get()){
             case 0:
                 do_neword(con, obj, val, thread_num, count);
@@ -76,7 +82,12 @@ int driver(pg_connection &con,
                 std::cerr << "Error - Unknown sequence." << std::endl;
         }
         count ++;
+        gettimeofday(&tv1, NULL);
     }
+    std::cout << "Total time is " << tv1.tv_sec - tv.tv_sec
+              << "s, total count is " << count << ", tps is "
+              << ((double)count / ((clock() - tran_start) / 1000000.0))
+              << std::endl;
     return 0;
 }
 
@@ -95,9 +106,9 @@ int do_neword (pg_connection &con, file_obj *obj,
         std::vector<pg_prepared_statement> &val, int t_num, int t_id) {
 
     pthread_t t = pthread_self();
-    std::clog << "This is Thread: [" << t << "]@"
-              << (void *)&t << ", function [do_neword]@"
-              << (void *)do_neword << std::endl;
+//    std::clog << "This is Thread: [" << t << "]@"
+//              << (void *)&t << ", function [do_neword]@"
+//              << (void *)do_neword << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
@@ -159,9 +170,9 @@ int do_payment(pg_connection &con, file_obj *obj,
         std::vector<pg_prepared_statement> &val, int t_num, int t_id) {
 
     pthread_t t = pthread_self();
-    std::clog << "This is Thread: [" << t << "]@"
-              << (void *)&t << ", function [do_payment]@"
-              << (void *)do_payment << std::endl;
+//    std::clog << "This is Thread: [" << t << "]@"
+//              << (void *)&t << ", function [do_payment]@"
+//              << (void *)do_payment << std::endl;
     extern std::default_random_engine e;
     int c_num;
     int num_conn = t_num;
@@ -213,9 +224,9 @@ int do_ordstat(pg_connection &con, file_obj *obj,
         std::vector<pg_prepared_statement> &val, int t_num, int t_id) {
 
     pthread_t t = pthread_self();
-    std::clog << "This is Thread: [" << t << "]@"
-              << (void *)&t << ", function [do_ordstat]@"
-              << (void *)do_ordstat << std::endl;
+//    std::clog << "This is Thread: [" << t << "]@"
+//              << (void *)&t << ", function [do_ordstat]@"
+//              << (void *)do_ordstat << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
@@ -256,9 +267,9 @@ int do_delivery(pg_connection &con, file_obj *obj,
         std::vector<pg_prepared_statement> &val, int t_num, int t_id) {
 
     pthread_t t = pthread_self();
-    std::clog << "This is Thread: [" << t << "]@"
-              << (void *)&t << ", function [do_delivery]@"
-              << (void *)do_delivery << std::endl;
+//    std::clog << "This is Thread: [" << t << "]@"
+//              << (void *)&t << ", function [do_delivery]@"
+//              << (void *)do_delivery << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
@@ -291,9 +302,9 @@ int do_slev (pg_connection &con, file_obj *obj,
              std::vector<pg_prepared_statement> &val, int t_num, int t_id) {
 
     pthread_t t = pthread_self();
-    std::clog << "This is Thread: [" << t << "]@"
-              << (void *)&t << ", function [do_slev]@"
-              << (void *)do_slev << std::endl;
+//    std::clog << "This is Thread: [" << t << "]@"
+//              << (void *)&t << ", function [do_slev]@"
+//              << (void *)do_slev << std::endl;
     extern std::default_random_engine e;
     int num_conn = t_num;
     int c_num;
