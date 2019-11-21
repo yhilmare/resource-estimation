@@ -4,36 +4,26 @@
 #include <tools/global_tools.h>
 #include <pg_lib/pg_connection.h>
 #include <string>
+#include "util/databassutil.h"
+#include "domain/pg_buffer.h"
+#include <vector>
+#include "util/bufferutil.h"
 
 int main() {
 
     using namespace std;
-
-    char buffer[1000];
-    getcwd(buffer, 1000);
-    unordered_map<string, string> config =
-            parse_properties_file(string(buffer) + "/config/pg_config.properties");
-
-    string host = config["PG_HOST"];
-    string password = config["PG_PASSWORD"];
-    string timout = config["PG_TIMEOUT"];
-    string database = config["PG_DATABASE"];
-    string user = config["PG_USER"];
-    string port = config["PG_PORT"];
-
-    pg_connection con(user.c_str(), password.c_str(),
-                      host.c_str(), database.c_str(), port.c_str());
-    string sql = "select ctid,* from warehouse";
-    pg_statement st = con.create_statement();
-    pg_resultset resultset = st.execute_query(sql);
-    int count = resultset.get_column_count();
-    while(resultset.has_next()){
-        for(int i = 0; i < count; i ++){
-            cout << resultset.get_string(i) << " ";
-        }
-        cout << endl;
+    pg_database database = databassutil::getDatabase("tpcc");
+    cout << database << endl;
+    vector<pg_buffer> val = bufferutil::getBuffers(database);
+    cout << val.size() << endl;
+    double total = .0;
+    for(vector<pg_buffer>::iterator iter = val.begin(); iter != val.end(); iter ++){
+        total += (*iter).usagecount;
     }
-    resultset.close();
-    con.close();
+    for(int i = 0; i < val.size(); i ++){
+        pg_buffer item = val[i];
+        val[i].usageratio = item.usagecount / total;
+    }
+    cout << val[156] << endl;
     return 0;
 }

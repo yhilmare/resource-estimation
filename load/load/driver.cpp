@@ -85,6 +85,7 @@ int driver(pg_connection &con,
         gettimeofday(&tv1, NULL);
     }
     std::cout << "Total time is " << tv1.tv_sec - tv.tv_sec
+              << "s, execuate time is " << (clock() - tran_start) / 1000000.0
               << "s, total count is " << count << ", tps is "
               << ((double)count / ((clock() - tran_start) / 1000000.0))
               << std::endl;
