@@ -19,7 +19,7 @@ pg_database::pg_database(std::string datid, std::string datname,
 }
 
 ostream &operator<<(ostream &out, const pg_database &instance){
-    out << instance.datid << ": " << instance.datname;
+    out << "[" << instance.datid << ": " << instance.datname << "]@" << (void *)&instance;
     return out;
 }
 

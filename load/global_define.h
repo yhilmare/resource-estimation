@@ -8,7 +8,6 @@
 #define STOCK_PER_WAREHOUSE 156
 #define DISTRICT_PER_WAREHOUSE 356
 #define CUSTOMER_PER_DISTRICT 548
-#define ORDER_PER_DISTRICT 4200
 
 #define EXECUTE_TIME 20
 
@@ -21,6 +20,7 @@
 #include <unordered_map>
 #include <string>
 #include <pg_lib/pg_prepared_statement.h>
+#include <sys/time.h>
 
 const parameter_type type0[] = {int_type, int_type, int_type};
 const parameter_type type1[] = {int_type, int_type};
@@ -107,14 +107,13 @@ const std::string SQL_STRING[] = {
 struct file_obj{
     std::ofstream out;
     pthread_mutex_t mutex;
-    clock_t start;
-    file_obj(std::string file_path){
+    timeval start;
+    file_obj(std::string file_path, timeval tmp):start(tmp){
         out.open(file_path.c_str(), std::ios_base::app | std::ios_base::out);
         if (!out.is_open()){
             exit(EXIT_FAILURE);
         }
         mutex = PTHREAD_MUTEX_INITIALIZER;
-        start = clock();
     }
     ~file_obj(){
         out.close();
@@ -126,8 +125,8 @@ struct thread_arg{
     int thread_num;
     file_obj *obj;
     thread_arg(std::unordered_map<std::string, std::string> map, int num,
-               std::string file_path):config(map), thread_num(num){
-        obj = new file_obj(file_path.c_str());
+               std::string file_path, timeval start):config(map), thread_num(num){
+        obj = new file_obj(file_path.c_str(), start);
     }
     ~thread_arg(){
         delete obj;

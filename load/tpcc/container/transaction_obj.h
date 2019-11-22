@@ -19,11 +19,11 @@ struct transaction_item{
     lock_type mode;
     std::string table;
     int row;
-    clock_t t;
-    clock_t execute_t;
+    long t;
+    long execute_t;
     transaction_item *pNext;
     transaction_item(lock_type type, std::string table_name,
-            int line, clock_t time, std::string name, clock_t t1): mode(type),
+            int line, long time, std::string name, long t1): mode(type),
             table(table_name), row(line), t(time), tran_name(name), execute_t(t1){
         pNext = NULL;
     }

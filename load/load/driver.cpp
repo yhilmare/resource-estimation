@@ -51,17 +51,19 @@ int do_delivery(pg_connection &con, file_obj *obj,
 int do_slev (pg_connection &con, file_obj *obj,
              std::vector<pg_prepared_statement> &val, int t_num, int t_id);
 
+pthread_mutex_t driver_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+int total_count = 0;
+
+int count_time = 0;
+
 int driver(pg_connection &con,
         std::vector<pg_prepared_statement> &val, int thread_num, file_obj *obj){
     long total_time = EXECUTE_TIME;
-    timeval tv;
-    gettimeofday(&tv, NULL);
-    long start = tv.tv_sec;
     int count = 0;
     timeval tv1;
     gettimeofday(&tv1, NULL);
-    clock_t tran_start = clock();
-    while((tv1.tv_sec - start) <= total_time){
+    while((tv1.tv_sec - obj->start.tv_sec) <= total_time){
         switch(seq_get()){
             case 0:
                 do_neword(con, obj, val, thread_num, count);
@@ -84,11 +86,17 @@ int driver(pg_connection &con,
         count ++;
         gettimeofday(&tv1, NULL);
     }
-    std::cout << "Total time is " << tv1.tv_sec - tv.tv_sec
-              << "s, execuate time is " << (clock() - tran_start) / 1000000.0
-              << "s, total count is " << count << ", tps is "
-              << ((double)count / ((clock() - tran_start) / 1000000.0))
+    pthread_t t = pthread_self();
+    PG::Date date;
+    std::clog << date << " [INFO] This is Thread: [" << t << "]@"
+              << (void *)&t << ", execution time is " << tv1.tv_sec - obj->start.tv_sec
+              << "s, running times is " << count << ", tps is "
+              << ((double)count / (tv1.tv_sec - obj->start.tv_sec))
               << std::endl;
+    pthread_mutex_lock(&driver_mutex);
+    total_count += count;
+    count_time = (count_time > (tv1.tv_sec - obj->start.tv_sec) ? count_time : (tv1.tv_sec - obj->start.tv_sec));
+    pthread_mutex_unlock(&driver_mutex);
     return 0;
 }
 

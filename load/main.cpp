@@ -33,6 +33,7 @@
 //}
 
 int num_ware = 10;
+
 void *thread_main(void *);
 
 int main(int argn, char *argv[]) {
@@ -40,28 +41,30 @@ int main(int argn, char *argv[]) {
 
     timeval tv;
     gettimeofday(&tv, NULL);
-    string time = parseInt(tv.tv_usec);
-    for(int i = 0; i < 6 - time.length(); i ++){
-        time = "0" + time;
-    }
-    string final = parseInt(tv.tv_sec) + time;
-
+    string final = parseInt(tv.tv_sec * 1000000 + tv.tv_usec);
     char buffer[1000];
     getcwd(buffer, 1000);
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
-    int thread_num = 1;
-    thread_arg arg(config, thread_num, file_name);
+    int thread_num = 5;
+    thread_arg arg(config, thread_num, file_name, tv);
     pthread_t ts[thread_num];
     for (int i = 0; i < thread_num; i ++){
         pthread_t t1;
         pthread_create(&t1, NULL, thread_main, (void *) &arg);
         ts[i] = t1;
     }
+//    thread_main(&arg);
     for(int i = 0; i < thread_num; i ++){
         pthread_join(ts[i], NULL);
     }
+    extern int total_count, count_time;
+    PG::Date date;
+    std::clog << date << " [INFO] Total execution time is " << count_time
+              << "s, total count is " << total_count << ", tps is "
+              << ((double)total_count / count_time)
+              << std::endl;
     return 0;
 }
 
@@ -85,7 +88,7 @@ void *thread_main(void *param){
     string port = config["PG_PORT"];
 
     //seq_init(int n, int p, int o, int d, int s)
-    seq_init(1, 25, 15, 1, 15);
+    seq_init(10, 25, 15, 10, 15);
 
     pg_connection con(user.c_str(), password.c_str(),
                       host.c_str(), database.c_str(), port.c_str());

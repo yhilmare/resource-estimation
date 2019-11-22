@@ -10,6 +10,7 @@
 #include "./container/transaction_obj.h"
 #include <pg_lib/pg_prepared_statement.h>
 #include <tools/global_tools.h>
+#include <sys/time.h>
 
 int slev(int w_id_arg, int d_id_arg, int level_arg,
         pg_connection &con, std::vector<pg_prepared_statement> &val, file_obj *obj, int t_id) {
@@ -34,14 +35,18 @@ int slev(int w_id_arg, int d_id_arg, int level_arg,
         pg_prepared_statement st = val[32];
         st.set_int(0, d_id);
         st.set_int(1, w_id);
-        clock_t start = clock();
+        timeval start;
+        gettimeofday(&start, NULL);
         pg_resultset res = st.execute_query();
-        clock_t end = clock();
+        timeval end;
+        gettimeofday(&end, NULL);
+        long interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        long series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         while(res.has_next()){
             d_next_o_id = res.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "district",
-                res.get_tuples_count(), start - obj->start, tran_name, end - start));
+                res.get_tuples_count(), series, tran_name, interval));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st]@"
@@ -57,14 +62,16 @@ int slev(int w_id_arg, int d_id_arg, int level_arg,
         st1.set_int(1, d_id);
         st1.set_int(2, d_next_o_id);
         st1.set_int(3, d_next_o_id);
-        start = clock();
+        gettimeofday(&start, NULL);
         pg_resultset res1 = st1.execute_query();
-        end = clock();
+        gettimeofday(&end, NULL);
+        interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         while(res1.has_next()){
             ol_i_id = res1.get_int(0);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                res1.get_tuples_count(), start - obj->start, tran_name, end - start));
+                res1.get_tuples_count(), series, tran_name, interval));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st1]@"
@@ -78,11 +85,13 @@ int slev(int w_id_arg, int d_id_arg, int level_arg,
         st2.set_int(0, w_id);
         st2.set_int(1, ol_i_id);
         st2.set_int(2, level);
-        start = clock();
+        gettimeofday(&start, NULL);
         pg_resultset res2 = st2.execute_query();
-        end = clock();
+        gettimeofday(&end, NULL);
+        interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         tran_obj.add_item(transaction_item(SHARED_LOCK, "stock",
-                res2.get_tuples_count(), start - obj->start, tran_name, end - start));
+                res2.get_tuples_count(), series, tran_name, interval));
 //        std::clog << " ----> Thread: [" << t << "]@"
 //                  << (void *)&t << ", function [slev]@" << (void *)slev
 //                  << ", pg_prepared_statement [st2]@"

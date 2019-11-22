@@ -10,6 +10,7 @@
 #include <pg_lib/pg_connection.h>
 #include <pg_lib/pg_prepared_statement.h>
 #include <tools/global_tools.h>
+#include <sys/time.h>
 
 #define pick_dist_info(ol_dist_info,ol_supply_w_id) \
 switch(ol_supply_w_id) { \
@@ -95,9 +96,13 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st.set_int(0, w_id);
         st.set_int(1, d_id);
         st.set_int(2, c_id);
-        clock_t start = clock();
+        timeval start;
+        gettimeofday(&start, NULL);
         pg_resultset res = st.execute_query();
-        clock_t end = clock();
+        timeval end;
+        gettimeofday(&end, NULL);
+        long interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        long series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         while(res.has_next()){
             c_discount = res.get_float(0);
             strcpy(c_last, res.get_value(1));
@@ -105,9 +110,9 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             w_tax = res.get_float(3);
         }
         tran_obj.add_item(transaction_item(SHARED_LOCK, "customer",
-                res.get_tuples_count(), start - obj->start, tran_name, end - start));
+                res.get_tuples_count(), series, tran_name, interval));
         tran_obj.add_item(transaction_item(SHARED_LOCK, "warehouse",
-                res.get_tuples_count(), start - obj->start, tran_name, end - start));
+                res.get_tuples_count(), series, tran_name, interval));
         /*
          * "SELECT d_next_o_id, d_tax FROM district WHERE d_id = $1 AND d_w_id = $2 FOR UPDATE",
          * const parameter_type type1[] = {int_type, int_type};
@@ -115,15 +120,17 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         pg_prepared_statement st1 = val[1];
         st1.set_int(0, d_id);
         st1.set_int(1, w_id);
-        start = clock();
+        gettimeofday(&start, NULL);
         pg_resultset res1 = st1.execute_query();
-        end = clock();
+        gettimeofday(&end, NULL);
         while(res1.has_next()){
             d_next_o_id = res1.get_int(0);
             d_tax = res1.get_float(1);
         }
+        interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "district",
-                res1.get_tuples_count(), start - obj->start, tran_name, end - start));
+                res1.get_tuples_count(), series, tran_name, interval));
         /*
          * const parameter_type type2[] = {int_type, int_type, int_type};
          * "UPDATE district SET d_next_o_id = $1 + 1 WHERE d_id = $2 AND d_w_id = $3",
@@ -132,11 +139,13 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st2.set_int(0, d_next_o_id);
         st2.set_int(1, d_id);
         st2.set_int(2, w_id);
-        start = clock();
+        gettimeofday(&start, NULL);
         int row_count = st2.execute_update();
-        end = clock();
+        gettimeofday(&end, NULL);
+        interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "district",
-                row_count, start - obj->start, tran_name, end - start));
+                row_count, series, tran_name, interval));
         o_id = d_next_o_id;
         /*
          * "INSERT INTO orders (o_id, o_d_id, o_w_id, o_c_id, o_entry_d, o_ol_cnt, o_all_local) VALUES($1, $2, $3, $4, $5, $6, $7)",
@@ -151,11 +160,13 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st3.set_date(4, date);
         st3.set_int(5, o_ol_cnt);
         st3.set_int(6, o_all_local);
-        start = clock();
+        gettimeofday(&start, NULL);
         row_count = st3.execute_update();
-        end = clock();
+        gettimeofday(&end, NULL);
+        interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "orders",
-                row_count, start - obj->start, tran_name, end - start));
+                row_count, series, tran_name, interval));
         /*
          * const parameter_type type4[] = {int_type, int_type, int_type};
          * "INSERT INTO new_orders (no_o_id, no_d_id, no_w_id) VALUES ($1,$2,$3)",
@@ -164,11 +175,13 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         st4.set_int(0, o_id);
         st4.set_int(1, d_id);
         st4.set_int(2, w_id);
-        start = clock();
+        gettimeofday(&start, NULL);
         row_count = st4.execute_update();
-        end = clock();
+        gettimeofday(&end, NULL);
+        interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+        series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
         tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "new_orders",
-                row_count, start - obj->start, tran_name, end - start));
+                row_count, series, tran_name, interval));
         for (i = 0; i < o_ol_cnt; i++) {
             ol_num_seq[i] = i;
         }
@@ -198,16 +211,18 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
              * */
             pg_prepared_statement st5 = val[5];
             st5.set_int(0, ol_i_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             pg_resultset res2 = st5.execute_query();
-            end = clock();
+            gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             while(res2.has_next()){
                 i_price = res2.get_float(0);
                 strcpy(i_name, res2.get_value(1));
                 strcpy(i_data, res2.get_value(2));
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "item",
-                    res2.get_tuples_count(), start - obj->start, tran_name, end - start));
+                    res2.get_tuples_count(), series, tran_name, interval));
             price[ol_num_seq[ol_number - 1]] = i_price;
             strncpy(iname[ol_num_seq[ol_number - 1]], i_name, 25);
             /*
@@ -219,9 +234,11 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             pg_prepared_statement st6 = val[6];
             st6.set_int(0, ol_i_id);
             st6.set_int(1, ol_supply_w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             pg_resultset res3 = st6.execute_query();
-            end = clock();
+            gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             while(res3.has_next()){
                 s_quantity = res3.get_int(0);
                 strcpy(s_data, res3.get_value(1));
@@ -237,7 +254,7 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
                 strcpy(s_dist_10, res3.get_value(11));
             }
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "stock",
-                    res3.get_tuples_count(), start - obj->start, tran_name, end - start));
+                    res3.get_tuples_count(), series, tran_name, interval));
             pick_dist_info(ol_dist_info, d_id);
             stock[ol_num_seq[ol_number - 1]] = s_quantity;
 
@@ -261,11 +278,13 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st7.set_int(0, s_quantity);
             st7.set_int(1, ol_i_id);
             st7.set_int(2, ol_supply_w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             row_count = st7.execute_update();
-            end = clock();
+            gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "stock",
-                    row_count, start - obj->start, tran_name, end - start));
+                    row_count, series, tran_name, interval));
 
             ol_amount = ol_quantity * i_price * (1 + w_tax + d_tax) * (1 - c_discount);
             amt[ol_num_seq[ol_number - 1]] = ol_amount;
@@ -285,11 +304,11 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             st8.set_int(6, ol_quantity);
             st8.set_float(7, ol_amount);
             st8.set_value(8, ol_dist_info);
-            start = clock();
+            gettimeofday(&start, NULL);
             row_count = st8.execute_update();
-            end = clock();
+            gettimeofday(&end, NULL);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "order_line",
-                    row_count, start - obj->start, tran_name, end - start));
+                    row_count, series, tran_name, interval));
         }
         con.commit();
         pthread_mutex_lock(&obj->mutex);

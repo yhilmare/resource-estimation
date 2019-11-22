@@ -10,6 +10,8 @@
 #include "./container/transaction_obj.h"
 #include <pg_lib/pg_prepared_statement.h>
 #include <tools/global_tools.h>
+#include <sys/time.h>
+
 
 //transaction_item(lock_type type, std::string table_name,
 //        int line, clock_t time): mode(type),
@@ -46,14 +48,18 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             pg_prepared_statement st = val[25];
             st.set_int(0, d_id);
             st.set_int(1, w_id);
-            clock_t start = clock();
+            timeval start;
+            gettimeofday(&start, NULL);
             pg_resultset res = st.execute_query();
-            clock_t end = clock();
+            timeval end;
+            gettimeofday(&end, NULL);
             while(res.has_next()){
                 no_o_id = res.get_int(0);
             }
+            long interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            long series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(SHARED_LOCK, "new_orders",
-                    res.get_tuples_count(), start - obj->start, tran_name, end - start));
+                    res.get_tuples_count(), series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st]@"
@@ -69,11 +75,13 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st1.set_int(0, no_o_id);
             st1.set_int(1, d_id);
             st1.set_int(2, w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             int row_count = st1.execute_update();
-            end = clock();
+            gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "new_orders",
-                    row_count, start - obj->start, tran_name, end - start));
+                    row_count, series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st1]@"
@@ -86,14 +94,16 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st2.set_int(0, no_o_id);
             st2.set_int(1, d_id);
             st2.set_int(2, w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             pg_resultset res1 = st2.execute_query();
-            end = clock();
+            gettimeofday(&end, NULL);
             while(res1.has_next()){
                 c_id = res1.get_int(0);
             }
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(SHARED_LOCK, "orders",
-                    res1.get_tuples_count(), start - obj->start, tran_name, end - start));
+                    res1.get_tuples_count(), series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st2]@"
@@ -107,11 +117,13 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st3.set_int(1, no_o_id);
             st3.set_int(2, d_id);
             st3.set_int(3, w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             row_count = st3.execute_update();
-            end = clock();
+            gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "orders",
-                    row_count, start - obj->start, tran_name, end - start));
+                    row_count, series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st3]@"
@@ -126,11 +138,13 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st4.set_int(1, no_o_id);
             st4.set_int(2, d_id);
             st4.set_int(3, w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             row_count = st4.execute_update();
-            end = clock();
+            gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "order_line",
-                    row_count, start - obj->start, tran_name, end - start));
+                    row_count, series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st4]@"
@@ -143,14 +157,16 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st5.set_int(0, no_o_id);
             st5.set_int(1, d_id);
             st5.set_int(2, w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             pg_resultset res2 = st5.execute_query();
-            end = clock();
+            gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             while(res2.has_next()){
                 ol_total = res2.get_float(0);
             }
             tran_obj.add_item(transaction_item(SHARED_LOCK, "order_line",
-                    res2.get_tuples_count(), start - obj->start, tran_name, end - start));
+                    res2.get_tuples_count(), series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st5]@"
@@ -165,11 +181,11 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             st6.set_int(1, c_id);
             st6.set_int(2, d_id);
             st6.set_int(3, w_id);
-            start = clock();
+            gettimeofday(&start, NULL);
             row_count = st6.execute_update();
-            end = clock();
+            gettimeofday(&end, NULL);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "customer",
-                    row_count, start - obj->start, tran_name, end - start));
+                    row_count, series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
 //                      << (void *)&t << ", function [delivery]@" << (void *)delivery
 //                      << ", pg_prepared_statement [st6]@"

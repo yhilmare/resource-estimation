@@ -26,11 +26,11 @@ pg_buffer::pg_buffer(pg_resultset *resultset) {
 }
 
 ostream &operator<<(ostream &out, const pg_buffer &buffer){
-    out << buffer.bufferid << " " << buffer.relfilenode
+    out << "[" << buffer.bufferid << " " << buffer.relfilenode
         << " " << buffer.reltablespace << " "
         << buffer.reldatabase << " " << buffer.relforknumber
         << " " << buffer.relblocknumber << " " << buffer.isdirty
         << " " << buffer.usagecount << " " << buffer.pinning_backends
-        << " " << buffer.usageratio;
+        << " " << buffer.usageratio << "]@" << (int *)&buffer;
     return out;
 }
