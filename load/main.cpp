@@ -47,7 +47,7 @@ int main(int argn, char *argv[]) {
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
-    int thread_num = 5;
+    int thread_num = 1;
     thread_arg arg(config, thread_num, file_name, tv);
     pthread_t ts[thread_num];
     for (int i = 0; i < thread_num; i ++){
@@ -88,7 +88,7 @@ void *thread_main(void *param){
     string port = config["PG_PORT"];
 
     //seq_init(int n, int p, int o, int d, int s)
-    seq_init(10, 25, 15, 10, 15);
+    seq_init(1, 25, 15, 1, 15);
 
     pg_connection con(user.c_str(), password.c_str(),
                       host.c_str(), database.c_str(), port.c_str());
