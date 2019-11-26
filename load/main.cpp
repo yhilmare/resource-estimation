@@ -92,13 +92,13 @@ void *thread_main(void *param){
 
     pg_connection con(user.c_str(), password.c_str(),
                       host.c_str(), database.c_str(), port.c_str());
-    vector<pg_prepared_statement> val;
-    for (int i = 0; i < sizeof(SQL_STRING) / sizeof(string); i ++){
-        string sql = SQL_STRING[i];
-        const parameter_type *type = SQL_PARAMETER_TYPE[i];
-        pg_prepared_statement tmp_st = con.prepared_statement(sql, type);
-        val.push_back(tmp_st);
-    }
-    driver(con, val, thread_num, arg->obj);
+//    vector<pg_prepared_statement> val;
+//    for (int i = 0; i < sizeof(SQL_STRING) / sizeof(string); i ++){
+//        string sql = SQL_STRING[i];
+//        const parameter_type *type = SQL_PARAMETER_TYPE[i];
+//        pg_prepared_statement tmp_st = con.prepared_statement(sql, type);
+//        val.push_back(tmp_st);
+//    }
+    driver(con, thread_num, arg->obj);
     return param;
 }
