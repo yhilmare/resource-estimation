@@ -186,11 +186,11 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             ol_num_seq[i] = i;
         }
         for (i = 0; i < (o_ol_cnt - 1); i++) {
-            tmp = (STOCK_PER_WAREHOUSE + 1) * supware[ol_num_seq[i]] + itemid[ol_num_seq[i]];
+            tmp = (MAX_ITEMS + 1) * supware[ol_num_seq[i]] + itemid[ol_num_seq[i]];
             min_num = i;
             for ( j = i+1; j < o_ol_cnt; j++) {
-                if ( (STOCK_PER_WAREHOUSE + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]] < tmp ){
-                    tmp = (STOCK_PER_WAREHOUSE + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]];
+                if ( (MAX_ITEMS + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]] < tmp ){
+                    tmp = (MAX_ITEMS + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]];
                     min_num = j;
                 }
             }
@@ -476,11 +476,11 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
             ol_num_seq[i] = i;
         }
         for (i = 0; i < (o_ol_cnt - 1); i++) {
-            tmp = (STOCK_PER_WAREHOUSE + 1) * supware[ol_num_seq[i]] + itemid[ol_num_seq[i]];
+            tmp = (MAX_ITEMS + 1) * supware[ol_num_seq[i]] + itemid[ol_num_seq[i]];
             min_num = i;
             for ( j = i+1; j < o_ol_cnt; j++) {
-                if ( (STOCK_PER_WAREHOUSE + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]] < tmp ){
-                    tmp = (STOCK_PER_WAREHOUSE + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]];
+                if ( (MAX_ITEMS + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]] < tmp ){
+                    tmp = (MAX_ITEMS + 1) * supware[ol_num_seq[j]] + itemid[ol_num_seq[j]];
                     min_num = j;
                 }
             }
@@ -493,6 +493,7 @@ int neword(int w_id_arg, int d_id_arg, int c_id_arg,
         for (ol_number = 1; ol_number <= o_ol_cnt; ol_number++) {
             ol_supply_w_id = supware[ol_num_seq[ol_number - 1]];
             ol_i_id = itemid[ol_num_seq[ol_number - 1]];
+
             ol_quantity = qty[ol_num_seq[ol_number - 1]];
 
             /*

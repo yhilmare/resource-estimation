@@ -134,7 +134,7 @@ namespace RANDOM_GEN {
 
 void load_item(std::unordered_map<std::string, std::string> &config){
     using namespace std;
-    clog << "Loading Table: item, Max Item: " << STOCK_PER_WAREHOUSE << endl;
+    clog << "Loading Table: item, Max Item: " << MAX_ITEMS << endl;
     string host = config["PG_HOST"];
     string password = config["PG_PASSWORD"];
     string timout = config["PG_TIMEOUT"];
@@ -154,14 +154,14 @@ void load_item(std::unordered_map<std::string, std::string> &config){
         float i_price;
         char i_data[51];
         int idatasiz;
-        int orig[STOCK_PER_WAREHOUSE + 1];
+        int orig[MAX_ITEMS + 1];
         int pos;
-        std::uniform_int_distribution<int> d(0, STOCK_PER_WAREHOUSE);
+        std::uniform_int_distribution<int> d(0, MAX_ITEMS);
         extern std::default_random_engine e;
-        for (int i = 0; i < STOCK_PER_WAREHOUSE / 10; i++){
+        for (int i = 0; i < MAX_ITEMS / 10; i++){
             orig[i] = 0;
         }
-        for (int i = 0; i < STOCK_PER_WAREHOUSE / 10; i++) {
+        for (int i = 0; i < MAX_ITEMS / 10; i++) {
             do {
                 pos = d(e);
             } while (orig[pos]);
@@ -170,7 +170,7 @@ void load_item(std::unordered_map<std::string, std::string> &config){
         std::uniform_int_distribution<int> d1(1, 10000);
         std::uniform_int_distribution<int> d2(100, 10000);
 
-        for (i_id = 1; i_id <= STOCK_PER_WAREHOUSE; i_id++) {
+        for (i_id = 1; i_id <= MAX_ITEMS; i_id++) {
             i_im_id = d1(e);
             i_name[RANDOM_GEN::make_alpha_string(14, 24, i_name)] = 0;
             i_price = (d2(e)) / 100.0;
@@ -248,7 +248,7 @@ void load_warehouse(std::unordered_map<std::string, std::string> &config,
             st.set_float(7, d(e) / 100.0);
             st.set_float(8, 30000.0);
             st.execute_update();
-            load_stock(i, con, STOCK_PER_WAREHOUSE);
+            load_stock(i, con, MAX_ITEMS);
             load_district(i, con, DISTRICT_PER_WAREHOUSE);
         }
     }catch (exception &e){
@@ -356,7 +356,7 @@ void load_order(int w_id, int d_id, pg_connection &con, int ORD_PER_DIST){
         std::string n_o_sql = "insert into new_orders(no_o_id,no_d_id,no_w_id) values($1,$2,$3)";
         pg_prepared_statement n_o_st = con.prepared_statement(n_o_sql, n_o_types);
 
-        std::uniform_int_distribution<long> d4(1, STOCK_PER_WAREHOUSE);
+        std::uniform_int_distribution<long> d4(1, MAX_ITEMS);
         std::uniform_int_distribution<long> d5(10, 10000);
 
         parameter_type ol_types[] = {int_type, int_type, int_type, int_type,
@@ -663,7 +663,7 @@ void load_stock(int w_id,
 
 void generate_item(){
     using namespace std;
-    clog << "Generating Table: item, Max Item: " << STOCK_PER_WAREHOUSE << endl;
+    clog << "Generating Table: item, Max Item: " << MAX_ITEMS << endl;
     try{
         int i_id;
         int i_im_id;
@@ -671,14 +671,14 @@ void generate_item(){
         float i_price;
         char i_data[51];
         int idatasiz;
-        int orig[STOCK_PER_WAREHOUSE + 1];
+        int orig[MAX_ITEMS + 1];
         int pos;
-        std::uniform_int_distribution<int> d(0, STOCK_PER_WAREHOUSE);
+        std::uniform_int_distribution<int> d(0, MAX_ITEMS);
         extern std::default_random_engine e;
-        for (int i = 0; i < STOCK_PER_WAREHOUSE / 10; i++){
+        for (int i = 0; i < MAX_ITEMS / 10; i++){
             orig[i] = 0;
         }
-        for (int i = 0; i < STOCK_PER_WAREHOUSE / 10; i++) {
+        for (int i = 0; i < MAX_ITEMS / 10; i++) {
             do {
                 pos = d(e);
             } while (orig[pos]);
@@ -696,7 +696,7 @@ void generate_item(){
             return;
         }
 
-        for (i_id = 1; i_id <= STOCK_PER_WAREHOUSE; i_id++) {
+        for (i_id = 1; i_id <= MAX_ITEMS; i_id++) {
             i_im_id = d1(e);
             i_name[RANDOM_GEN::make_alpha_string(14, 24, i_name)] = 0;
             i_price = (d2(e)) / 100.0;
@@ -755,7 +755,7 @@ void generate_warehouse(int max_num){
                 << "|" << w_street_2 << "|" << w_city << "|"
                 << w_state << "|" << w_zip << "|" << d(e) / 100.0
                 << "|" << 30000.0 << endl;
-            generate_stock(i, STOCK_PER_WAREHOUSE);
+            generate_stock(i, MAX_ITEMS);
             generate_district(i, DISTRICT_PER_WAREHOUSE);
         }
         out.close();
@@ -850,7 +850,7 @@ void generate_order(int w_id, int d_id, int ORD_PER_DIST){
         std::uniform_int_distribution<int> d1(1, 10);
         std::uniform_int_distribution<int> d2(5, 15);
         std::uniform_int_distribution<long> d3(0L, 630720000L);
-        std::uniform_int_distribution<long> d4(1, STOCK_PER_WAREHOUSE);
+        std::uniform_int_distribution<long> d4(1, MAX_ITEMS);
         std::uniform_int_distribution<long> d5(10, 10000);
 
         char buffer[1000];

@@ -196,7 +196,7 @@ int do_neword (pg_connection &con, file_obj *obj,
     int i, ret;
     int w_id, d_id, c_id, ol_cnt;
     int all_local = 1;
-    int notfound = STOCK_PER_WAREHOUSE + 1;
+    int notfound = MAX_ITEMS + 1;
     int rbk;
     int itemid[MAX_NUM_ITEMS];
     int supware[MAX_NUM_ITEMS];
@@ -223,7 +223,7 @@ int do_neword (pg_connection &con, file_obj *obj,
 
     std::uniform_int_distribution<int> d3(1, 10);
     for (i = 0; i < ol_cnt; i++) {
-        itemid[i] = RANDOM_GEN::NURand(8191, 1, STOCK_PER_WAREHOUSE);
+        itemid[i] = RANDOM_GEN::NURand(8191, 1, MAX_ITEMS);
         if ((i == ol_cnt - 1) && (rbk == 1)) {
             itemid[i] = notfound;
         }
@@ -429,7 +429,7 @@ int do_neword (pg_connection &con, file_obj *obj, int t_num, int t_id) {
     int i, ret;
     int w_id, d_id, c_id, ol_cnt;
     int all_local = 1;
-    int notfound = STOCK_PER_WAREHOUSE + 1;
+    int notfound = MAX_ITEMS + 1;
     int rbk;
     int itemid[MAX_NUM_ITEMS];
     int supware[MAX_NUM_ITEMS];
@@ -456,7 +456,7 @@ int do_neword (pg_connection &con, file_obj *obj, int t_num, int t_id) {
 
     std::uniform_int_distribution<int> d3(1, 10);
     for (i = 0; i < ol_cnt; i++) {
-        itemid[i] = RANDOM_GEN::NURand(8191, 1, STOCK_PER_WAREHOUSE);
+        itemid[i] = RANDOM_GEN::NURand(8191, 1, MAX_ITEMS);
         if ((i == ol_cnt - 1) && (rbk == 1)) {
             itemid[i] = notfound;
         }
