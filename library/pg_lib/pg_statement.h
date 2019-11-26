@@ -9,6 +9,7 @@
 #include <libpq-fe.h>
 #include "pg_resultset.h"
 
+
 class pg_statement {
 protected:
     std::string sql;

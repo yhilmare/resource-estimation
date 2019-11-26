@@ -18,5 +18,4 @@ public:
 
 };
 
-
 #endif //POSTGRESQL_FILE_EXCEPTION_H

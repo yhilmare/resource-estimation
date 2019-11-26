@@ -16,5 +16,4 @@ public:
     virtual const char *what() const noexcept override;
 };
 
-
 #endif //POSTGRESQL_CONN_FAIL_EXCEPTION_H

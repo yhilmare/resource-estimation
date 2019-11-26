@@ -17,5 +17,4 @@ public:
 
 };
 
-
 #endif //POSTGRESQL_STATEMENT_EXCEPTION_H

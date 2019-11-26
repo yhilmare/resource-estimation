@@ -117,12 +117,12 @@ int driver(pg_connection &con, int thread_num, file_obj *obj){
     }
     pthread_t t = pthread_self();
     PG::Date date;
+    pthread_mutex_lock(&driver_mutex);
     std::clog << date << " [INFO] This is Thread: [" << t << "]@"
               << (void *)&t << ", execution time is " << tv1.tv_sec - obj->start.tv_sec
               << "s, running times is " << count << ", tps is "
               << ((double)count / (tv1.tv_sec - obj->start.tv_sec))
               << std::endl;
-    pthread_mutex_lock(&driver_mutex);
     total_count += count;
     count_time = (count_time > (tv1.tv_sec - obj->start.tv_sec) ? count_time : (tv1.tv_sec - obj->start.tv_sec));
     pthread_mutex_unlock(&driver_mutex);
@@ -160,12 +160,12 @@ int driver(pg_connection &con,
     }
     pthread_t t = pthread_self();
     PG::Date date;
+    pthread_mutex_lock(&driver_mutex);
     std::clog << date << " [INFO] This is Thread: [" << t << "]@"
               << (void *)&t << ", execution time is " << tv1.tv_sec - obj->start.tv_sec
               << "s, running times is " << count << ", tps is "
               << ((double)count / (tv1.tv_sec - obj->start.tv_sec))
               << std::endl;
-    pthread_mutex_lock(&driver_mutex);
     total_count += count;
     count_time = (count_time > (tv1.tv_sec - obj->start.tv_sec) ? count_time : (tv1.tv_sec - obj->start.tv_sec));
     pthread_mutex_unlock(&driver_mutex);

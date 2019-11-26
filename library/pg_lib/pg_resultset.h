@@ -8,6 +8,7 @@
 #include <string>
 #include <libpq-fe.h>
 
+
 class pg_resultset {
 private:
     PGresult *result_set;

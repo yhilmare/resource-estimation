@@ -17,5 +17,4 @@ public:
     virtual const char *what() const noexcept override;
 };
 
-
 #endif //POSTGRESQL_RESULTSET_NULLPOINTER_EXCEPTION_H

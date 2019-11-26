@@ -39,4 +39,5 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const pg_connection &con);
 };
 
+
 #endif //POSTGRESQL_PG_CONNECTION_H

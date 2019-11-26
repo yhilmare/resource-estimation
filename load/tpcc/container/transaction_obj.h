@@ -53,5 +53,4 @@ public:
     transaction_item &operator[](int idx);
 };
 
-
 #endif //POSTGRESQL_TRANSACTION_OBJ_H

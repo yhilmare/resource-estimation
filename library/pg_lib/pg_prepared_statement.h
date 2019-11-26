@@ -19,6 +19,7 @@ enum parameter_type{
     numeric_type
 };
 
+
 class pg_prepared_statement: public pg_statement {
 private:
     int parameters_count;

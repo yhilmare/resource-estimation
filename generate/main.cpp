@@ -3,7 +3,7 @@
 #include "load/data_load.h"
 #include <tools/global_tools.h>
 
-int num_ware = 10;
+int num_ware = 100;
 
 int main(int argn, char *argv[]) {
     using namespace std;

@@ -17,6 +17,7 @@ static int total;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static int *seq;
+
 static int next_num;
 
 void shuffle() {

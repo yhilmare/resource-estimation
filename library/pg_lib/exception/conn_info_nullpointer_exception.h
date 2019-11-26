@@ -7,6 +7,7 @@
 
 #include <exception>
 
+
 class conn_info_nullpointer_exception: public std::exception{
 public:
     conn_info_nullpointer_exception(const char *connection_info);
