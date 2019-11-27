@@ -6,7 +6,13 @@
 #include "../util/configutil.h"
 #include <pg_lib/pg_connection.h>
 
-vector<pg_buffer> bufferutil::getBuffers(const pg_database &database) {
+
+bufferutil::bufferutil(pg_database &instance): database(instance) {
+
+}
+
+
+vector<pg_buffer> bufferutil::getBuffers() {
     unordered_map<string, string> config = configutil::getConfig();
     string host = config["PG_HOST"];
     string password = config["PG_PASSWORD"];
@@ -30,6 +36,7 @@ vector<pg_buffer> bufferutil::getBuffers(const pg_database &database) {
     }
     resultset.close();
     con.close();
+    cout << total << endl;
     for(int i = 0; i < val.size(); i ++){
         pg_buffer item = val[i];
         val[i].usageratio = item.usagecount / total;

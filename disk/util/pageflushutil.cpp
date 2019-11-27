@@ -3,12 +3,11 @@
 //
 
 #include "pageflushutil.h"
+#include <cmath>
 
-pageflushutil::pageflushutil() {
-    throw exception();
-}
-
-pageflushutil::pageflushutil(vector<pg_buffer> &val, unordered_map<string, string> &config) {
+pageflushutil::pageflushutil(vector<pg_buffer> &val,
+        unordered_map<string, string> &config):p_1(NULL), p_2(NULL),
+        p_3(NULL), t(NULL), sum(NULL), cache(NULL), buffers(val) {
     unordered_map<string, string>::iterator tps_pair = config.find("TPS");
     unordered_map<string, string>::iterator log_length_pair = config.find("LOG_LENGTH");
     unordered_map<string, string>::iterator epsino_pair = config.find("EPSINO");
@@ -30,6 +29,12 @@ pageflushutil::pageflushutil(vector<pg_buffer> &val, unordered_map<string, strin
     this->p_1 = new double[this->buffer_length];
     this->p_2 = new double[this->buffer_length];
     this->p_3 = new double[this->buffer_length];
+    for(int i = 0; i < this->buffer_length; i ++){
+        *(this->p_1 + i) = .0;
+        *(this->p_2 + i) = .0;
+        *(this->p_3 + i) = 1.0;
+    }
+    this->tp = new double[this->buffer_length];
     this->t = new double[this->buffer_length];
     this->sum = new double[this->buffer_length];
     this->cache = new double[this->buffer_length];
@@ -39,24 +44,8 @@ pageflushutil& pageflushutil::operator=(const pageflushutil &instance) {
     if (this == &instance){
         return *this;
     }
-    if (this->p_1 != NULL){
-        delete[] this->p_1;
-    }
-    if (this->p_2 != NULL){
-        delete[] this->p_2;
-    }
-    if (this->p_3 != NULL){
-        delete[] this->p_3;
-    }
-    if (this->t != NULL){
-        delete[] this->t;
-    }
-    if (this->sum != NULL){
-        delete[] this->sum;
-    }
-    if (this->cache != NULL){
-        delete[] this->cache;
-    }
+    delete[] this->p_1, this->p_2, this->p_3;
+    delete[] this->t, this->sum, this->cache, this->tp;
     this->tps = instance.tps;
     this->log_length = instance.log_length;
     this->epsino = instance.epsino;
@@ -73,30 +62,24 @@ pageflushutil& pageflushutil::operator=(const pageflushutil &instance) {
     this->p_2 = new double[this->buffer_length];
     this->p_3 = new double[this->buffer_length];
     this->t = new double[this->buffer_length];
+    this->tp = new double[this->buffer_length];
     this->sum = new double[this->buffer_length];
     this->cache = new double[this->buffer_length];
+    for(int i = 0; i < instance.buffer_length; i ++){
+        *(this->p_1 + i) = instance.p_1[i];
+        *(this->p_2 + i) = instance.p_2[i];
+        *(this->p_3 + i) = instance.p_3[i];
+        *(this->t + i) = instance.t[i];
+        *(this->sum + i) = instance.sum[i];
+        *(this->cache + i) = instance.cache[i];
+        *(this->tp + i) = instance.tp[i];
+    }
     return *this;
 }
 
-pageflushutil::pageflushutil(const pageflushutil &instance) {
-    if (this->p_1 != NULL){
-        delete[] this->p_1;
-    }
-    if (this->p_2 != NULL){
-        delete[] this->p_2;
-    }
-    if (this->p_3 != NULL){
-        delete[] this->p_3;
-    }
-    if (this->t != NULL){
-        delete[] this->t;
-    }
-    if (this->sum != NULL){
-        delete[] this->sum;
-    }
-    if (this->cache != NULL){
-        delete[] this->cache;
-    }
+pageflushutil::pageflushutil(const pageflushutil &instance): buffers(instance.buffers) {
+    delete[] this->p_1, this->p_2, this->p_3;
+    delete[] this->t, this->sum, this->cache, this->tp;
     this->tps = instance.tps;
     this->log_length = instance.log_length;
     this->epsino = instance.epsino;
@@ -113,27 +96,66 @@ pageflushutil::pageflushutil(const pageflushutil &instance) {
     this->p_2 = new double[this->buffer_length];
     this->p_3 = new double[this->buffer_length];
     this->t = new double[this->buffer_length];
+    this->tp = new double[this->buffer_length];
     this->sum = new double[this->buffer_length];
     this->cache = new double[this->buffer_length];
+    for(int i = 0; i < instance.buffer_length; i ++){
+        *(this->p_1 + i) = instance.p_1[i];
+        *(this->p_2 + i) = instance.p_2[i];
+        *(this->p_3 + i) = instance.p_3[i];
+        *(this->t + i) = instance.t[i];
+        *(this->sum + i) = instance.sum[i];
+        *(this->cache + i) = instance.cache[i];
+        *(this->tp + i) = instance.tp[i];
+    }
 }
 
 pageflushutil::~pageflushutil() {
-    if (this->p_1 != NULL){
-        delete[] this->p_1;
+    delete[] this->p_1, this->p_2, this->p_3;
+    delete[] this->t, this->sum, this->cache, this->tp;
+}
+
+ostream &operator<<(ostream &out, const pageflushutil &instance) {
+    out << "[pageflushutil]@" << (void *)&instance;
+    return out;
+}
+
+void pageflushutil::calculate() {
+    for(int i = 0; i < this->buffer_length; i ++){
+        pg_buffer item = buffers[i];
+        t[i] = 1 - pow(1 - item.usageratio, tps);
+        tp[i] = pow(1 - t[i], m);
+        cache[i] = pow(1 - tps / log_length, m);
+        if (t[i] == (tps / log_length)){
+            cout << "impossible" << endl;
+            sum[i] = m * tp[i] / (1 - t[i]);
+        }else{
+            sum[i] = (pow(1 - t[i], m) - pow(1 - tps / log_length, m)) / (tps / log_length - t[i]);
+        }
     }
-    if (this->p_2 != NULL){
-        delete[] this->p_2;
+    for(int i = 0; i < 1200; i ++){
+        cout << sum[i] << " ";
+        if ((i + 1) % 10 == 0){
+            cout << endl;
+        }
     }
-    if (this->p_3 != NULL){
-        delete[] this->p_3;
-    }
-    if (this->t != NULL){
-        delete[] this->t;
-    }
-    if (this->sum != NULL){
-        delete[] this->sum;
-    }
-    if (this->cache != NULL){
-        delete[] this->cache;
-    }
+//    int iter = 0;
+//    double d1 = 0;
+//    while(abs(avg_flush_rate - flush_rate) > epsino){
+//        avg_flush_rate = (iter * avg_flush_rate + flush_rate) / (double)(iter + 1);
+//        iter ++;
+//        for(int i = 0; i < buffer_length; i ++){
+//            d1 += p_1[i];
+//        }
+//        flush_rate = min(d1 / (double)period, max_flush_rate);
+//        for(int i = 0; i < buffer_length; i ++){
+//            p_3[i] = p_3[i] * tp[i] + (tps / log_length) * p_1[i] * sum[i];
+//            p_1[i] = p_1[i] * cache[i];
+//            p_2[i] = 1 - p_1[i] - p_3[i];
+//
+//            p_3[i] = p_3[i] + p_1[i];
+//            p_1[i] = p_2[i];
+//            p_2[i] = 0;
+//        }
+//    }
 }

@@ -11,8 +11,13 @@
 
 using namespace std;
 class bufferutil {
+private:
+    pg_database &database;
 public:
-    static vector<pg_buffer> getBuffers(const pg_database &database);
+    bufferutil(pg_database &);
+
+    vector<pg_buffer> getBuffers();
+
 };
 
 
