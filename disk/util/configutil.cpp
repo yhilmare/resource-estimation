@@ -1,12 +1,12 @@
 //
-// Created by ilmare on 11/21/19.
+// Created by ilmare on 11/27/19.
 //
 
-#include "configUtil.h"
+#include "configutil.h"
 #include <sys/unistd.h>
 #include <tools/global_tools.h>
 
-unordered_map<string, string> configUtil::getConfig() {
+unordered_map<string, string> configutil::getConfig() {
     char buffer[1000];
     getcwd(buffer, 1000);
     unordered_map<string, string> config =

@@ -1,16 +1,16 @@
 //
-// Created by ilmare on 11/21/19.
+// Created by ilmare on 11/27/19.
 //
 
-#include "databassutil.h"
+#include "databaseutil.h"
 #include <iostream>
-#include "../util/configUtil.h"
+#include "../util/configutil.h"
 #include <pg_lib/pg_connection.h>
 #include <string>
 
-pg_database databassutil::getDatabase(string name) {
+pg_database databaseutil::getDatabase(string name) {
 
-    unordered_map<string, string> config = configUtil::getConfig();
+    unordered_map<string, string> config = configutil::getConfig();
     string host = config["PG_HOST"];
     string password = config["PG_PASSWORD"];
     string timout = config["PG_TIMEOUT"];

@@ -46,6 +46,7 @@ namespace RANDOM_GEN {
         std::uniform_int_distribution<unsigned> d4(x, y);
         return (int)(((d3(e) | d4(e)) + C) % (y - x + 1)) + x;
     }
+
     void Lastname(int num, char *name) {
         const static char *n[] = {"BAR", "OUGHT", "ABLE", "PRI", "PRES",
              "ESE", "ANTI", "CALLY", "ATION", "EING"};

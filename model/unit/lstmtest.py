@@ -119,29 +119,29 @@ if __name__ == "__main__":
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
     obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
                     True, min=2, max=6, label_dim=102)
-    # dest = np.reshape(obj.test.labels, newshape=[-1, 102])
-    # dest = np.argmax(dest, 1)
-    # result = dict()
-    # for item in dest:
-    #     if result.get(item, -1) == -1:
-    #         result[item] = 1
-    #     else:
-    #         result[item] = result[item] + 1
-    # print(result)
-    # count = 0
-    # for value in result.values():
-    #     count += value
-    # print(count)
-    # count_1 = 0
-    # for key, value in result.items():
-    #     print(key, ": ", value / count)
-    #     result[key] = value / count
-    #     count_1 += (value / count)
-    # print(count_1)
-    obj.pca_samples(11)
-    model = lstm.lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
-                            keep_prob=0.8, l_rate=0.005, max_step=5000,
-                            save_path=model_path, batch_size=obj.test.samples.shape[0])
-    test_obj = lstm_evaluation(model, obj)
-    print(test_obj)
-    test_obj.plot()
+    dest = np.reshape(obj.test.labels, newshape=[-1, 102])
+    dest = np.argmax(dest, 1)
+    result = dict()
+    for item in dest:
+        if result.get(item, -1) == -1:
+            result[item] = 1
+        else:
+            result[item] = result[item] + 1
+    print(result)
+    count = 0
+    for value in result.values():
+        count += value
+    print(count)
+    count_1 = 0
+    for key, value in result.items():
+        print(key, ": ", value / count)
+        result[key] = value / count
+        count_1 += (value / count)
+    print(count_1)
+    # obj.pca_samples(11)
+    # model = lstm.lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
+    #                         keep_prob=0.8, l_rate=0.005, max_step=5000,
+    #                         save_path=model_path, batch_size=obj.test.samples.shape[0])
+    # test_obj = lstm_evaluation(model, obj)
+    # print(test_obj)
+    # test_obj.plot()

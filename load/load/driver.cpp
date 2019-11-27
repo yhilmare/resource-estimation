@@ -124,7 +124,7 @@ int driver(pg_connection &con, int thread_num, file_obj *obj){
               << ((double)count / (tv1.tv_sec - obj->start.tv_sec))
               << std::endl;
     total_count += count;
-    count_time = (count_time > (tv1.tv_sec - obj->start.tv_sec) ? count_time : (tv1.tv_sec - obj->start.tv_sec));
+    count_time = (count_time > (int)(tv1.tv_sec - obj->start.tv_sec) ? count_time : (int)(tv1.tv_sec - obj->start.tv_sec));
     pthread_mutex_unlock(&driver_mutex);
     return 0;
 }
@@ -167,7 +167,7 @@ int driver(pg_connection &con,
               << ((double)count / (tv1.tv_sec - obj->start.tv_sec))
               << std::endl;
     total_count += count;
-    count_time = (count_time > (tv1.tv_sec - obj->start.tv_sec) ? count_time : (tv1.tv_sec - obj->start.tv_sec));
+    count_time = (count_time > (int)(tv1.tv_sec - obj->start.tv_sec) ? count_time : (int)(tv1.tv_sec - obj->start.tv_sec));
     pthread_mutex_unlock(&driver_mutex);
     return 0;
 }

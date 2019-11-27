@@ -9,12 +9,12 @@
 #define DISTRICT_PER_WAREHOUSE 10
 #define CUSTOMER_PER_DISTRICT 3000
 
-#define EXECUTE_TIME 20
+#define EXECUTE_TIME 30
 
 /* definitions for new order transaction */
 #define MAX_NUM_ITEMS 15
 #define MAX_ITEM_LEN 24
-#define MAX_RETRY 3
+#define MAX_RETRY 1
 
 #include <fstream>
 #include <unordered_map>

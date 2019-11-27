@@ -3,11 +3,11 @@
 //
 
 #include "bufferutil.h"
-#include "../util/configUtil.h"
+#include "../util/configutil.h"
 #include <pg_lib/pg_connection.h>
 
 vector<pg_buffer> bufferutil::getBuffers(const pg_database &database) {
-    unordered_map<string, string> config = configUtil::getConfig();
+    unordered_map<string, string> config = configutil::getConfig();
     string host = config["PG_HOST"];
     string password = config["PG_PASSWORD"];
     string timout = config["PG_TIMEOUT"];
@@ -22,11 +22,17 @@ vector<pg_buffer> bufferutil::getBuffers(const pg_database &database) {
     pg_statement st = con.create_statement();
     pg_resultset resultset = st.execute_query(sql);
     vector<pg_buffer> val;
+    double total = .0;
     while(resultset.has_next()){
+        total += resultset.get_int(7);
         pg_buffer buffer = pg_buffer(&resultset);
         val.push_back(buffer);
     }
     resultset.close();
     con.close();
+    for(int i = 0; i < val.size(); i ++){
+        pg_buffer item = val[i];
+        val[i].usageratio = item.usagecount / total;
+    }
     return val;
 }
