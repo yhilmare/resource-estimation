@@ -133,4 +133,17 @@ struct thread_arg{
     }
 };
 
+struct disk_statistic{
+    long interval_count;
+    long pre_timer, current_timer;
+    pthread_mutex_t disk_mutex;
+    disk_statistic():interval_count(0){
+        disk_mutex = PTHREAD_MUTEX_INITIALIZER;
+        timeval tmp;
+        gettimeofday(&tmp, NULL);
+        pre_timer = tmp.tv_sec * 1000000 + tmp.tv_usec;
+        current_timer = pre_timer;
+    }
+};
+
 #endif //POSTGRESQL_GLOBAL_DEFINE_H

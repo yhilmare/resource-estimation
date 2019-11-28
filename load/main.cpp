@@ -8,6 +8,9 @@
 #include "./tpcc/sequence.h"
 #include <tools/global_tools.h>
 #include <unordered_map>
+#include "thread/bufferthread.h"
+#include "thread/mainthread.h"
+#include "thread/TPSthread.h"
 
 //void regex_test(){
 //    using namespace std;
@@ -32,12 +35,8 @@
 //    }
 //}
 
-int num_ware = 10;
+int num_ware = 100;
 
-void *thread_main(void *);
-
-#include <random>
-#include "./load/data_load.h"
 int main(int argn, char *argv[]) {
     using namespace std;
 
@@ -49,8 +48,26 @@ int main(int argn, char *argv[]) {
     unordered_map<string, string> config =
             parse_properties_file(string(buffer) + "/config/pg_config.properties");
     string file_name = config["DATA_FILE"] + "originlog_" + final + ".csv";
-    int thread_num = 1;
+
+    bool disk_statistic_flag = !(config["WATCH_FLAG"] == "false");
+    bool buffer_flag = !(config["BUFFER_FLAG"] == "false");
+
+    int thread_num = 10;
+
     thread_arg arg(config, thread_num, file_name, tv);
+    //===============================================tps监控线程==============================================
+    pthread_t watch_thread;
+    if (disk_statistic_flag){
+        pthread_create(&watch_thread, NULL, tps_record, (void *) &arg);
+    }
+    //===============================================监控线程完===============================================
+
+    //=============================================buffer监控线程=============================================
+    pthread_t buffer_thread;
+    if (buffer_flag){
+        pthread_create(&buffer_thread, NULL, buffer_record, (void *) &arg);
+    }
+    //=============================================buffer监控线程完============================================
     pthread_t ts[thread_num];
     for (int i = 0; i < thread_num; i ++){
         pthread_t t1;
@@ -61,6 +78,12 @@ int main(int argn, char *argv[]) {
     for(int i = 0; i < thread_num; i ++){
         pthread_join(ts[i], NULL);
     }
+    if (buffer_flag){
+        pthread_join(buffer_thread, NULL);
+    }
+    if (disk_statistic_flag){
+        pthread_join(watch_thread, NULL);
+    }
     extern int total_count, count_time;
     PG::Date date;
     std::clog << date << " [INFO] Total execution time is " << count_time
@@ -68,39 +91,4 @@ int main(int argn, char *argv[]) {
               << ((double)total_count / count_time)
               << std::endl;
     return 0;
-}
-
-void *thread_main(void *param){
-    using namespace std;
-
-    pthread_t t = pthread_self();
-//    std::clog << "This is Thread: [" << t << "]@"
-//              << (void *)&t << ", function [thread_main]@"
-//              << (void *)thread_main << std::endl;
-
-    thread_arg *arg = (thread_arg *)param;
-    unordered_map<string, string> config = arg->config;
-    int thread_num = arg->thread_num;
-
-    string host = config["PG_HOST"];
-    string password = config["PG_PASSWORD"];
-    string timout = config["PG_TIMEOUT"];
-    string database = config["PG_DATABASE"];
-    string user = config["PG_USER"];
-    string port = config["PG_PORT"];
-
-    //seq_init(int n, int p, int o, int d, int s)
-    seq_init(10, 10, 1, 1, 1);
-
-    pg_connection con(user.c_str(), password.c_str(),
-                      host.c_str(), database.c_str(), port.c_str());
-//    vector<pg_prepared_statement> val;
-//    for (int i = 0; i < sizeof(SQL_STRING) / sizeof(string); i ++){
-//        string sql = SQL_STRING[i];
-//        const parameter_type *type = SQL_PARAMETER_TYPE[i];
-//        pg_prepared_statement tmp_st = con.prepared_statement(sql, type);
-//        val.push_back(tmp_st);
-//    }
-    driver(con, thread_num, arg->obj);
-    return param;
 }

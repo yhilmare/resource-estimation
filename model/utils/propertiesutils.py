@@ -16,6 +16,7 @@ class OPTIONS:
     BP_MODEL="bp_model_dir"
     RNN_DATA="rnn_data_dir"
     BP_DATA="bp_data_dir"
+    DISK_DATA="disk_data_dir"
 
 class config_reader_sections:
     def __init__(self, section_name, config_parser):

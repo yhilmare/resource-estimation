@@ -184,6 +184,8 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             gettimeofday(&start, NULL);
             row_count = st6.execute_update();
             gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "customer",
                     row_count, series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"
@@ -362,6 +364,8 @@ int delivery(int w_id_arg, int o_carrier_id_arg,
             gettimeofday(&start, NULL);
             row_count = st.execute_update(sql);
             gettimeofday(&end, NULL);
+            interval = (end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec);
+            series = (start.tv_sec * 1000000 + start.tv_usec) - (obj->start.tv_sec * 1000000 + obj->start.tv_usec);
             tran_obj.add_item(transaction_item(EXCLUSIVE_LOCK, "customer",
                                                row_count, series, tran_name, interval));
 //            std::clog << " ----> Thread: [" << t << "]@"

@@ -5,6 +5,7 @@
 #include "driver.h"
 #include <time.h>
 #include <iostream>
+#include <tools/global_tools.h>
 #include <sys/time.h>
 #include <random>
 #include "data_load.h"
@@ -87,7 +88,9 @@ int total_count = 0;
 
 int count_time = 0;
 
-int driver(pg_connection &con, int thread_num, file_obj *obj){
+disk_statistic disk_obj = disk_statistic();
+
+int driver(pg_connection &con, int thread_num, file_obj *obj, bool disk_flag){
     long total_time = EXECUTE_TIME;
     int count = 0;
     timeval tv1;
@@ -114,7 +117,18 @@ int driver(pg_connection &con, int thread_num, file_obj *obj){
         }
         count ++;
         gettimeofday(&tv1, NULL);
+
+        if (disk_flag){
+            pthread_mutex_lock(&disk_obj.disk_mutex);
+            disk_obj.interval_count += 1;
+            long tv_stamp = tv1.tv_sec * 1000000 + tv1.tv_usec;
+            if (tv_stamp > disk_obj.current_timer){
+                disk_obj.current_timer = tv_stamp;
+            }
+            pthread_mutex_unlock(&disk_obj.disk_mutex);
+        }
     }
+
     pthread_t t = pthread_self();
     PG::Date date;
     pthread_mutex_lock(&driver_mutex);
@@ -130,7 +144,7 @@ int driver(pg_connection &con, int thread_num, file_obj *obj){
 }
 
 int driver(pg_connection &con,
-        std::vector<pg_prepared_statement> &val, int thread_num, file_obj *obj){
+        std::vector<pg_prepared_statement> &val, int thread_num, file_obj *obj, bool disk_flag){
     long total_time = EXECUTE_TIME;
     int count = 0;
     timeval tv1;
@@ -157,6 +171,16 @@ int driver(pg_connection &con,
         }
         count ++;
         gettimeofday(&tv1, NULL);
+
+        if (disk_flag){
+            pthread_mutex_lock(&disk_obj.disk_mutex);
+            disk_obj.interval_count += 1;
+            long tv_stamp = tv1.tv_sec * 1000000 + tv1.tv_usec;
+            if (tv_stamp > disk_obj.current_timer){
+                disk_obj.current_timer = tv_stamp;
+            }
+            pthread_mutex_unlock(&disk_obj.disk_mutex);
+        }
     }
     pthread_t t = pthread_self();
     PG::Date date;
