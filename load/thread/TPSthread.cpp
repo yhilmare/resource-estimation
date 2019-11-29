@@ -19,7 +19,7 @@ void *tps_record(void *param){
     extern disk_statistic disk_obj;
 
     std::unordered_map<std::string, std::string> config = arg->config;
-    double sleep_margin = atoi(config["WATCH_INTERVAL"].c_str());
+    double sleep_margin = atoi(config["WATCH_TPS_INTERVAL"].c_str());
 
     std::fstream out;
     std::string final = parseInt(start.tv_sec * 1000000 + start.tv_usec);

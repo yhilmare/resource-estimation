@@ -61,6 +61,7 @@ class diskUI:
         stamp2 = int(result.group())
         figure = plt.figure("disk-contrast")
         plt.xlabel("Time Stamp")
+        plt.xlim(1574952024638729 - 10000000, 1574952024638729 + 1000000000)
         ax = figure.add_subplot(111)
         plot_list = self.__read_from_file(file1)
         ax.grid(True)
@@ -115,6 +116,6 @@ class diskUI:
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = diskUI(reader[pu.SECTIONS.DATA][pu.OPTIONS.DISK_DATA])
-    obj.plotContrast("record_1574951394972175.csv", "tps_1574951394960959.csv", ["clean buffer", "dirties buffer", "total buffer"], ["live TPS"])
+    obj.plotContrast("record_1574952024649769.csv", "tps_1574952024638729.csv", ["clean buffer", "dirties buffer", "total buffer"], ["live TPS"])
     # obj.plotTotal(type="record", labels=["clean buffer", "dirties buffer", "total buffer"])
-    # obj.plotSingle(type="tps", labels=["clean buffer", "dirties buffer", "total buffer"])
+    # obj.plotSingle(type="record", labels=["clean buffer", "dirties buffer", "total buffer"])

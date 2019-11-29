@@ -9,7 +9,9 @@
 #define DISTRICT_PER_WAREHOUSE 10
 #define CUSTOMER_PER_DISTRICT 3000
 
-#define EXECUTE_TIME 180
+#define EXECUTE_TIME 30
+
+#define BUFFER_WATCH_EXTEND 10
 
 /* definitions for new order transaction */
 #define MAX_NUM_ITEMS 15

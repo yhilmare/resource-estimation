@@ -45,8 +45,8 @@ void *buffer_record(void *param){
     timeval current;
     gettimeofday(&current, NULL);
     int count = 0;
-    double sleep_margin = atoi(config["BUFFER_INTERVAL"].c_str());
-    long maxTime = EXECUTE_TIME;
+    double sleep_margin = atoi(config["BUFFER_RECORD_INTERVAL"].c_str());
+    long maxTime = EXECUTE_TIME + BUFFER_WATCH_EXTEND;
 
     while(current.tv_sec - start.tv_sec < maxTime && ++count){
         pg_resultset resultset = st.execute_query(sql);
