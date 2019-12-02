@@ -17,7 +17,6 @@ private:
 public:
     bufferutil(pg_database &);
 
-    void recordBuffers(long interval, long delay=0);
     vector<pg_buffer> getBuffers();
 };
 

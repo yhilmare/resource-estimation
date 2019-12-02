@@ -18,12 +18,10 @@ int main() {
     cout << database << endl;
     bufferutil bu = bufferutil(database);
     vector<pg_buffer> val = bu.getBuffers();
-    cout << val.size() << endl;
-    bu.recordBuffers(500);
 
-//    unordered_map<string, string> config = configutil::getConfig();
-//    pageflushutil pf = pageflushutil(val, config);
-//    cout << pf << endl;
-//    pf.calculate();
+    unordered_map<string, string> config = configutil::getConfig();
+    pageflushutil pf = pageflushutil(val, config);
+    cout << pf << endl;
+    pf.calculate();
     return 0;
 }

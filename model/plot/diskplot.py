@@ -54,14 +54,16 @@ class diskUI:
                 ax.plot(tmp_lst[:, 0], tmp_lst[:, index + 1])
         ax.legend()
         plt.show()
-    def plotContrast(self, file1, file2, labels1=None, labels2=None):
+    def plotContrast(self, file1, file2, labels1=None, labels2=None, interval=None):
         result = re.search(r"[0-9]+", file1)
         stamp1 = int(result.group())
         result = re.search(r"[0-9]+", file2)
         stamp2 = int(result.group())
         figure = plt.figure("disk-contrast")
         plt.xlabel("Time Stamp")
-        plt.xlim(1574952024638729 - 10000000, 1574952024638729 + 1000000000)
+        if interval is not None and interval[0] < interval[1]:
+            begin = stamp1 if stamp1 < stamp2 else stamp2
+            plt.xlim(begin + interval[0] * 1000000, begin + interval[1] * 1000000)
         ax = figure.add_subplot(111)
         plot_list = self.__read_from_file(file1)
         ax.grid(True)
@@ -71,7 +73,7 @@ class diskUI:
                 ax.plot(stamp1 + plot_list[:, 0], plot_list[:, index + 1], label=labels1[index])
             else:
                 ax.plot(stamp1 + plot_list[:, 0], plot_list[:, index + 1])
-        ax.legend()
+        ax.legend(loc="upper right")
         bx = ax.twinx()
         bx.set_ylabel("TPS")
         plot_list = self.__read_from_file(file2)
@@ -81,7 +83,7 @@ class diskUI:
                 bx.plot(stamp2 + plot_list[:, 0], plot_list[:, index + 1], color="olive", label=labels2[index])
             else:
                 bx.plot(stamp2 + plot_list[:, 0], plot_list[:, index + 1])
-        bx.legend()
+        bx.legend(loc="upper left")
         plt.show()
     def plotTotal(self, type="record", labels=None):
         plotList = []
@@ -116,6 +118,7 @@ class diskUI:
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = diskUI(reader[pu.SECTIONS.DATA][pu.OPTIONS.DISK_DATA])
-    obj.plotContrast("record_1574952024649769.csv", "tps_1574952024638729.csv", ["clean buffer", "dirties buffer", "total buffer"], ["live TPS"])
+    obj.plotContrast("record_1574952024649769.csv", "tps_1574952024638729.csv",
+                     ["clean buffer", "dirties buffer", "total buffer"], ["live TPS"], [-10, 1000])
     # obj.plotTotal(type="record", labels=["clean buffer", "dirties buffer", "total buffer"])
     # obj.plotSingle(type="record", labels=["clean buffer", "dirties buffer", "total buffer"])

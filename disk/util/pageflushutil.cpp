@@ -8,10 +8,10 @@
 pageflushutil::pageflushutil(vector<pg_buffer> &val,
         unordered_map<string, string> &config):p_1(NULL), p_2(NULL),
         p_3(NULL), t(NULL), sum(NULL), cache(NULL), buffers(val) {
-    unordered_map<string, string>::iterator tps_pair = config.find("TPS");
-    unordered_map<string, string>::iterator log_length_pair = config.find("LOG_LENGTH");
-    unordered_map<string, string>::iterator epsino_pair = config.find("EPSINO");
-    unordered_map<string, string>::iterator max_flush_rate_pair = config.find("MAXFLUSHRATE");
+    auto tps_pair = config.find("TPS");
+    auto log_length_pair = config.find("LOG_LENGTH");
+    auto epsino_pair = config.find("EPSINO");
+    auto max_flush_rate_pair = config.find("MAXFLUSHRATE");
     if (tps_pair == config.end() || log_length_pair == config.end()
     || epsino_pair == config.end() || max_flush_rate_pair == config.end()){
         throw  exception();
@@ -130,32 +130,34 @@ void pageflushutil::calculate() {
             cout << "impossible" << endl;
             sum[i] = m * tp[i] / (1 - t[i]);
         }else{
-            sum[i] = (pow(1 - t[i], m) - pow(1 - tps / log_length, m)) / (tps / log_length - t[i]);
+            sum[i] = (pow(1 - t[i], m) - pow(1 - tps / log_length,  m)) / (tps / log_length - t[i]);
         }
     }
-    for(int i = 0; i < 1200; i ++){
-        cout << sum[i] << " ";
-        if ((i + 1) % 10 == 0){
-            cout << endl;
+    int iter = 1;
+    double d1 = 0;
+    while(abs(avg_flush_rate - flush_rate) > epsino){
+        avg_flush_rate = (iter * avg_flush_rate + flush_rate) / (double)(iter + 1);
+        iter ++;
+        for(int i = 0; i < buffer_length; i ++){
+            d1 += p_1[i];
         }
+        if (iter % 10 == 0){
+            clog << iter << " avg_flush_rate: " << avg_flush_rate
+                 << ", flush_rate: " << d1 / (double)period
+                 << ", d1: " << d1 << endl;
+        }
+        flush_rate = min(d1 / (double)period, max_flush_rate);
+        for(int i = 0; i < buffer_length; i ++) {
+            p_3[i] = p_3[i] * tp[i] + (tps / log_length) * p_1[i] * sum[i];
+            p_1[i] = p_1[i] * cache[i];
+            p_2[i] = 1 - p_1[i] - p_3[i];
+
+            p_3[i] = p_3[i] + p_1[i];
+            p_1[i] = p_2[i];
+            p_2[i] = 0;
+        }
+//        if (iter % (int)(log_length / tps) == 0){
+            d1 = 0;
+//        }
     }
-//    int iter = 0;
-//    double d1 = 0;
-//    while(abs(avg_flush_rate - flush_rate) > epsino){
-//        avg_flush_rate = (iter * avg_flush_rate + flush_rate) / (double)(iter + 1);
-//        iter ++;
-//        for(int i = 0; i < buffer_length; i ++){
-//            d1 += p_1[i];
-//        }
-//        flush_rate = min(d1 / (double)period, max_flush_rate);
-//        for(int i = 0; i < buffer_length; i ++){
-//            p_3[i] = p_3[i] * tp[i] + (tps / log_length) * p_1[i] * sum[i];
-//            p_1[i] = p_1[i] * cache[i];
-//            p_2[i] = 1 - p_1[i] - p_3[i];
-//
-//            p_3[i] = p_3[i] + p_1[i];
-//            p_1[i] = p_2[i];
-//            p_2[i] = 0;
-//        }
-//    }
 }

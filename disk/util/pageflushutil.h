@@ -14,7 +14,7 @@
 using namespace std;
 class pageflushutil {
 private:
-    double flush_rate = 0, avg_flush_rate = 100, max_flush_rate;
+    double flush_rate = 0, avg_flush_rate = 50, max_flush_rate;
     double *p_1, *p_2, *p_3;
     double *t, *sum, *cache, *tp;
     double log_length, tps, epsino;
