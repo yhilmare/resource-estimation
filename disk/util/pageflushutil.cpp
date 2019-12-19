@@ -135,16 +135,16 @@ void pageflushutil::calculate() {
     }
     int iter = 1;
     double d1 = 0;
+
     while(abs(avg_flush_rate - flush_rate) > epsino){
         avg_flush_rate = (iter * avg_flush_rate + flush_rate) / (double)(iter + 1);
         iter ++;
         for(int i = 0; i < buffer_length; i ++){
             d1 += p_1[i];
         }
-        if (iter % 10 == 0){
+        if (iter % 100 == 0){
             clog << iter << " avg_flush_rate: " << avg_flush_rate
-                 << ", flush_rate: " << d1 / (double)period
-                 << ", d1: " << d1 << endl;
+                 << " pages/sec, flush_rate: " << d1 / (double)period << " pages/sec" << endl;
         }
         flush_rate = min(d1 / (double)period, max_flush_rate);
         for(int i = 0; i < buffer_length; i ++) {

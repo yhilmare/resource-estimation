@@ -122,12 +122,12 @@ if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
     obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
-                    True, min=2, max=6, label_dim=102)
+                    True, min=4, max=11, label_dim=102)
     obj.pca_samples(11)
     model = lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
                        keep_prob=0.8, l_rate=0.005, max_step=10000,
                        save_path=model_path, batch_size=256)
     model.train()
-    pre, acc = model.test()
-    print(pre.shape)
+    # pre, acc = model.test()
+    # print(pre.shape)
 

@@ -118,7 +118,7 @@ if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
     obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
-                    True, min=2, max=6, label_dim=102)
+                    True, min=4, max=11, label_dim=102)
     dest = np.reshape(obj.test.labels, newshape=[-1, 102])
     dest = np.argmax(dest, 1)
     result = dict()

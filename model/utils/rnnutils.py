@@ -61,7 +61,7 @@ def generate_samples(pre_path, file_name):
     test = []
     for idx, line in enumerate(reader):
         row = list(line)
-        if idx <= 510000:
+        if idx <= 480000:
             train.append(row)
         else:
             test.append(row)
