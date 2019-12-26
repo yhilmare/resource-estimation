@@ -6,7 +6,7 @@ Created By ILMARE
 from tensorflow.contrib import rnn
 import tensorflow as tf
 import time
-from domain.lstmobject import lstm_data
+from domain.lstmobject import lstm_data, lstm_data_core
 import numpy as np
 import re
 from matplotlib import pyplot as plt

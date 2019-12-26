@@ -4,7 +4,7 @@ Created By ILMARE
 '''
 
 from lib import lstm
-from domain.lstmobject import lstm_data
+from domain.lstmobject import lstm_data, lstm_data_core
 from utils import propertiesutils as pu
 from matplotlib import pyplot as plt
 import matplotlib as mpl
@@ -14,7 +14,8 @@ class lstm_evaluation:
     def __init__(self, model, data_obj):
         self._model = model
         if data_obj.one_hot:
-            self._data_obj_digtial = lstm_data(data_obj.file_path, 25, False)
+            self._data_obj_digtial = lstm_data(data_obj.file_path, 25,
+                                                    False)
             self._data_obj_one_hot = data_obj
         else:
             self._data_obj_digtial = data_obj
@@ -119,29 +120,40 @@ if __name__ == "__main__":
     model_path = reader[pu.SECTIONS.MODEL][pu.OPTIONS.RNN_MODEL]
     obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,
                     True, min=4, max=11, label_dim=102)
-    dest = np.reshape(obj.test.labels, newshape=[-1, 102])
-    dest = np.argmax(dest, 1)
-    result = dict()
-    for item in dest:
-        if result.get(item, -1) == -1:
-            result[item] = 1
-        else:
-            result[item] = result[item] + 1
-    print(result)
-    count = 0
-    for value in result.values():
-        count += value
-    print(count)
-    count_1 = 0
-    for key, value in result.items():
-        print(key, ": ", value / count)
-        result[key] = value / count
-        count_1 += (value / count)
-    print(count_1)
-    # obj.pca_samples(11)
-    # model = lstm.lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
-    #                         keep_prob=0.8, l_rate=0.005, max_step=5000,
-    #                         save_path=model_path, batch_size=obj.test.samples.shape[0])
-    # test_obj = lstm_evaluation(model, obj)
-    # print(test_obj)
-    # test_obj.plot()
+    print(obj.test.labels.shape, obj.train.labels.shape)
+    # dest = np.reshape(obj.test.labels, newshape=[-1, 102])
+    # dest = np.argmax(dest, 1)
+    # result = dict()
+    # for item in dest:
+    #     if result.get(item, -1) == -1:
+    #         result[item] = 1
+    #     else:
+    #         result[item] = result[item] + 1
+    # print(result)
+    # count = 0
+    # for value in result.values():
+    #     count += value
+    # print(count)
+    # count_1 = 0
+    # for key, value in result.items():
+    #     print(key, ": ", value / count)
+    #     result[key] = value / count
+    #     count_1 += (value / count)
+    # fig = plt.figure()
+    # mpl.rcParams["font.size"] = 16
+    # mpl.rcParams["xtick.labelsize"] = 16
+    # mpl.rcParams["ytick.labelsize"] = 16
+    # plt.ylabel("Count")
+    # plt.xlabel("Classification")
+    # plt.bar(result.keys(), result.values(), label="count")
+    # plt.grid(True)
+    # plt.show()
+    # print(count_1)
+    obj.pca_samples(11)
+    print(model_path)
+    model = lstm.lstm_model(hidden_size=128, num_layer=2, data_obj=obj,
+                            keep_prob=0.8, l_rate=0.005, max_step=5000,
+                            save_path=model_path, batch_size=obj.test.samples.shape[0])
+    test_obj = lstm_evaluation(model, obj)
+    print(test_obj)
+    test_obj.plot()

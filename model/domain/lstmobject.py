@@ -125,6 +125,86 @@ class lstm_data:
         self._dim = n_components
         self.init_samples()
 
+class lstm_data_core:
+    def __init__(self, pre_path, transaction_size,
+                 one_hot=False, min=-1, max=-1, label_dim=-1):
+        test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", pre_path)
+        assert test != None, Exception("path is invaild")
+        if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
+            pre_path = "{0}/".format(pre_path)
+        self._pre_path = pre_path
+        self._train_path = "{0}{1}".format(pre_path, "train.csv")
+        self._test_path = "{0}{1}".format(pre_path, "test.csv")
+        self._tran_size = transaction_size
+        if one_hot:
+            assert min != -1 and max != -1 and label_dim != -1, Exception("dest_dim can not be -1")
+        self._min = min
+        self._max = max
+        self._label_dim = label_dim
+        self._one_hot = one_hot
+        def parse_data(path):
+            samples = []
+            labels = []
+            fp = open(path, "r")
+            reader = csv.reader(fp)
+            for line in reader:
+                tmp_log = np.log(int(line[-1])) if int(line[-1]) is not 0 else 0
+                tmp_lst = generate_label(tmp_log, self._min, self._max, self._label_dim)
+                if tmp_lst[0] == 1 or tmp_lst[-1] == 1:
+                    continue
+                samples.append(line[0: -1])
+                if self._one_hot:
+                    labels.append(tmp_lst)
+                else:
+                    labels.append([tmp_log])
+            fp.close()
+            return np.array(samples, dtype=np.float32), np.array(labels, dtype=np.float32)
+        self._train, self._train_labels = parse_data(self._train_path)
+        self._test, self._test_labels = parse_data(self._test_path)
+        self._dim = self._train.shape[1]
+        self.init_samples()
+    def init_samples(self):
+        self._train_samples = data_obj(self._train, self._train_labels, self._tran_size)
+        self._test_samples = data_obj(self._test, self._test_labels, self._tran_size)
+    @property
+    def file_path(self):
+        return self._pre_path
+    @property
+    def one_hot(self):
+        return self._one_hot
+    class descriptor:
+        def __init__(self, get):
+            self.__get = get
+        def __get__(self, instance, owner):
+            return self.__get(instance)
+    def __min_getter(self):
+        return self._min
+    min = descriptor(__min_getter)
+    def __max_getter(self):
+        return self._max
+    max = descriptor(__max_getter)
+    def __dest_dim_getter(self):
+        return self._label_dim
+    label_dim = descriptor(__dest_dim_getter)
+    def __get_train(self):
+        return self._train_samples
+    train = descriptor(__get_train)
+    def __get_test(self):
+        return self._test_samples
+    test = descriptor(__get_test)
+    @property
+    def transaction_size(self):
+        return self._tran_size
+    @property
+    def sample_dim(self):
+        return self._dim
+    def pca_samples(self, n_components):
+        pca = PCA(n_components=n_components)
+        self._train = pca.fit_transform(self._train)
+        self._test = pca.fit_transform(self._test)
+        self._dim = n_components
+        self.init_samples()
+
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = lstm_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.RNN_DATA], 25,

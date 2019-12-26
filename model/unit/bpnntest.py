@@ -95,29 +95,29 @@ if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA],
                   one_hot=True, min=7, max=11, dest_dim=102)
-    # model = bp_model(batch_size=256,
-    #                  learning_rate=0.05,
-    #                  iterator_num=100000, data_obj=obj, pca_dim=8,
-    #                  model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
-    # test_obj = bp_evaluation(model, obj)
-    # print(test_obj)
-    # test_obj.plot(True)
-    dest = np.reshape(obj.test.labels, newshape=[-1, 102])
-    dest = np.argmax(dest, 1)
-    result = dict()
-    for item in dest:
-        if result.get(item, -1) == -1:
-            result[item] = 1
-        else:
-            result[item] = result[item] + 1
-    print(result)
-    count = 0
-    for value in result.values():
-        count += value
-    print(count)
-    count_1 = 0
-    for key, value in result.items():
-        print(key, ": ", value / count)
-        result[key] = value / count
-        count_1 += (value / count)
-    print(count_1)
+    model = bp_model(batch_size=256,
+                     learning_rate=0.05,
+                     iterator_num=100000, data_obj=obj, pca_dim=8,
+                     model_path=reader[pu.SECTIONS.MODEL][pu.OPTIONS.BP_MODEL])
+    test_obj = bp_evaluation(model, obj)
+    print(test_obj)
+    test_obj.plot()
+    # dest = np.reshape(obj.test.labels, newshape=[-1, 102])
+    # dest = np.argmax(dest, 1)
+    # result = dict()
+    # for item in dest:
+    #     if result.get(item, -1) == -1:
+    #         result[item] = 1
+    #     else:
+    #         result[item] = result[item] + 1
+    # print(result)
+    # count = 0
+    # for value in result.values():
+    #     count += value
+    # print(count)
+    # count_1 = 0
+    # for key, value in result.items():
+    #     print(key, ": ", value / count)
+    #     result[key] = value / count
+    #     count_1 += (value / count)
+    # print(count_1)
