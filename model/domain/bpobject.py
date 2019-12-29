@@ -61,7 +61,18 @@ class bp_data:
         reader = csv.reader(fp)
         _train = []
         _label = []
+        tmp_min = 10000
+        tmp_max = 0
+        tmp_count = 0
+        count = 0
         for line in reader:
+            tmp = int(line[-1])
+            if tmp_min > tmp:
+                tmp_min = tmp
+            if tmp_max < tmp:
+                tmp_max = tmp
+            tmp_count += tmp
+            count += 1
             _train.append(line[0: -1])
             if self._one_hot:
                 assert self._dest_dim != -1, Exception("dest_dim can not be -1")
@@ -71,6 +82,7 @@ class bp_data:
                 _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else 0])
         self._train = np.array(_train, dtype=np.float32)
         self._train_label = np.array(_label, dtype=np.float32)
+        print("This is load train:", tmp_min, tmp_max, tmp_count, count)
         fp.close()
     def load_test(self):
         test_path = "{0}test.csv".format(self._filePath)
@@ -78,7 +90,18 @@ class bp_data:
         reader = csv.reader(fp)
         _test = []
         _label = []
+        tmp_min = 10000
+        tmp_max = 0
+        tmp_count = 0
+        count = 0
         for line in reader:
+            tmp = int(line[-1])
+            if tmp_min > tmp:
+                tmp_min = tmp
+            if tmp_max < tmp:
+                tmp_max = tmp
+            tmp_count += tmp
+            count += 1
             _test.append(line[0: -1])
             if self._one_hot:
                 assert self._dest_dim != -1, Exception("dest_dim can not be -1")
@@ -88,6 +111,7 @@ class bp_data:
                 _label.append([np.log(int(line[-1])) if int(line[-1]) != 0 else 0])
         self._test = np.array(_test, dtype=np.float32)
         self._test_label = np.array(_label, dtype=np.float32)
+        print("This is load test:", tmp_min, tmp_max, tmp_count, count)
         fp.close()
     def init_samples(self):
         self._train_sample = data_obj(self._train, self._train_label)

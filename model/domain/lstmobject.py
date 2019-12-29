@@ -69,7 +69,18 @@ class lstm_data:
             labels = []
             fp = open(path, "r")
             reader = csv.reader(fp)
+            tmp_min = 10000
+            tmp_max = 0
+            tmp_count = 0
+            count = 0
             for line in reader:
+                tmp = int(line[-1])
+                if tmp_min > tmp:
+                    tmp_min = tmp
+                if tmp_max < tmp:
+                    tmp_max = tmp
+                tmp_count += tmp
+                count += 1
                 samples.append(line[0: -1])
                 if self._one_hot:
                     labels.append(generate_label(np.log(int(line[-1])) if int(line[-1]) is not 0 else 0,
@@ -78,6 +89,7 @@ class lstm_data:
                     self._label_dim = 1
                     labels.append([np.log(int(line[-1])) if int(line[-1]) is not 0 else 0])
             fp.close()
+            print("This is load test:", tmp_min, tmp_max, tmp_count, count, tmp_count / count)
             return np.array(samples, dtype=np.float32), np.array(labels, dtype=np.float32)
         self._train, self._train_labels = parse_data(self._train_path)
         self._test, self._test_labels = parse_data(self._test_path)

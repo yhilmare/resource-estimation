@@ -94,7 +94,7 @@ class bp_evaluation:
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = bp_data(reader[pu.SECTIONS.DATA][pu.OPTIONS.BP_DATA],
-                  one_hot=True, min=7, max=11, dest_dim=102)
+                  one_hot=True, min=6, max=11, dest_dim=102)
     model = bp_model(batch_size=256,
                      learning_rate=0.05,
                      iterator_num=100000, data_obj=obj, pca_dim=8,
@@ -121,3 +121,12 @@ if __name__ == "__main__":
     #     result[key] = value / count
     #     count_1 += (value / count)
     # print(count_1)
+    # fig = plt.figure()
+    # mpl.rcParams["font.size"] = 16
+    # mpl.rcParams["xtick.labelsize"] = 16
+    # mpl.rcParams["ytick.labelsize"] = 16
+    # plt.ylabel("Count")
+    # plt.xlabel("Classification")
+    # plt.bar(result.keys(), result.values(), label="count")
+    # plt.grid(True)
+    # plt.show()

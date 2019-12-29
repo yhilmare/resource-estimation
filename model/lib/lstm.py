@@ -72,11 +72,16 @@ class lstm_model:
     def train(self):
         assert self._tran_size != 1 and self._batch_size != -1, Exception("Sample need to be False")
         fig = plt.figure("cross-entropy")
-        mpl.rcParams['xtick.labelsize'] = 8
-        mpl.rcParams['ytick.labelsize'] = 8
+        mpl.rcParams['xtick.labelsize'] = 16
+        mpl.rcParams['ytick.labelsize'] = 16
+        mpl.rcParams["font.size"] = 16
         ax = fig.add_subplot(211)
         ax.grid(True)
+        ax.set_ylabel("Loss")
+        ax.set_xlabel("Times")
         bx = fig.add_subplot(212)
+        bx.set_ylabel("Accuracy")
+        bx.set_xlabel("Times")
         bx.grid(True)
         with tf.Session() as sess:
             loss_lst = []
