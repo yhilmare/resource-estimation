@@ -48,7 +48,7 @@ int main(int argn, char *argv[]) {
     bool disk_statistic_flag = !(config["WATCH_TPS_FLAG"] == "false");
     bool buffer_flag = !(config["BUFFER_RECORD_FLAG"] == "false");
 
-    int thread_num = 1;
+    int thread_num = 10;
 
     thread_arg arg(config, thread_num, file_name, tv);
     //===============================================tps监控线程==============================================

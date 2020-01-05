@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 from sklearn.externals import joblib
 
 class svm_model:
-    def __init__(self, data_obj, pca_dim, kernal="poly"):
+    def __init__(self, data_obj, pca_dim, kernal="rbf"):
         self._kernal = kernal
         self._data = data_obj
         self._data.pca_samples(pca_dim)
@@ -18,13 +18,13 @@ class svm_model:
     def dest_dim(self):
         return self._dest_dim
     def define_model(self):
-        self._svc = svm.SVR(kernel=self._kernal, max_iter=100000)
+        self._svc = svm.SVR(kernel=self._kernal, max_iter=10000)
     def train(self):
         self.define_model()
         self._svc.fit(self._data.train.samples, self._data.train.labels.flatten())
-        joblib.dump(self._svc, "/home/ilmare/Desktop/resource_estimation/model/svm/svm_rnn_poly.pkl")
+        joblib.dump(self._svc, "/home/ilmare/Desktop/resource_estimation/model/svm/svm_rnn_rbf.pkl")
     def load(self):
-        self._svc = joblib.load("/home/ilmare/Desktop/resource_estimation/model/svm/svm_rnn_poly.pkl")
+        self._svc = joblib.load("/home/ilmare/Desktop/resource_estimation/model/svm/svm_rnn_rbf.pkl")
     def test(self):
         print("accuracy:", self._svc.score(self._data.test.samples, self._data.test.labels.flatten()))
     def predict(self, sample):
@@ -81,4 +81,4 @@ if __name__ == "__main__":
     model.train()
     # model.load()
     # model.test()
-    # print(model)
+    print(model)

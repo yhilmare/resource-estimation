@@ -12,12 +12,13 @@ import os
 import csv
 
 class diskUI:
-    def __init__(self, pre_path, xtickLableSize=8, ytickLabelSize=8):
+    def __init__(self, pre_path, xtickLableSize=16, ytickLabelSize=16):
         self._pre_path = pre_path
         test = re.match(r"^([a-zA-Z]:){0,1}([\\/][a-zA-Z0-9_-]+)+[\\/]{0,1}$", pre_path)
         assert test != None, Exception("path is invaild")
         if pre_path[-1] is not "\\" and pre_path[-1] is not "/":
             self._pre_path = "{0}/".format(pre_path)
+        mpl.rcParams["font.size"] = 16
         mpl.rcParams["xtick.labelsize"] = xtickLableSize
         mpl.rcParams["ytick.labelsize"] = ytickLabelSize
     def __read_from_file(self, fileName):
@@ -118,7 +119,7 @@ class diskUI:
 if __name__ == "__main__":
     reader = pu.configreader(pu.configfile)
     obj = diskUI(reader[pu.SECTIONS.DATA][pu.OPTIONS.DISK_DATA])
-    obj.plotContrast("record_1574952024649769.csv", "tps_1574952024638729.csv",
-                     ["clean buffer", "dirties buffer", "total buffer"], ["live TPS"], [-10, 1000])
+    obj.plotContrast("record_1578214554984138.csv", "tps_1578214554976297.csv",
+                     ["clean buffer", "dirties buffer", "total buffer"], ["live TPS"], [-10, 1500])
     # obj.plotTotal(type="record", labels=["clean buffer", "dirties buffer", "total buffer"])
     # obj.plotSingle(type="record", labels=["clean buffer", "dirties buffer", "total buffer"])

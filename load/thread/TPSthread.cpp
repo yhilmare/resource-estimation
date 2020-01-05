@@ -36,9 +36,9 @@ void *tps_record(void *param){
         long watch_interval = disk_obj.current_timer - disk_obj.pre_timer;
         if (watch_interval != 0){
             double live_tps = disk_obj.interval_count / (watch_interval / 1000000.0);
-            std::clog << date << " [INFO] watch interval is " << watch_interval
-                      << "us, watch transaction is " << disk_obj.interval_count
-                      << ", live tps is " << live_tps << std::endl;
+//            std::clog << date << " [INFO] watch interval is " << watch_interval
+//                      << "us, watch transaction is " << disk_obj.interval_count
+//                      << ", live tps is " << live_tps << std::endl;
             long tmp_time = disk_obj.current_timer - (start.tv_sec * 1000000 + start.tv_usec);
             out << tmp_time << "," << live_tps << std::endl;
             disk_obj.interval_count = 0;

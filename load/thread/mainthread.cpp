@@ -27,7 +27,7 @@ void *thread_main(void *param){
     string port = config["PG_PORT"];
     bool flag = config["WATCH_TPS_FLAG"] == "false" ? false : true;
     //seq_init(int n, int p, int o, int d, int s)
-    seq_init(10, 10, 1, 1, 1);
+    seq_init(900, 77, 8, 8, 8);
     pg_connection con(user.c_str(), password.c_str(),
                       host.c_str(), database.c_str(), port.c_str());
 //    vector<pg_prepared_statement> val;
